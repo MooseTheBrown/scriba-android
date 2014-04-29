@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scriba</string>
+    <string name="no_records">No records</string>
+    <!-- Entry data -->
+    <string name="company_name_title">Name:</string>
+    <string name="company_jur_name_title">Legal name:</string>
+    <string name="company_address_title">Address:</string>
+    <string name="company_inn_title">Tax id:</string>
+    <string name="company_phonenum_title">Telephone:</string>
+    <string name="company_email_title">Email:</string>
+    <string name="people_title">People:</string>
+    <string name="projects_title">Projects:</string>
+    <string name="events_title">Events:</string>
+    <string name="poc_firstname_title">First name:</string>
+    <string name="poc_secondname_title">Second name:</string>
+    <string name="poc_lastname_title">Last name:</string>
+    <string name="poc_mobilenum_title">Mobile:</string>
+    <string name="poc_phonenum_title">Phone:</string>
+    <string name="poc_email_title">Email:</string>
+    <string name="poc_position_title">Position:</string>
+    <string name="poc_company_title">Company:</string>
+    <string name="poc_company_spinner_prompt">Select company</string>
+    <string name="project_title_title">Title:</string>
+    <string name="project_descr_title">Description:</string>
+    <string name="project_company_title">Company:</string>
+    <string name="project_state_title">State:</string>
+    <string name="project_company_spinner_prompt">Select company</string>
+    <string name="project_state_spinner_prompt">Select project state</string>
+    <string name="event_descr_title">Description:</string>
+    <string name="event_company_title">Company:</string>
+    <string name="event_company_spinner_prompt">Select company</string>
+    <string name="event_poc_title">Person of contact:</string>
+    <string name="event_poc_spinner_prompt">Select person of contact</string>
+    <string name="event_project_title">Project:</string>
+    <string name="event_project_spinner_prompt">Select project</string>
+    <string name="event_type_title">Event type:</string>
+    <string name="event_type_spinner_prompt">Choose event type</string>
+    <string name="event_outcome_title">Outcome:</string>
+    <string name="event_date_title">Date:</string>
+    <string name="event_time_title">Time:</string>
+    <!-- Actions -->
+    <string name="add_record">Add record</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="entry_added">New entry added</string>
+    <string name="saved">Saved</string>
+    <string name="delete_record">Delete</string>
+    <!-- Entry types -->
+    <string name="Companies">Companies</string>
+    <string name="People">People</string>
+    <string name="Projects">Projects</string>
+    <string name="Events">Events</string>
+    <string-array name="entry_type_list">
+        <item>@string/Companies</item>
+        <item>@string/People</item>
+        <item>@string/Projects</item>
+        <item>@string/Events</item>
+    </string-array>
+    <string name="Company">Company</string>
+    <string name="POC">Person of contact</string>
+    <string name="Project">Project</string>
+    <string name="Event">Event</string>
+    <string name="add_company">Add company</string>
+    <string name="add_poc">Add contact</string>
+    <string name="add_project">Add project</string>
+    <string name="add_event">Add event</string>
+    <!-- Project states -->
+    <string name="proj_state_initial">Initial</string>
+    <string name="proj_state_client_informed">Client informed</string>
+    <string name="proj_state_client_response">Client response</string>
+    <string name="proj_state_offer">Offer</string>
+    <string name="proj_state_rejected">Rejected</string>
+    <string name="proj_state_contract_signed">Contract signed</string>
+    <string name="proj_state_execution">Execution</string>
+    <string name="proj_state_payment">Payment</string>
+    <!-- Event types -->
+    <string name="event_type_meeting">Meeting</string>
+    <string name="event_type_call">Call</string>
+    <string name="event_type_task">Task</string>
+</resources>

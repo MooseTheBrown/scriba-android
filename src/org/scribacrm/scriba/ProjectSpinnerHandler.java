@@ -1,0 +1,111 @@
+package org.scribacrm.scriba;
+
+import org.scribacrm.libscriba.*;
+import android.content.Context;
+import android.widget.ArrayAdapter;
+import android.content.Loader;
+import android.app.LoaderManager;
+import android.widget.Spinner;
+import android.widget.AdapterView;
+import android.os.Bundle;
+import android.view.View;
+import android.util.Log;
+
+// Project spinner handler loads list of projects using loader, populates
+// spinner widget and reports selected project id
+public class ProjectSpinnerHandler implements
+                                   LoaderManager.LoaderCallbacks<DataDescriptor[]>,
+                                   AdapterView.OnItemSelectedListener {
+
+    private Context _context = null;
+    private LoaderManager _loaderManager = null;
+    // selected project id
+    private long _selectedProjectId = 0;
+    // company id used for POC filter
+    private long _companyId = -1;
+    // adapter for project list
+    private ArrayAdapter<DataDescriptor> _projectListAdapter = null;
+    Spinner _spinner = null;
+
+    public ProjectSpinnerHandler(Context context, LoaderManager loaderManager) {
+        _context = context;
+        _loaderManager = loaderManager;
+
+        _projectListAdapter = new ArrayAdapter<DataDescriptor>(_context,
+            android.R.layout.simple_spinner_item);
+        _projectListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    }
+
+    @Override
+    public Loader<DataDescriptor[]> onCreateLoader(int id, Bundle args) {
+        if (id == EntryType.PROJECT.loaderId()) {
+            ProjectListLoader loader = new ProjectListLoader(_context);
+
+            // if there's a company id set, get projects for selected
+            // company only
+            if (_companyId != -1) {
+                loader.setCompanySearch(_companyId);
+            }
+
+            return (Loader<DataDescriptor[]>) loader;
+        }
+        else {
+            Log.e("[Scriba]", "ProjectSpinnerHandler.onCreateLoader() invalid loader id!");
+            return null;
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<DataDescriptor[]> loader, DataDescriptor[] data) {
+        _projectListAdapter.clear();
+        for (DataDescriptor item : data) {
+            _projectListAdapter.add(item);
+            if (item.id == _selectedProjectId) {
+                int pos = _projectListAdapter.getPosition(item);
+                _spinner.setSelection(pos);
+            }
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<DataDescriptor[]> loader) {
+        _projectListAdapter.clear();
+    }
+
+    // load POC list from DB
+    public void load(Spinner spinner) {
+        load(spinner, -1, -1);
+    }
+
+    // load POC list from DB with company filter
+    public void load(Spinner spinner, long companyId) {
+        load(spinner, companyId, -1);
+    }
+
+    // load POC list from DB with company filter and set selection
+    public void load(Spinner spinner, long companyId, long selectedId) {
+        _companyId = companyId;
+        _selectedProjectId = selectedId;
+        _spinner = spinner;
+        spinner.setAdapter(_projectListAdapter);
+        spinner.setOnItemSelectedListener(this);
+        _loaderManager.restartLoader(EntryType.PROJECT.loaderId(), null, this);
+    }
+
+    // AdapterView.onItemSelectedListener implementation
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        DataDescriptor descr = _projectListAdapter.getItem(pos);
+        _selectedProjectId = descr.id;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        _selectedProjectId = 0;
+    }
+
+    // get id of currently selected person
+    public long getSelectedProjectId() {
+        return _selectedProjectId;
+    }
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+
+    <!-- Project title -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_title_header"
+            android:text="@string/project_title_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/project_title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Project description -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_descr_header"
+            android:text="@string/project_descr_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/project_descr_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Project company -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_company_header"
+            android:text="@string/project_company_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/project_company_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/project_company_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Project state -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_state_header"
+            android:text="@string/project_state_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/project_state_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/project_state_spinner_prompt"
+            />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

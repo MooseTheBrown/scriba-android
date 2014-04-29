@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/company_details_scrollview"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:scriba="http://schemas.android.com/apk/res/org.scribacrm.scriba"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+    >
+
+    <!-- Company name -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_name_header"
+            android:text="@string/company_name_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/company_name_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company legal name -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_jur_name_header"
+            android:text="@string/company_jur_name_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/company_jur_name_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company address -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_address_header"
+            android:text="@string/company_address_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/company_address_text"
+            style="@style/scriba_entry_item_text"
+             />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company tax id -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_inn_header"
+            android:text="@string/company_inn_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/company_inn_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company phone number -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_phonenum_header"
+            android:text="@string/company_phonenum_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/company_phonenum_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company email -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_email_header"
+            android:text="@string/company_email_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/company_email_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Expandable list of people -->
+    <org.scribacrm.scriba.ExpandablePanel
+        android:id="@+id/poc_panel"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        scriba:handle="@+id/poc_expander"
+        scriba:content="@+id/poc_list"
+        >
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@id/poc_expander"
+            android:clickable="true"
+            style="@style/scriba_expandable_item"
+            >
+            <TextView
+                android:id="@+id/company_people_title"
+                android:text="@string/people_title"
+                style="@style/scriba_expandable_header"
+                >
+            </TextView>
+            <ImageView
+                android:id="@+id/poc_exp_image"
+                android:src="@drawable/expander_open"
+                style="@style/scriba_expand_image"
+                >
+            </ImageView>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@id/poc_list"
+            style="@style/scriba_list_container"
+            />
+    </org.scribacrm.scriba.ExpandablePanel>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Expandable list of projects -->
+    <org.scribacrm.scriba.ExpandablePanel
+        android:id="@+id/project_panel"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        scriba:handle="@+id/project_expander"
+        scriba:content="@+id/project_list"
+        >
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@id/project_expander"
+            android:clickable="true"
+            style="@style/scriba_expandable_item"
+            >
+            <TextView
+                android:id="@+id/company_projects_title"
+                android:text="@string/projects_title"
+                style="@style/scriba_expandable_header"
+                >
+            </TextView>
+            <ImageView
+                android:id="@+id/project_exp_image"
+                android:src="@drawable/expander_open"
+                style="@style/scriba_expand_image"
+                >
+            </ImageView>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@id/project_list"
+            style="@style/scriba_list_container"
+            />
+    </org.scribacrm.scriba.ExpandablePanel>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Expandable list of events -->
+    <org.scribacrm.scriba.ExpandablePanel
+        android:id="@+id/event_panel"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        scriba:handle="@+id/event_expander"
+        scriba:content="@+id/event_list"
+        >
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@id/event_expander"
+            android:clickable="true"
+            style="@style/scriba_expandable_item"
+            >
+            <TextView
+                android:id="@+id/company_events_title"
+                android:text="@string/events_title"
+                style="@style/scriba_expandable_header"
+                >
+            </TextView>
+            <ImageView
+                android:id="@+id/event_exp_image"
+                android:src="@drawable/expander_open"
+                style="@style/scriba_expand_image"
+              >
+            </ImageView>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@id/event_list"
+            style="@style/scriba_list_container"
+            />
+    </org.scribacrm.scriba.ExpandablePanel>
+</LinearLayout>
+</ScrollView>

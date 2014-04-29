@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+
+    <!-- Company name -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_name_header"
+            android:text="@string/company_name_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/company_name_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company legal name -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_jur_name_header"
+            android:text="@string/company_jur_name_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/company_jur_name_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company address -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_address_header"
+            android:text="@string/company_address_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/company_address_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+             />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company tax id -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_inn_header"
+            android:text="@string/company_inn_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/company_inn_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company phone number -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_phonenum_header"
+            android:text="@string/company_phonenum_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/company_phonenum_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Company email -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/company_email_header"
+            android:text="@string/company_email_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/company_email_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

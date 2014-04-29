@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- colors -->
+    <color name="scriba_window_bg">#74726f</color>
+
+    <!-- Scriba application theme -->
+    <style name="scriba_theme"
+        parent="@android:style/Theme.Holo.Light"
+        >
+        <item name="android:windowBackground">@color/scriba_window_bg</item>
+    </style>
+
+    <!-- Entry list container -->
+    <style name="scriba_list_container">
+        <item name="android:background">@drawable/entry_bg</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Add entry item -->
+    <style name="scriba_add_entry_item">
+        <item name="android:background">@drawable/entry_bg</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Entry details item -->
+    <style name="scriba_entry_item"
+      >
+        <item name="android:background">@drawable/entry_item_bg</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Entry details delimiter -->
+    <style name="scriba_entry_delim"
+      >
+        <item name="android:background">@color/scriba_window_bg</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">10dp</item>
+    </style>
+
+    <!-- Entry details item header -->
+    <style name="scriba_entry_item_header"
+      >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Entry details item text -->
+    <style name="scriba_entry_item_text">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <!-- Expandable item -->
+    <style name="scriba_expandable_item"
+      >
+        <item name="android:background">@drawable/entry_item_bg</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Expandable item header text -->
+    <style name="scriba_expandable_header"
+        >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+
+    <!-- Expandable item toggle image -->
+    <style name="scriba_expand_image"
+        >
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scriba</string>
+    <string name="no_records">Нет записей</string>
+    <!-- Entry data -->
+    <string name="company_name_title">Название:</string>
+    <string name="company_jur_name_title">Юридическое имя:</string>
+    <string name="company_address_title">Адрес:</string>
+    <string name="company_inn_title">ИНН:</string>
+    <string name="company_phonenum_title">Telephone:</string>
+    <string name="company_email_title">Email:</string>
+    <string name="people_title">Контакты:</string>
+    <string name="projects_title">Проекты:</string>
+    <string name="events_title">События:</string>
+    <string name="poc_firstname_title">Имя:</string>
+    <string name="poc_secondname_title">Отчество:</string>
+    <string name="poc_lastname_title">Фамилия:</string>
+    <string name="poc_mobilenum_title">Мобильный:</string>
+    <string name="poc_phonenum_title">Телефон:</string>
+    <string name="poc_email_title">Email:</string>
+    <string name="poc_position_title">Должность:</string>
+    <string name="poc_company_title">Компания:</string>
+    <string name="poc_company_spinner_prompt">Выберите компанию</string>
+    <string name="project_title_title">Название:</string>
+    <string name="project_descr_title">Описание:</string>
+    <string name="project_company_title">Компания:</string>
+    <string name="project_state_title">Статус:</string>
+    <string name="project_company_spinner_prompt">Выберите компанию</string>
+    <string name="project_state_spinner_prompt">Выберите статус проекта</string>
+    <string name="event_descr_title">Описание:</string>
+    <string name="event_company_title">Компания:</string>
+    <string name="event_company_spinner_prompt">Выберите компанию</string>
+    <string name="event_poc_title">Контактное лицо:</string>
+    <string name="event_poc_spinner_prompt">Выберите контактное лицо</string>
+    <string name="event_project_title">Проект:</string>
+    <string name="event_project_spinner_prompt">Выберите проект</string>
+    <string name="event_type_title">Тип события:</string>
+    <string name="event_type_spinner_prompt">Выберите тип события</string>
+    <string name="event_outcome_title">Результат:</string>
+    <string name="event_date_title">Дата:</string>
+    <string name="event_time_title">Время:</string>
+    <!-- Actions -->
+    <string name="add_record">Добавить запись</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="edit">Редактировать</string>
+    <string name="entry_added">Добавлена новая запись</string>
+    <string name="saved">Сохранено</string>
+    <string name="delete_record">Удалить</string>
+    <!-- Entry types -->
+    <string name="Companies">Компании</string>
+    <string name="People">Контакты</string>
+    <string name="Projects">Проекты</string>
+    <string name="Events">События</string>
+    <string-array name="entry_type_list">
+        <item>@string/Companies</item>
+        <item>@string/People</item>
+        <item>@string/Projects</item>
+        <item>@string/Events</item>
+    </string-array>
+    <string name="Company">Компания</string>
+    <string name="POC">Контактное лицо</string>
+    <string name="Project">Проект</string>
+    <string name="Event">Событие</string>
+    <string name="add_company">Добавить компанию</string>
+    <string name="add_poc">Добавить контактное лицо</string>
+    <string name="add_project">Добавить проект</string>
+    <string name="add_event">Добавить событие</string>
+    <!-- Project states -->
+    <string name="proj_state_initial">Начало</string>
+    <string name="proj_state_client_informed">Клиент информирован</string>
+    <string name="proj_state_client_response">Клиент ответил</string>
+    <string name="proj_state_offer">Предложение</string>
+    <string name="proj_state_rejected">Отказ</string>
+    <string name="proj_state_contract_signed">Договор заключен</string>
+    <string name="proj_state_execution">Выполнение</string>
+    <string name="proj_state_payment">Оплата</string>
+    <!-- Event types -->
+    <string name="event_type_meeting">Встреча</string>
+    <string name="event_type_call">Звонок</string>
+    <string name="event_type_task">Задача</string>
+</resources>

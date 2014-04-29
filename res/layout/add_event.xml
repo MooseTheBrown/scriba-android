@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+
+    <!-- Event description -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_descr_header"
+            android:text="@string/event_descr_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/event_descr_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Event company -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_company_header"
+            android:text="@string/event_company_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/event_company_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/event_company_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Event POC -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_poc_header"
+            android:text="@string/event_poc_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/event_poc_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/event_poc_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Event project -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_project_header"
+            android:text="@string/event_project_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/event_project_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/event_project_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Event type -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_type_header"
+            android:text="@string/event_type_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/event_type_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/event_type_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Event date -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/event_date"
+        style="@style/scriba_expandable_item"
+        android:clickable="true"
+        >
+        <TextView
+            android:id="@+id/event_date_header"
+            android:text="@string/event_date_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/event_date_text"
+            android:layout_below="@id/event_date_header"
+            style="@style/scriba_entry_item_text"
+            />
+        <ImageView
+            android:id="@+id/date_exp_image"
+            android:src="@drawable/go"
+            style="@style/scriba_expand_image"
+          >
+        </ImageView>
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Event time -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/event_time"
+        style="@style/scriba_expandable_item"
+        android:clickable="true"
+        >
+        <TextView
+            android:id="@+id/event_time_header"
+            android:text="@string/event_time_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/event_time_text"
+            android:layout_below="@id/event_time_header"
+            style="@style/scriba_entry_item_text"
+            />
+        <ImageView
+            android:id="@+id/time_exp_image"
+            android:src="@drawable/go"
+            style="@style/scriba_expand_image"
+          >
+        </ImageView>
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Event outcome -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_outcome_header"
+            android:text="@string/event_outcome_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/event_outcome_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

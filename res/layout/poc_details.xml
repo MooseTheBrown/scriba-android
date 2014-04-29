@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp"
+    >
+
+    <!-- POC first name -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/poc_firstname_header"
+            android:text="@string/poc_firstname_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_firstname_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- POC second name -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/poc_secondname_header"
+            android:text="@string/poc_secondname_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_secondname_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- POC last name -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/poc_lastname_header"
+            android:text="@string/poc_lastname_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_lastname_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- POC mobile number -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/poc_mobilenum_header"
+            android:text="@string/poc_mobilenum_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_mobilenum_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- POC phone number -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/poc_phonenum_header"
+            android:text="@string/poc_phonenum_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_phonenum_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- POC email -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/poc_email_header"
+            android:text="@string/poc_email_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_email_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- POC position -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/poc_position_header"
+            android:text="@string/poc_position_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_position_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- POC company -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/poc_company"
+        android:clickable="true"
+        style="@style/scriba_expandable_item"
+        >
+        <TextView
+            android:id="@+id/poc_company_header"
+            android:text="@string/poc_company_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/poc_company_text"
+            android:layout_below="@id/poc_company_header"
+            style="@style/scriba_entry_item_text"
+            />
+        <ImageView
+            android:id="@+id/time_exp_image"
+            android:src="@drawable/go"
+            style="@style/scriba_expand_image"
+          >
+        </ImageView>
+    </RelativeLayout>
+</LinearLayout>
+</ScrollView>
