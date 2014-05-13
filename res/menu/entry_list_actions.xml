@@ -1,3 +1,23 @@
+<!-- 
+ * Copyright (C) 2014 Mikhail Sapozhnikov
+ *
+ * This file is part of scriba-android.
+ *
+ * scriba-android is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * scriba-android is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with scriba-android. If not, see <http://www.gnu.org/licenses/>.
+ *
+ -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_add_record"
           android:icon="@android:drawable/ic_input_add"
