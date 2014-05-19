@@ -58,6 +58,8 @@ public class EditEntryFragment extends Fragment
     private ProjectSpinnerHandler _projectSpinnerHandler = null;
     // event type spinner handler instance
     private EventTypeSpinnerHandler _eventTypeSpinnerHandler = null;
+    // event state spinner handler instance
+    private EventStateSpinnerHandler _eventStateSpinnerHandler = null; 
     // event date
     Date _eventDate = null;
     // date/time handler instance
@@ -219,6 +221,12 @@ public class EditEntryFragment extends Fragment
         Spinner eventTypeSpinner = (Spinner)getActivity().findViewById(R.id.event_type_spinner);
         _eventTypeSpinnerHandler.populateSpinner(eventTypeSpinner, _event.type);
 
+        // setup event state spinner
+        _eventStateSpinnerHandler = new EventStateSpinnerHandler(getActivity());
+        Spinner eventStateSpinner = (Spinner)getActivity().findViewById(R.id.event_state_spinner);
+        _eventStateSpinnerHandler.populateSpinner(eventStateSpinner, _event.state);
+
+        // event outcome
         txt = (EditText)getActivity().findViewById(R.id.event_outcome_text);
         txt.setText(_event.outcome);
 
@@ -340,10 +348,11 @@ public class EditEntryFragment extends Fragment
         long pocId = _pocSpinnerHandler.getSelectedPOCId();
         long projectId = _projectSpinnerHandler.getSelectedProjectId();
         byte type = _eventTypeSpinnerHandler.getSelectedType();
+        byte state = _eventStateSpinnerHandler.getSelectedState();
         long timestamp = _eventDate.getTime();
 
         Event event = new Event(_event.id, descr, companyId, pocId, projectId,
-                                type, outcome, timestamp);
+                                type, outcome, timestamp, state);
         ScribaDBManager.useDB(getActivity());
         ScribaDB.updateEvent(event);
         ScribaDBManager.releaseDB();

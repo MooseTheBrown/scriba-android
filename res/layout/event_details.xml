@@ -158,6 +158,26 @@
         >
     </LinearLayout>
 
+    <!-- Event state -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_state_header"
+            android:text="@string/event_state_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/event_state_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
     <!-- Event date -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"

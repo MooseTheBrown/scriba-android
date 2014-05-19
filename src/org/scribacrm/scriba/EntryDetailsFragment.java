@@ -449,6 +449,11 @@ public class EntryDetailsFragment extends Fragment {
         txt = (TextView)getActivity().findViewById(R.id.event_type_text);
         txt.setText(typeStr);
 
+        EventStateMapper eventStateMapper = new EventStateMapper(getActivity());
+        String stateStr = eventStateMapper.getString(_event.state);
+        txt = (TextView)getActivity().findViewById(R.id.event_state_text);
+        txt.setText(stateStr);
+
         txt = (TextView)getActivity().findViewById(R.id.event_outcome_text);
         txt.setText(_event.outcome);
 

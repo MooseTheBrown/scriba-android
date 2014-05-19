@@ -57,6 +57,8 @@
     <string name="event_project_spinner_prompt">Выберите проект</string>
     <string name="event_type_title">Тип события:</string>
     <string name="event_type_spinner_prompt">Выберите тип события</string>
+    <string name="event_state_title">Состояние события:</string>
+    <string name="event_state_spinner_prompt">Выберите состояние события</string>
     <string name="event_outcome_title">Результат:</string>
     <string name="event_date_title">Дата:</string>
     <string name="event_time_title">Время:</string>
@@ -100,4 +102,8 @@
     <string name="event_type_meeting">Встреча</string>
     <string name="event_type_call">Звонок</string>
     <string name="event_type_task">Задача</string>
+    <!-- Event states -->
+    <string name="event_state_scheduled">Запланировано</string>
+    <string name="event_state_cancelled">Отменено</string>
+    <string name="event_state_completed">Завершено</string>
 </resources>

@@ -57,6 +57,8 @@
     <string name="event_project_spinner_prompt">Select project</string>
     <string name="event_type_title">Event type:</string>
     <string name="event_type_spinner_prompt">Choose event type</string>
+    <string name="event_state_title">Event state:</string>
+    <string name="event_state_spinner_prompt">Choose event state</string>
     <string name="event_outcome_title">Outcome:</string>
     <string name="event_date_title">Date:</string>
     <string name="event_time_title">Time:</string>
@@ -100,4 +102,8 @@
     <string name="event_type_meeting">Meeting</string>
     <string name="event_type_call">Call</string>
     <string name="event_type_task">Task</string>
+    <!-- Event states -->
+    <string name="event_state_scheduled">Scheduled</string>
+    <string name="event_state_cancelled">Cancelled</string>
+    <string name="event_state_completed">Completed</string>
 </resources>

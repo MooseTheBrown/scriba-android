@@ -149,6 +149,30 @@
         >
     </LinearLayout>
 
+    <!-- Event state -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/event_state_header"
+            android:text="@string/event_state_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/event_state_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/event_state_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
     <!-- Event date -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_date"

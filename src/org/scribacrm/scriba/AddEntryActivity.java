@@ -59,8 +59,10 @@ public class AddEntryActivity extends Activity
     private POCSpinnerHandler _pocSpinnerHandler = null;
     // Project spinner handler instance
     private ProjectSpinnerHandler _projectSpinnerHandler = null;
-    // event type list handler instance
+    // event type spinner handler instance
     private EventTypeSpinnerHandler _eventTypeSpinnerHandler = null;
+    // event state spinner handler instance
+    private EventStateSpinnerHandler _eventStateSpinnerHandler = null;
     // date/time handler instance
     private DateTimeHandler _dateTimeHandler = null;
     // event date/time
@@ -273,12 +275,14 @@ public class AddEntryActivity extends Activity
         long pocId = _pocSpinnerHandler.getSelectedPOCId();
         long projectId = _projectSpinnerHandler.getSelectedProjectId();
         byte type = _eventTypeSpinnerHandler.getSelectedType();
+        byte state = _eventStateSpinnerHandler.getSelectedState();
         long timestamp = _eventDate.getTime();
 
         txt = (EditText)findViewById(R.id.event_outcome_text);
         String outcome = txt.getText().toString();
         ScribaDBManager.useDB(this);
-        ScribaDB.addEvent(descr, companyId, pocId, projectId, type, outcome, timestamp);
+        ScribaDB.addEvent(descr, companyId, pocId, projectId, type,
+                          outcome, timestamp, state);
         ScribaDBManager.releaseDB();
     }
 
@@ -341,6 +345,11 @@ public class AddEntryActivity extends Activity
         Spinner eventTypeSpinner = (Spinner)findViewById(R.id.event_type_spinner);
         _eventTypeSpinnerHandler = new EventTypeSpinnerHandler(this);
         _eventTypeSpinnerHandler.populateSpinner(eventTypeSpinner);
+
+        // setup event state spinner
+        Spinner eventStateSpinner = (Spinner)findViewById(R.id.event_state_spinner);
+        _eventStateSpinnerHandler = new EventStateSpinnerHandler(this);
+        _eventStateSpinnerHandler.populateSpinner(eventStateSpinner);
 
         // setup date/time widgets and handler
         // populate date and time fields - onDateChanged() will do the job
