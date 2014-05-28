@@ -42,13 +42,8 @@
             />
         <TextView
             android:id="@+id/project_title_text"
-            style="@style/scriba_entry_item_text"
+            style="@style/scriba_entry_item_text_large"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Project description -->
@@ -64,11 +59,6 @@
             android:id="@+id/project_descr_text"
             style="@style/scriba_entry_item_text"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Project company -->
@@ -94,11 +84,6 @@
           >
         </ImageView>
     </RelativeLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
 
     <!-- Project state -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

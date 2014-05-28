@@ -42,13 +42,8 @@
             />
         <TextView
             android:id="@+id/event_descr_text"
-            style="@style/scriba_entry_item_text"
+            style="@style/scriba_entry_item_text_large"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Event company -->
@@ -75,11 +70,6 @@
         </ImageView>
     </RelativeLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Event POC -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_poc"
@@ -103,11 +93,6 @@
           >
         </ImageView>
     </RelativeLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
 
     <!-- Event project -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -133,11 +118,6 @@
         </ImageView>
     </RelativeLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Event type -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"
@@ -151,11 +131,6 @@
             android:id="@+id/event_type_text"
             style="@style/scriba_entry_item_text"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Event state -->
@@ -173,11 +148,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Event date -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"
@@ -193,11 +163,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Event time -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"
@@ -211,11 +176,6 @@
             android:id="@+id/event_time_text"
             style="@style/scriba_entry_item_text"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Event outcome -->

@@ -44,13 +44,8 @@
             />
         <TextView
             android:id="@+id/company_name_text"
-            style="@style/scriba_entry_item_text"
+            style="@style/scriba_entry_item_text_large"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Company legal name -->
@@ -68,11 +63,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Company address -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"
@@ -86,11 +76,6 @@
             android:id="@+id/company_address_text"
             style="@style/scriba_entry_item_text"
              />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Company tax id -->
@@ -108,11 +93,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Company phone number -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"
@@ -127,12 +107,6 @@
             style="@style/scriba_entry_item_text"
             />
     </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Company email -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"
