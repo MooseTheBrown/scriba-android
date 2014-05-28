@@ -134,6 +134,16 @@ public class EntryDetailsActivity extends Activity
         return _entryId;
     }
 
+    public void onFragmentResumed(EntryType type, long id) {
+        Log.d("[Scriba]", "EntryDetailsActivity.onFragmentResumed, type=" + type +
+              ", id=" + id);
+        // a framgment has been resumed
+        // bring entry type and id in sync with currently displayed fragment
+        _entryType = type;
+        _entryId = id;
+        setActionBarTitle();
+    }
+
     // this is called by EntryDetailsFragment each time new entry
     // has to be displayed
     public void onEntryChange(EntryType newType, long newId) {
@@ -150,10 +160,10 @@ public class EntryDetailsActivity extends Activity
         _entryId = newId;
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment viewFragment = (Fragment)new EntryDetailsFragment();
         transaction.replace(R.id.entry_details_container, viewFragment, VIEW_FRAGMENT_TAG);
+        transaction.addToBackStack(null);
         transaction.commit();
 
         setActionBarTitle();
@@ -201,22 +211,14 @@ public class EntryDetailsActivity extends Activity
         toast.show();
 
         // replace edit fragment with view fragment
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment viewFragment = (Fragment)new EntryDetailsFragment();
-        transaction.replace(R.id.entry_details_container, viewFragment, VIEW_FRAGMENT_TAG);
-        transaction.commit();
+        fragmentManager.popBackStackImmediate();
     }
 
     // cancel menu item clicked
     private void onCancel() {
         // replace edit fragment with view fragment
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment viewFragment = (Fragment)new EntryDetailsFragment();
-        transaction.replace(R.id.entry_details_container, viewFragment, VIEW_FRAGMENT_TAG);
-        transaction.commit();
+        fragmentManager.popBackStackImmediate();
     }
 
     // set entry type based on its integer representation

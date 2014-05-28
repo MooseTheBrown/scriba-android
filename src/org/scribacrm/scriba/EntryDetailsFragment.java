@@ -46,6 +46,7 @@ public class EntryDetailsFragment extends Fragment {
         EntryType getEntryType();
         long getEntryId();
         void onEntryChange(EntryType newType, long newId);
+        void onFragmentResumed(EntryType type, long id);
     }
 
     // LoaderCallbacks implementation
@@ -151,6 +152,7 @@ public class EntryDetailsFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
+        Log.d("[Scriba]", "EntryDetailsFragment.onAttach()");
         _activityInterface = (EntryDetailsActivityInterface)activity;
         _entryType = _activityInterface.getEntryType();
         _entryId = _activityInterface.getEntryId();
@@ -162,6 +164,8 @@ public class EntryDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("[Scriba]", "EntryDetailsFragment.onCreateView()");
+
         View view = null;
 
         switch (_entryType) {
@@ -187,6 +191,13 @@ public class EntryDetailsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         loadEntryDetails();
         getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("[Scriba]", "EntryDetailsFragment.onResume()");
+        _activityInterface.onFragmentResumed(_entryType, _entryId);
     }
 
     // initiate loading of entry details
