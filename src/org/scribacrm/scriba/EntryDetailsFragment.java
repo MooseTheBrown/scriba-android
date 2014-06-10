@@ -329,14 +329,14 @@ public class EntryDetailsFragment extends Fragment {
                 public void onExpand(View handle, View content) {
                     ImageView expandImage = (ImageView)getActivity().
                                                findViewById(R.id.poc_exp_image);
-                    expandImage.setImageResource(R.drawable.expander_close);
+                    expandImage.setImageResource(R.drawable.up);
                 }
 
                 @Override
                 public void onCollapse(View handle, View content) {
                     ImageView expandImage = (ImageView)getActivity().
                                                findViewById(R.id.poc_exp_image);
-                    expandImage.setImageResource(R.drawable.expander_open);
+                    expandImage.setImageResource(R.drawable.down);
                 }
             };
         pocPanel.setOnExpandListener(pocPanelListener);
@@ -350,14 +350,14 @@ public class EntryDetailsFragment extends Fragment {
                 public void onExpand(View handle, View content) {
                     ImageView expandImage = (ImageView)getActivity().
                                                findViewById(R.id.project_exp_image);
-                    expandImage.setImageResource(R.drawable.expander_close);
+                    expandImage.setImageResource(R.drawable.up);
                 }
 
                 @Override
                 public void onCollapse(View handle, View content) {
                     ImageView expandImage = (ImageView)getActivity().
                                                findViewById(R.id.project_exp_image);
-                    expandImage.setImageResource(R.drawable.expander_open);
+                    expandImage.setImageResource(R.drawable.down);
                 }
             };
         projectPanel.setOnExpandListener(projectPanelListener);
@@ -371,14 +371,14 @@ public class EntryDetailsFragment extends Fragment {
                 public void onExpand(View handle, View content) {
                     ImageView expandImage = (ImageView)getActivity().
                                                findViewById(R.id.event_exp_image);
-                    expandImage.setImageResource(R.drawable.expander_close);
+                    expandImage.setImageResource(R.drawable.up);
                 }
 
                 @Override
                 public void onCollapse(View handle, View content) {
                     ImageView expandImage = (ImageView)getActivity().
                                                findViewById(R.id.event_exp_image);
-                    expandImage.setImageResource(R.drawable.expander_open);
+                    expandImage.setImageResource(R.drawable.down);
                 }
             };
         eventPanel.setOnExpandListener(eventPanelListener);

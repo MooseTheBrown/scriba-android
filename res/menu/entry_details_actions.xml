@@ -22,5 +22,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_edit"
           android:title="@string/edit"
+          android:icon="@drawable/edit"
           android:showAsAction="ifRoom"/>
 </menu>

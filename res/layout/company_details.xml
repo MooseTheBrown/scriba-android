@@ -30,7 +30,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10dp"
+    android:padding="5dp"
     >
 
     <!-- Company name -->
@@ -149,7 +149,7 @@
             </TextView>
             <ImageView
                 android:id="@+id/poc_exp_image"
-                android:src="@drawable/expander_open"
+                android:src="@drawable/down"
                 style="@style/scriba_expand_image"
                 >
             </ImageView>
@@ -187,7 +187,7 @@
             </TextView>
             <ImageView
                 android:id="@+id/project_exp_image"
-                android:src="@drawable/expander_open"
+                android:src="@drawable/down"
                 style="@style/scriba_expand_image"
                 >
             </ImageView>
@@ -225,7 +225,7 @@
             </TextView>
             <ImageView
                 android:id="@+id/event_exp_image"
-                android:src="@drawable/expander_open"
+                android:src="@drawable/down"
                 style="@style/scriba_expand_image"
               >
             </ImageView>

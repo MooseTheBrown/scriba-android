@@ -20,7 +20,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_add_record"
-          android:icon="@android:drawable/ic_input_add"
+          android:icon="@drawable/plus"
           android:title="@string/add_record"
           android:showAsAction="ifRoom"/>
 </menu>
