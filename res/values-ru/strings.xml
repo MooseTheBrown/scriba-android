@@ -28,7 +28,7 @@
     <string name="company_jur_name_title">Юридическое имя:</string>
     <string name="company_address_title">Адрес:</string>
     <string name="company_inn_title">ИНН:</string>
-    <string name="company_phonenum_title">Telephone:</string>
+    <string name="company_phonenum_title">Телефон:</string>
     <string name="company_email_title">Email:</string>
     <string name="people_title">Контакты:</string>
     <string name="projects_title">Проекты:</string>
