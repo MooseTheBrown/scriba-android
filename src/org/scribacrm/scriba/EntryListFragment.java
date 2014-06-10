@@ -55,7 +55,7 @@ public class EntryListFragment extends ListFragment
     // type of currently displayed items
     private EntryType _entryType = EntryType.COMPANY;
     // adapter for ListView
-    private ArrayAdapter<DataDescriptor> _adapter = null;
+    private EntryListAdapter _adapter = null;
     // activity handling entry clicks
     private ActivityInterface _activityInterface = null;
 
@@ -67,8 +67,7 @@ public class EntryListFragment extends ListFragment
         Log.d("[Scriba]", "EntryListFragment.onAttach()");
         super.onAttach(activity);
         _activityInterface = (ActivityInterface)activity;
-        _adapter = new ArrayAdapter<DataDescriptor>(activity,
-                       android.R.layout.simple_list_item_multiple_choice);
+        _adapter = new EntryListAdapter(activity.getLayoutInflater());
     }
 
     @Override

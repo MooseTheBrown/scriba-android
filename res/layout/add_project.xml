@@ -48,11 +48,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- Project description -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_add_entry_item"
@@ -68,11 +63,6 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Project company -->
@@ -92,11 +82,6 @@
             android:spinnerMode="dialog"
             android:prompt="@string/project_company_spinner_prompt"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- Project state -->

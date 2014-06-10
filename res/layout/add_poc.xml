@@ -48,11 +48,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- POC second name -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_add_entry_item"
@@ -68,11 +63,6 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- POC last name -->
@@ -92,11 +82,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- POC mobile number -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_add_entry_item"
@@ -112,11 +97,6 @@
             android:layout_height="wrap_content"
             android:inputType="phone"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- POC phone number -->
@@ -136,11 +116,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- POC email -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_add_entry_item"
@@ -158,11 +133,6 @@
             />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
-    </LinearLayout>
-
     <!-- POC position -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_add_entry_item"
@@ -178,11 +148,6 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             />
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_delim"
-        >
     </LinearLayout>
 
     <!-- POC company -->
