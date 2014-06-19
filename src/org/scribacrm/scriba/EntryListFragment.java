@@ -56,6 +56,8 @@ public class EntryListFragment extends ListFragment
     private EntryType _entryType = EntryType.COMPANY;
     // adapter for ListView
     private EntryListAdapter _adapter = null;
+    // adapter for event ListView
+    private EventListAdapter _eventAdapter = null;
     // activity handling entry clicks
     private ActivityInterface _activityInterface = null;
 
@@ -84,7 +86,15 @@ public class EntryListFragment extends ListFragment
         _entryType = _activityInterface.getEntryType();
         Log.d("[Scriba]", "EntryListFragment.onActivityCreated(), _entryType=" + _entryType);
 
-        setListAdapter((ListAdapter)_adapter);
+        if (_entryType == EntryType.EVENT) {
+            // events require different adapter
+            _eventAdapter = new EventListAdapter(getActivity(),
+                                                 getActivity().getLayoutInflater());
+            setListAdapter((ListAdapter)_eventAdapter);
+        }
+        else {
+            setListAdapter((ListAdapter)_adapter);
+        }
 
         ListView listView = getListView();
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -96,18 +106,22 @@ public class EntryListFragment extends ListFragment
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // let activity handle the entry click
-        DataDescriptor entry = _adapter.getItem(position);
+        DataDescriptor entry;
         switch (_entryType) {
             case COMPANY:
+                entry = _adapter.getItem(position);
                 _activityInterface.onCompanyClicked(entry.id);
                 break;
             case EVENT:
+                entry = _eventAdapter.getItem(position);
                 _activityInterface.onEventClicked(entry.id);
                 break;
             case POC:
+                entry = _adapter.getItem(position);
                 _activityInterface.onPOCClicked(entry.id);
                 break;
             case PROJECT:
+                entry = _adapter.getItem(position);
                 _activityInterface.onProjectClicked(entry.id);
                 break;
         }
@@ -140,10 +154,16 @@ public class EntryListFragment extends ListFragment
         Log.d("[Scriba]", "EntryListFragment.onLoadFinished()");
         Log.d("[Scriba]", "data length is " + data.length);
 
+        EntryListAdapter adapter = _adapter;
+        // different adapter is used for event list
+        if (_entryType == EntryType.EVENT) {
+            adapter = (EntryListAdapter)_eventAdapter;
+        }
+
         // populate ListView adapter with data
-        _adapter.clear();
+        adapter.clear();
         for (DataDescriptor item : data) {
-            _adapter.add(item);
+            adapter.add(item);
         }
     }
 
@@ -151,6 +171,9 @@ public class EntryListFragment extends ListFragment
     public void onLoaderReset(Loader<DataDescriptor[]> loader) {
         Log.d("[Scriba]", "EntryListFragment.onLoaderReset()");
         _adapter.clear();
+        if (_eventAdapter != null) {
+            _eventAdapter.clear();
+        }
     }
 
     // AbsListView.MultiChoiceModeListener implementation
@@ -197,7 +220,23 @@ public class EntryListFragment extends ListFragment
 
         // destroy loader for old type of entries
         getLoaderManager().destroyLoader(_entryType.loaderId());
+
+        if (newType == EntryType.EVENT) {
+            // switching to event view
+            if (_eventAdapter == null) {
+                _eventAdapter = new EventListAdapter(getActivity(),
+                                                     getActivity().getLayoutInflater());
+            }
+
+            setListAdapter((ListAdapter)_eventAdapter);
+        }
+        else if (_entryType == EntryType.EVENT) {
+            // switching from event view
+            setListAdapter((ListAdapter)_adapter);
+        }
+
         _entryType = newType;
+
         // force data loading for new type of entries
         loadData(true);
     }
@@ -215,13 +254,20 @@ public class EntryListFragment extends ListFragment
 
     private void deleteSelectedEntries() {
         Log.d("[Scriba]", "EntryListFragment.deleteSelectedEntries()");
+
+        EntryListAdapter adapter = _adapter;
+        if (_entryType == EntryType.EVENT) {
+            // events use different adapter
+            adapter = (EntryListAdapter)_eventAdapter;
+        }
+
         ScribaDBManager.useDB(getActivity());
         SparseBooleanArray checked_item_pos = getListView().getCheckedItemPositions();
         Log.d("[Scriba]", "number of items: " + checked_item_pos.size());
-        for (int i = 0; i < _adapter.getCount(); i++) {
+        for (int i = 0; i < adapter.getCount(); i++) {
             if (checked_item_pos.get(i) == true) {
                 Log.d("[Scriba]", "Removing item at position " + i);
-                DataDescriptor entry = _adapter.getItem(i);
+                DataDescriptor entry = adapter.getItem(i);
                 switch (_entryType) {
                     case COMPANY:
                         ScribaDB.removeCompany(entry.id);

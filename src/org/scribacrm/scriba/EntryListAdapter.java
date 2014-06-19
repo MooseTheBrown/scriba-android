@@ -30,13 +30,13 @@ import android.database.DataSetObserver;
 import android.widget.CheckedTextView;
 
 // adapter for scriba entry lists
-class EntryListAdapter implements ListAdapter {
+public class EntryListAdapter implements ListAdapter {
 
     // list of entries
-    private ArrayList<DataDescriptor> _entries = null;
+    protected ArrayList<DataDescriptor> _entries = null;
     // list of observers
-    private ArrayList<DataSetObserver> _observers = null;
-    private LayoutInflater _inflater = null;
+    protected ArrayList<DataSetObserver> _observers = null;
+    protected LayoutInflater _inflater = null;
 
     public EntryListAdapter(LayoutInflater inflater) {
         _entries = new ArrayList<DataDescriptor>();
