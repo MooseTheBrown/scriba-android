@@ -22,7 +22,7 @@
 
 <resources>
     <!-- colors -->
-    <color name="scriba_window_bg">#74726f</color>
+    <color name="scriba_window_bg">#ffffff</color>
 
     <!-- Scriba application theme -->
     <style name="scriba_theme"

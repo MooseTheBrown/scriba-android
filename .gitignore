@@ -1,1 +1,10 @@
 local.properties
+# libscriba native code
+jni/*
+# generated stuff
+bin/*
+gen/*
+libs/*
+obj/*
+# libscriba code automatically imported to scriba-android
+src/org/scribacrm/libscriba/*
