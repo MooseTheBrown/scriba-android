@@ -50,12 +50,12 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_company"
         android:clickable="true"
-        style="@style/scriba_expandable_item"
+        style="@style/scriba_action_item"
         >
         <TextView
             android:id="@+id/event_company_header"
             android:text="@string/event_company_title"
-            style="@style/scriba_entry_item_header"
+            style="@style/scriba_action_item_header"
             />
         <TextView
             android:id="@+id/event_company_text"
@@ -65,7 +65,7 @@
         <ImageView
             android:id="@+id/time_exp_image"
             android:src="@drawable/go"
-            style="@style/scriba_expand_image"
+            style="@style/scriba_action_image"
           >
         </ImageView>
     </RelativeLayout>
@@ -74,12 +74,12 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_poc"
         android:clickable="true"
-        style="@style/scriba_expandable_item"
+        style="@style/scriba_action_item"
         >
         <TextView
             android:id="@+id/event_poc_header"
             android:text="@string/event_poc_title"
-            style="@style/scriba_entry_item_header"
+            style="@style/scriba_action_item_header"
             />
         <TextView
             android:id="@+id/event_poc_text"
@@ -89,7 +89,7 @@
         <ImageView
             android:id="@+id/time_exp_image"
             android:src="@drawable/go"
-            style="@style/scriba_expand_image"
+            style="@style/scriba_action_image"
           >
         </ImageView>
     </RelativeLayout>
@@ -98,12 +98,12 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_project"
         android:clickable="true"
-        style="@style/scriba_expandable_item"
+        style="@style/scriba_action_item"
         >
         <TextView
             android:id="@+id/event_project_header"
             android:text="@string/event_project_title"
-            style="@style/scriba_entry_item_header"
+            style="@style/scriba_action_item_header"
             />
         <TextView
             android:id="@+id/event_project_text"
@@ -113,7 +113,7 @@
         <ImageView
             android:id="@+id/time_exp_image"
             android:src="@drawable/go"
-            style="@style/scriba_expand_image"
+            style="@style/scriba_action_image"
           >
         </ImageView>
     </RelativeLayout>

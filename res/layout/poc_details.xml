@@ -77,34 +77,48 @@
     </LinearLayout>
 
     <!-- POC mobile number -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_item"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/poc_mobilenum"
+        style="@style/scriba_action_item"
         >
         <TextView
             android:id="@+id/poc_mobilenum_header"
             android:text="@string/poc_mobilenum_title"
-            style="@style/scriba_entry_item_header"
+            style="@style/scriba_action_item_header"
             />
         <TextView
             android:id="@+id/poc_mobilenum_text"
+            android:layout_below="@id/poc_mobilenum_header"
             style="@style/scriba_entry_item_text"
             />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/poc_mobilenum_button"
+            android:src="@drawable/phone"
+            style="@style/scriba_action_image"
+            />
+    </RelativeLayout>
 
     <!-- POC phone number -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_item"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/poc_phonenum"
+        style="@style/scriba_action_item"
         >
         <TextView
             android:id="@+id/poc_phonenum_header"
             android:text="@string/poc_phonenum_title"
-            style="@style/scriba_entry_item_header"
+            style="@style/scriba_action_item_header"
             />
         <TextView
             android:id="@+id/poc_phonenum_text"
+            android:layout_below="@id/poc_phonenum_header"
             style="@style/scriba_entry_item_text"
             />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/poc_phonenum_button"
+            android:src="@drawable/phone"
+            style="@style/scriba_action_image"
+            />
+    </RelativeLayout>
 
     <!-- POC email -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -140,12 +154,12 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/poc_company"
         android:clickable="true"
-        style="@style/scriba_expandable_item"
+        style="@style/scriba_action_item"
         >
         <TextView
             android:id="@+id/poc_company_header"
             android:text="@string/poc_company_title"
-            style="@style/scriba_entry_item_header"
+            style="@style/scriba_action_item_header"
             />
         <TextView
             android:id="@+id/poc_company_text"
@@ -155,7 +169,7 @@
         <ImageView
             android:id="@+id/time_exp_image"
             android:src="@drawable/go"
-            style="@style/scriba_expand_image"
+            style="@style/scriba_action_image"
           >
         </ImageView>
     </RelativeLayout>

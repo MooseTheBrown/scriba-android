@@ -94,19 +94,28 @@
     </LinearLayout>
 
     <!-- Company phone number -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/scriba_entry_item"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/company_phonenum"
+        android:clickable="true"
+        style="@style/scriba_action_item"
         >
         <TextView
             android:id="@+id/company_phonenum_header"
             android:text="@string/company_phonenum_title"
-            style="@style/scriba_entry_item_header"
+            style="@style/scriba_action_item_header"
             />
         <TextView
             android:id="@+id/company_phonenum_text"
             style="@style/scriba_entry_item_text"
+            android:layout_below="@id/company_phonenum_header"
             />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/company_phonenum_button"
+            android:src="@drawable/phone"
+            style="@style/scriba_action_image"
+            />
+    </RelativeLayout>
+
     <!-- Company email -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/scriba_entry_item"
@@ -139,18 +148,18 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@id/poc_expander"
             android:clickable="true"
-            style="@style/scriba_expandable_item"
+            style="@style/scriba_action_item"
             >
             <TextView
                 android:id="@+id/company_people_title"
                 android:text="@string/people_title"
-                style="@style/scriba_expandable_header"
+                style="@style/scriba_action_item_header"
                 >
             </TextView>
             <ImageView
                 android:id="@+id/poc_exp_image"
                 android:src="@drawable/down"
-                style="@style/scriba_expand_image"
+                style="@style/scriba_action_image"
                 >
             </ImageView>
         </RelativeLayout>
@@ -177,18 +186,18 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@id/project_expander"
             android:clickable="true"
-            style="@style/scriba_expandable_item"
+            style="@style/scriba_action_item"
             >
             <TextView
                 android:id="@+id/company_projects_title"
                 android:text="@string/projects_title"
-                style="@style/scriba_expandable_header"
+                style="@style/scriba_action_item_header"
                 >
             </TextView>
             <ImageView
                 android:id="@+id/project_exp_image"
                 android:src="@drawable/down"
-                style="@style/scriba_expand_image"
+                style="@style/scriba_action_image"
                 >
             </ImageView>
         </RelativeLayout>
@@ -215,18 +224,18 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@id/event_expander"
             android:clickable="true"
-            style="@style/scriba_expandable_item"
+            style="@style/scriba_action_item"
             >
             <TextView
                 android:id="@+id/company_events_title"
                 android:text="@string/events_title"
-                style="@style/scriba_expandable_header"
+                style="@style/scriba_action_item_header"
                 >
             </TextView>
             <ImageView
                 android:id="@+id/event_exp_image"
                 android:src="@drawable/down"
-                style="@style/scriba_expand_image"
+                style="@style/scriba_action_image"
               >
             </ImageView>
         </RelativeLayout>

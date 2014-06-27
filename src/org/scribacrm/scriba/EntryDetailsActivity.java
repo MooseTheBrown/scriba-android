@@ -33,6 +33,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
 import android.util.Log;
+import android.net.Uri;
+import android.telephony.TelephonyManager;
+import android.content.Context;
 
 public class EntryDetailsActivity extends Activity
                                   implements EntryDetailsFragment.EntryDetailsActivityInterface {
@@ -126,6 +129,28 @@ public class EntryDetailsActivity extends Activity
     }
 
     // EntryDetailsActivityInterface implementation
+
+    public byte callNumber(String number) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + number));
+        if (intent.resolveActivity(getPackageManager()) == null) {
+            // no application capable of dialing
+            return EntryDetailsFragment.EntryDetailsActivityInterface.CALL_IMPOSSIBLE;
+        }
+        else {
+            TelephonyManager manager =
+            (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+            if (manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE) {
+                // no phone to transmit voice calls
+                return EntryDetailsFragment.EntryDetailsActivityInterface.CALL_IMPOSSIBLE;
+            }
+
+            // ok, we can make a call
+            startActivity(intent);
+            return EntryDetailsFragment.EntryDetailsActivityInterface.CALL_POSSIBLE;
+        }
+    }
+
     public EntryType getEntryType() {
         return _entryType;
     }

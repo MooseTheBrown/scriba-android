@@ -146,7 +146,7 @@
     <!-- Event date -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_date"
-        style="@style/scriba_expandable_item"
+        style="@style/scriba_action_item"
         android:clickable="true"
         >
         <TextView
@@ -162,7 +162,7 @@
         <ImageView
             android:id="@+id/date_exp_image"
             android:src="@drawable/go"
-            style="@style/scriba_expand_image"
+            style="@style/scriba_action_image"
           >
         </ImageView>
     </RelativeLayout>
@@ -170,7 +170,7 @@
     <!-- Event time -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/event_time"
-        style="@style/scriba_expandable_item"
+        style="@style/scriba_action_item"
         android:clickable="true"
         >
         <TextView
@@ -186,7 +186,7 @@
         <ImageView
             android:id="@+id/time_exp_image"
             android:src="@drawable/go"
-            style="@style/scriba_expand_image"
+            style="@style/scriba_action_image"
           >
         </ImageView>
     </RelativeLayout>

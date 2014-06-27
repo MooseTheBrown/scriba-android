@@ -43,6 +43,16 @@ public class EntryDetailsFragment extends Fragment {
 
     // interface, which must be implemented by all activities using this fragment
     public interface EntryDetailsActivityInterface {
+
+        // return values for callNumber()
+        public static final byte CALL_POSSIBLE = 0;
+        public static final byte CALL_IMPOSSIBLE = 1;
+
+        /* callNumber() should attempt to call given phone number.
+           If there's no phone app available, it should return
+           CALL_IMPOSSIBLE. Otherwise it should return CALL_POSSIBLE.
+         */
+        byte callNumber(String number);
         EntryType getEntryType();
         long getEntryId();
         void onEntryChange(EntryType newType, long newId);
@@ -124,6 +134,40 @@ public class EntryDetailsFragment extends Fragment {
             // get new item id using adapter and report entry change event to activity
             DataDescriptor item = _adapter.getItem(_pos);
             _activityInterface.onEntryChange(_handlerEntryType, item.id);
+        }
+    }
+
+    // PhoneItemHandler is responsible for handling phone icon clicks and
+    // hiding phone icon if the phone number is absent
+    private class PhoneItemHandler {
+
+        private int _phoneViewRes = -1;
+        private int _phoneIconRes = -1;
+        private String _phonenum = null;
+
+        public PhoneItemHandler(int phoneViewRes,
+                                int phoneIconRes,
+                                String phonenum) {
+            _phoneViewRes = phoneViewRes;
+            _phoneIconRes = phoneIconRes;
+            _phonenum = phonenum;
+
+            View phoneView = getActivity().findViewById(_phoneViewRes);
+            if (phonenum != null) {
+                phoneView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        _activityInterface.callNumber(_phonenum);
+                        // TODO: check return value and display
+                        // alert dialog if call is not possible
+                    }
+                });
+            }
+            else {
+                phoneView.setClickable(false);
+                View phoneIconView = getActivity().findViewById(_phoneIconRes);
+                phoneIconView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -249,6 +293,9 @@ public class EntryDetailsFragment extends Fragment {
 
         txt = (TextView)getActivity().findViewById(R.id.company_phonenum_text);
         txt.setText(_company.phonenum);
+        new PhoneItemHandler(R.id.company_phonenum,
+                             R.id.company_phonenum_button,
+                             _company.phonenum);
 
         txt = (TextView)getActivity().findViewById(R.id.company_email_text);
         txt.setText(_company.email);
@@ -555,9 +602,15 @@ public class EntryDetailsFragment extends Fragment {
 
         txt = (TextView)getActivity().findViewById(R.id.poc_mobilenum_text);
         txt.setText(_poc.mobilenum);
+        new PhoneItemHandler(R.id.poc_mobilenum,
+                             R.id.poc_mobilenum_button,
+                             _poc.mobilenum);
 
         txt = (TextView)getActivity().findViewById(R.id.poc_phonenum_text);
         txt.setText(_poc.phonenum);
+        new PhoneItemHandler(R.id.poc_phonenum,
+                             R.id.poc_phonenum_button,
+                             _poc.phonenum);
 
         txt = (TextView)getActivity().findViewById(R.id.poc_email_text);
         txt.setText(_poc.email);

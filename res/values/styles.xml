@@ -51,7 +51,7 @@
 
     <!-- Entry details item -->
     <style name="scriba_entry_item"
-      >
+        >
         <item name="android:background">@drawable/entry_item_bg</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">fill_parent</item>
@@ -61,7 +61,7 @@
 
     <!-- Entry delimiter -->
     <style name="scriba_entry_delim"
-      >
+        >
         <item name="android:background">@color/scriba_window_bg</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">fill_parent</item>
@@ -70,7 +70,7 @@
 
     <!-- Entry details item header -->
     <style name="scriba_entry_item_header"
-      >
+        >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">left</item>
@@ -95,17 +95,17 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <!-- Expandable item -->
-    <style name="scriba_expandable_item"
-      >
+    <!-- Action item -->
+    <style name="scriba_action_item"
+        >
         <item name="android:background">@drawable/entry_item_bg</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">10dp</item>
     </style>
 
-    <!-- Expandable item header text -->
-    <style name="scriba_expandable_header"
+    <!-- Action item header text -->
+    <style name="scriba_action_item_header"
         >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -113,8 +113,8 @@
         <item name="android:layout_alignParentLeft">true</item>
     </style>
 
-    <!-- Expandable item toggle image -->
-    <style name="scriba_expand_image"
+    <!-- Action item toggle image -->
+    <style name="scriba_action_image"
         >
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
