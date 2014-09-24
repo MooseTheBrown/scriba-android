@@ -39,16 +39,17 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
+import java.util.UUID;
 
 public class EntryListFragment extends ListFragment
                                implements LoaderManager.LoaderCallbacks<DataDescriptor[]>,
                                AbsListView.MultiChoiceModeListener {
 
     public interface ActivityInterface {
-        void onCompanyClicked(long id);
-        void onEventClicked(long id);
-        void onPOCClicked(long id);
-        void onProjectClicked(long id);
+        void onCompanyClicked(UUID id);
+        void onEventClicked(UUID id);
+        void onPOCClicked(UUID id);
+        void onProjectClicked(UUID id);
         EntryType getEntryType();
     }
     

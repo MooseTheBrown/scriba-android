@@ -36,6 +36,7 @@ import android.util.Log;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
 import android.content.Context;
+import java.util.UUID;
 
 public class EntryDetailsActivity extends Activity
                                   implements EntryDetailsFragment.EntryDetailsActivityInterface {
@@ -54,7 +55,7 @@ public class EntryDetailsActivity extends Activity
 
     // type and id of currently displayed entry
     private EntryType _entryType = EntryType.COMPANY;
-    private long _entryId = 0; 
+    private UUID _entryId = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,8 @@ public class EntryDetailsActivity extends Activity
             int typeCode = savedInstanceState.getInt(ENTRY_TYPE_INTENT_KEY, -1);
             if (typeCode != -1) {
                 setEntryType(typeCode);
-                _entryId = savedInstanceState.getLong(ENTRY_ID_INTENT_KEY, 0);
+                String entryIdString = savedInstanceState.getString(ENTRY_ID_INTENT_KEY, "");
+                _entryId = UUID.fromString(entryIdString);
             }
         }
         else {
@@ -75,7 +77,8 @@ public class EntryDetailsActivity extends Activity
             // get entry type
             setEntryType(intent.getIntExtra(ENTRY_TYPE_INTENT_KEY, EntryType.COMPANY.id()));
             // get entry id
-            _entryId = intent.getLongExtra(ENTRY_ID_INTENT_KEY, 0);
+            String entryIdString = intent.getStringExtra(ENTRY_ID_INTENT_KEY);
+            _entryId = UUID.fromString(entryIdString);
         }
 
         setContentView(R.layout.entry_details);
@@ -125,7 +128,7 @@ public class EntryDetailsActivity extends Activity
     public void onSaveInstanceState(Bundle outState) {
         // save current entry type and id
         outState.putInt(ENTRY_TYPE_INTENT_KEY, _entryType.id());
-        outState.putLong(ENTRY_ID_INTENT_KEY, _entryId);
+        outState.putString(ENTRY_ID_INTENT_KEY, _entryId.toString());
     }
 
     // EntryDetailsActivityInterface implementation
@@ -155,13 +158,13 @@ public class EntryDetailsActivity extends Activity
         return _entryType;
     }
 
-    public long getEntryId() {
+    public UUID getEntryId() {
         return _entryId;
     }
 
-    public void onFragmentResumed(EntryType type, long id) {
+    public void onFragmentResumed(EntryType type, UUID id) {
         Log.d("[Scriba]", "EntryDetailsActivity.onFragmentResumed, type=" + type +
-              ", id=" + id);
+              ", id=" + id.toString());
         // a framgment has been resumed
         // bring entry type and id in sync with currently displayed fragment
         _entryType = type;
@@ -171,9 +174,9 @@ public class EntryDetailsActivity extends Activity
 
     // this is called by EntryDetailsFragment each time new entry
     // has to be displayed
-    public void onEntryChange(EntryType newType, long newId) {
+    public void onEntryChange(EntryType newType, UUID newId) {
         Log.d("[Scriba]", "EntryDetailsActivity.onEntryChange(), type=" + newType +
-              ", id=" + newId);
+              ", id=" + newId.toString());
 
         if (getActivityType() == ACTIVITY_TYPE_EDIT) {
             // this should not happen

@@ -30,6 +30,7 @@ import android.widget.AdapterView;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
+import java.util.UUID;
 
 // Project spinner handler loads list of projects using loader, populates
 // spinner widget and reports selected project id
@@ -40,9 +41,9 @@ public class ProjectSpinnerHandler implements
     private Context _context = null;
     private LoaderManager _loaderManager = null;
     // selected project id
-    private long _selectedProjectId = 0;
+    private UUID _selectedProjectId = null;
     // company id used for POC filter
-    private long _companyId = -1;
+    private UUID _companyId = null;
     // adapter for project list
     private ArrayAdapter<DataDescriptor> _projectListAdapter = null;
     Spinner _spinner = null;
@@ -63,7 +64,7 @@ public class ProjectSpinnerHandler implements
 
             // if there's a company id set, get projects for selected
             // company only
-            if (_companyId != -1) {
+            if (_companyId != null) {
                 loader.setCompanySearch(_companyId);
             }
 
@@ -80,7 +81,7 @@ public class ProjectSpinnerHandler implements
         _projectListAdapter.clear();
         for (DataDescriptor item : data) {
             _projectListAdapter.add(item);
-            if (item.id == _selectedProjectId) {
+            if (item.id.equals(_selectedProjectId)) {
                 int pos = _projectListAdapter.getPosition(item);
                 _spinner.setSelection(pos);
             }
@@ -94,16 +95,16 @@ public class ProjectSpinnerHandler implements
 
     // load POC list from DB
     public void load(Spinner spinner) {
-        load(spinner, -1, -1);
+        load(spinner, null, null);
     }
 
     // load POC list from DB with company filter
-    public void load(Spinner spinner, long companyId) {
-        load(spinner, companyId, -1);
+    public void load(Spinner spinner, UUID companyId) {
+        load(spinner, companyId, null);
     }
 
     // load POC list from DB with company filter and set selection
-    public void load(Spinner spinner, long companyId, long selectedId) {
+    public void load(Spinner spinner, UUID companyId, UUID selectedId) {
         _companyId = companyId;
         _selectedProjectId = selectedId;
         _spinner = spinner;
@@ -121,11 +122,11 @@ public class ProjectSpinnerHandler implements
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        _selectedProjectId = 0;
+        _selectedProjectId = null;
     }
 
     // get id of currently selected person
-    public long getSelectedProjectId() {
+    public UUID getSelectedProjectId() {
         return _selectedProjectId;
     }
 }

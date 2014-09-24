@@ -38,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.AdapterView;
 import java.util.Date;
 import java.text.DateFormat;
+import java.util.UUID;
 
 public class EntryDetailsFragment extends Fragment {
 
@@ -54,9 +55,9 @@ public class EntryDetailsFragment extends Fragment {
          */
         byte callNumber(String number);
         EntryType getEntryType();
-        long getEntryId();
-        void onEntryChange(EntryType newType, long newId);
-        void onFragmentResumed(EntryType type, long id);
+        UUID getEntryId();
+        void onEntryChange(EntryType newType, UUID newId);
+        void onFragmentResumed(EntryType type, UUID id);
     }
 
     // LoaderCallbacks implementation
@@ -176,7 +177,7 @@ public class EntryDetailsFragment extends Fragment {
     // entry type
     private EntryType _entryType = EntryType.COMPANY;
     // entry id
-    private long _entryId = 0;
+    private UUID _entryId = null;
 
     // currently loaded entry data
     private Company _company = null;
@@ -273,9 +274,9 @@ public class EntryDetailsFragment extends Fragment {
         }
 
         // verify that company id is the same as requested
-        if (_entryId != _company.id) {
-            Log.e("[Scriba]", "Requested company details for id=" + _entryId + 
-                              ", but received details for id=" + _company.id);
+        if (!_entryId.equals(_company.id)) {
+            Log.e("[Scriba]", "Requested company details for id=" + _entryId.toString() +
+                              ", but received details for id=" + _company.id.toString());
             return;
         }
 
@@ -442,9 +443,9 @@ public class EntryDetailsFragment extends Fragment {
         }
 
         // verify that event id is the same as requested
-        if (_entryId != _event.id) {
-            Log.e("[Scriba]", "Requested event details for id=" + _entryId + 
-                              ", but received details for id=" + _event.id);
+        if (!_entryId.equals(_event.id)) {
+            Log.e("[Scriba]", "Requested event details for id=" + _entryId.toString() +
+                              ", but received details for id=" + _event.id.toString());
             return;
         }
 
@@ -538,9 +539,9 @@ public class EntryDetailsFragment extends Fragment {
         }
 
         // verify that project id is the same as requested
-        if (_entryId != _project.id) {
-            Log.e("[Scriba]", "Requested project details for id=" + _entryId + 
-                              ", but received details for id=" + _project.id);
+        if (!_entryId.equals(_project.id)) {
+            Log.e("[Scriba]", "Requested project details for id=" + _entryId.toString() +
+                              ", but received details for id=" + _project.id.toString());
             return;
         }
 
@@ -585,9 +586,9 @@ public class EntryDetailsFragment extends Fragment {
         }
 
         // verify that POC id is the same as requested
-        if (_entryId != _poc.id) {
-            Log.e("[Scriba]", "Requested poc details for id=" + _entryId + 
-                              ", but received details for id=" + _poc.id);
+        if (!_entryId.equals(_poc.id)) {
+            Log.e("[Scriba]", "Requested poc details for id=" + _entryId.toString() +
+                              ", but received details for id=" + _poc.id.toString());
             return;
         }
 

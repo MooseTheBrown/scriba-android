@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.util.Log;
+import java.util.UUID;
 
 public class EventListAdapter extends EntryListAdapter {
 
@@ -73,7 +74,7 @@ public class EventListAdapter extends EntryListAdapter {
     }
 
     // get event state by event id
-    private byte getEventState(long eventId) {
+    private byte getEventState(UUID eventId) {
         ScribaDBManager.useDB(_context);
         Event event = ScribaDB.getEvent(eventId);
         ScribaDBManager.releaseDB();

@@ -24,6 +24,7 @@ import android.util.Log;
 import android.content.AsyncTaskLoader;
 import org.scribacrm.libscriba.*;
 import android.content.Context;
+import java.util.UUID;
 
 public class POCListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
@@ -40,7 +41,7 @@ public class POCListLoader extends AsyncTaskLoader<DataDescriptor []> {
     private String _secondname = null;
     private String _lastname = null;
     private String _searchParam = null;
-    private long _companyId = 0;
+    private UUID _companyId = null;
 
     public POCListLoader(Context context) {
         super(context);
@@ -55,7 +56,7 @@ public class POCListLoader extends AsyncTaskLoader<DataDescriptor []> {
     }
 
     // search by company
-    public void setCompanySearch(long companyId) {
+    public void setCompanySearch(UUID companyId) {
         _filterType = FilterType.COMPANY;
         _companyId = companyId;
     }

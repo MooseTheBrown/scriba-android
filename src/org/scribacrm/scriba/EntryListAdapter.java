@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.database.DataSetObserver;
 import android.widget.CheckedTextView;
+import java.util.UUID;
 
 // adapter for scriba entry lists
 public class EntryListAdapter implements ListAdapter {
@@ -82,10 +83,8 @@ public class EntryListAdapter implements ListAdapter {
 
     @Override
     public long getItemId(int position) {
-        // we rely on libscriba ids, assuming they are unique and
-        // the same id always refers to the same entry
         DataDescriptor entry = _entries.get(position);
-        return entry.id;
+        return entry.id.hashCode();
     }
 
     @Override

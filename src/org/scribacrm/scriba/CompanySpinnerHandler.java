@@ -30,6 +30,7 @@ import android.widget.AdapterView;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
+import java.util.UUID;
 
 // company spinner handler loads company list using loader, populates given
 // spinner widget and reports selected company id
@@ -38,14 +39,14 @@ public class CompanySpinnerHandler implements
                                    AdapterView.OnItemSelectedListener {
 
     public interface OnSelectedListener {
-        void onCompanySelected(long id);
+        void onCompanySelected(UUID id);
     }
 
     private Context _context = null;
     private LoaderManager _loaderManager = null;
     Spinner _spinner = null;
     // currently selected company
-    private long _companyId = -1;
+    private UUID _companyId = null;
     // company list adapter
     private ArrayAdapter<DataDescriptor> _companyListAdapter = null;
     private OnSelectedListener _listener = null;
@@ -80,7 +81,7 @@ public class CompanySpinnerHandler implements
         DataDescriptor selectedItem = null;
         for (DataDescriptor item : data) {
             _companyListAdapter.add(item);
-            if (item.id == _companyId) {
+            if (item.id.equals(_companyId)) {
                 // remember company, which has to be selected
                 selectedItem = item;
             }
@@ -96,7 +97,7 @@ public class CompanySpinnerHandler implements
             }
             else {
                 // there are no companies at all
-                _companyId = -1;
+                _companyId = null;
             }
         }
 
@@ -113,12 +114,12 @@ public class CompanySpinnerHandler implements
 
     // load company list from DB into spinner widget
     public void load(Spinner spinner) {
-        load(spinner, -1);
+        load(spinner, null);
     }
 
     // load company list from DB into spinner widget and set selection
     // to company with selectedId
-    public void load(Spinner spinner, long selectedId) {
+    public void load(Spinner spinner, UUID selectedId) {
         _companyId = selectedId;
         _spinner = spinner;
         spinner.setAdapter(_companyListAdapter);
@@ -129,22 +130,22 @@ public class CompanySpinnerHandler implements
     // AdapterView.onItemSelectedListener implementation
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        long oldId = _companyId;
+        UUID oldId = _companyId;
         DataDescriptor descr = _companyListAdapter.getItem(pos);
         _companyId = descr.id;
         // only notify listener if selection has changed
-        if ((oldId != _companyId) && (_listener != null)) {
+        if ((!oldId.equals(_companyId)) && (_listener != null)) {
             _listener.onCompanySelected(_companyId);
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        _companyId = -1;
+        _companyId = null;
     }
 
     // get id of currently selected company
-    public long getSelectedCompanyId() {
+    public UUID getSelectedCompanyId() {
         return _companyId;
     }
 }

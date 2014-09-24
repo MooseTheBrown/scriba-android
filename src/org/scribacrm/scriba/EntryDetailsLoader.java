@@ -24,19 +24,21 @@ import android.content.AsyncTaskLoader;
 import org.scribacrm.libscriba.*;
 import android.content.Context;
 import android.util.Log;
+import java.util.UUID;
 
 public class EntryDetailsLoader<EntryType> extends AsyncTaskLoader<EntryType> {
 
-    private long _entryId = 0;
+    private UUID _entryId = null;
     private Class<EntryType> _cls;
 
-    public EntryDetailsLoader(Context context, long entryId, Class<EntryType> cls) {
+    public EntryDetailsLoader(Context context, UUID entryId, Class<EntryType> cls) {
         super(context);
 
         _entryId = entryId;
         _cls = cls;
 
-        Log.d("[Scriba]", "Initialized EntryDetailsLoader for id=" + _entryId + ", cls=" + _cls);
+        Log.d("[Scriba]", "Initialized EntryDetailsLoader for id=" + _entryId.toString() +
+              ", cls=" + _cls);
     }
 
     @Override

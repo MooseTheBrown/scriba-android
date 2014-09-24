@@ -31,6 +31,7 @@ import android.widget.Toast;
 import android.util.Log;
 import android.app.Fragment;
 import android.widget.ArrayAdapter;
+import java.util.UUID;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
@@ -136,19 +137,19 @@ public class EntryListActivity extends Activity
     }
 
     // EntryListFragment.ActivityInterface implementation
-    public void onCompanyClicked(long id) {
+    public void onCompanyClicked(UUID id) {
         onEntryClicked(id);
     }
 
-    public void onEventClicked(long id) {
+    public void onEventClicked(UUID id) {
         onEntryClicked(id);
     }
 
-    public void onPOCClicked(long id) {
+    public void onPOCClicked(UUID id) {
         onEntryClicked(id);
     }
 
-    public void onProjectClicked(long id) {
+    public void onProjectClicked(UUID id) {
         onEntryClicked(id);
     }
 
@@ -210,13 +211,13 @@ public class EntryListActivity extends Activity
     }
 
     // launch EntryDetailsActivity
-    private void startEntryDetailsActivity(long id) {
+    private void startEntryDetailsActivity(UUID id) {
         Intent intent = new Intent(this, EntryDetailsActivity.class);
 
         // set entry type
         intent.putExtra(EntryDetailsActivity.ENTRY_TYPE_INTENT_KEY, _entryType.id());
         // set entry id
-        intent.putExtra(EntryDetailsActivity.ENTRY_ID_INTENT_KEY, id);
+        intent.putExtra(EntryDetailsActivity.ENTRY_ID_INTENT_KEY, id.toString());
         startActivityForResult(intent, REQUEST_VIEW_ENTRY);
     }
 
@@ -240,7 +241,7 @@ public class EntryListActivity extends Activity
     }
 
     // common response to entry click event from EntryListFragment
-    private void onEntryClicked(long id) {
+    private void onEntryClicked(UUID id) {
         if (getScreenType() == SCREEN_TYPE_SMALL) {
             // we're on a small screen device,
             // launch separate activity for entry details

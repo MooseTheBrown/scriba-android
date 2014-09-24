@@ -37,6 +37,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import java.util.Date;
 import java.text.DateFormat;
+import java.util.UUID;
 
 public class EditEntryFragment extends Fragment
                                implements CompanySpinnerHandler.OnSelectedListener,
@@ -146,7 +147,7 @@ public class EditEntryFragment extends Fragment
 
     // CompanySpinnerHandler.OnSelectedListener implementation
     @Override
-    public void onCompanySelected(long companyId) {
+    public void onCompanySelected(UUID companyId) {
         // only for event editor
         if (_event != null) {
             // populate poc spinner with people for currently selected company
@@ -344,9 +345,9 @@ public class EditEntryFragment extends Fragment
         txt = (EditText)getActivity().findViewById(R.id.event_outcome_text);
         String outcome = txt.getText().toString();
 
-        long companyId = _companySpinnerHandler.getSelectedCompanyId();
-        long pocId = _pocSpinnerHandler.getSelectedPOCId();
-        long projectId = _projectSpinnerHandler.getSelectedProjectId();
+        UUID companyId = _companySpinnerHandler.getSelectedCompanyId();
+        UUID pocId = _pocSpinnerHandler.getSelectedPOCId();
+        UUID projectId = _projectSpinnerHandler.getSelectedProjectId();
         byte type = _eventTypeSpinnerHandler.getSelectedType();
         byte state = _eventStateSpinnerHandler.getSelectedState();
         long timestamp = _eventDate.getTime();
@@ -366,7 +367,7 @@ public class EditEntryFragment extends Fragment
         txt = (EditText)getActivity().findViewById(R.id.project_descr_text);
         String descr = txt.getText().toString();
 
-        long selectedCompanyId = _companySpinnerHandler.getSelectedCompanyId();
+        UUID selectedCompanyId = _companySpinnerHandler.getSelectedCompanyId();
         byte selectedState = _projectStateSpinnerHandler.getSelectedState();
 
         Project project = new Project(_project.id, title, descr,
@@ -400,7 +401,7 @@ public class EditEntryFragment extends Fragment
         txt = (EditText)getActivity().findViewById(R.id.poc_position_text);
         String position = txt.getText().toString();
 
-        long selectedCompanyId = _companySpinnerHandler.getSelectedCompanyId();
+        UUID selectedCompanyId = _companySpinnerHandler.getSelectedCompanyId();
 
         POC poc = new POC(_poc.id, firstname, secondname, lastname, mobilenum,
                           phonenum, email, position, selectedCompanyId);

@@ -39,6 +39,7 @@ import android.view.View;
 import java.util.Date;
 import java.text.DateFormat;
 import android.widget.TextView;
+import java.util.UUID;
 
 public class AddEntryActivity extends Activity
                               implements CompanySpinnerHandler.OnSelectedListener,
@@ -139,7 +140,7 @@ public class AddEntryActivity extends Activity
 
     // company spinner handler calls this when company selection changes
     @Override
-    public void onCompanySelected(long companyId) {
+    public void onCompanySelected(UUID companyId) {
         // if we are adding new event, we need to update POC and project spinners
         // with people and projects for currently selected company
         if (_entryType == EntryType.EVENT) {
@@ -240,7 +241,7 @@ public class AddEntryActivity extends Activity
         txt = (EditText)findViewById(R.id.poc_position_text);
         String position = txt.getText().toString();
 
-        long companyId = _companySpinnerHandler.getSelectedCompanyId();
+        UUID companyId = _companySpinnerHandler.getSelectedCompanyId();
 
         // add new POC to the database
         ScribaDBManager.useDB(this);
@@ -257,7 +258,7 @@ public class AddEntryActivity extends Activity
         txt = (EditText)findViewById(R.id.project_descr_text);
         String descr = txt.getText().toString();
 
-        long companyId = _companySpinnerHandler.getSelectedCompanyId();
+        UUID companyId = _companySpinnerHandler.getSelectedCompanyId();
         byte state = _projectStateSpinnerHandler.getSelectedState();
 
         // add new project to the database
@@ -271,9 +272,9 @@ public class AddEntryActivity extends Activity
         EditText txt = (EditText)findViewById(R.id.event_descr_text);
         String descr = txt.getText().toString();
 
-        long companyId = _companySpinnerHandler.getSelectedCompanyId();
-        long pocId = _pocSpinnerHandler.getSelectedPOCId();
-        long projectId = _projectSpinnerHandler.getSelectedProjectId();
+        UUID companyId = _companySpinnerHandler.getSelectedCompanyId();
+        UUID pocId = _pocSpinnerHandler.getSelectedPOCId();
+        UUID projectId = _projectSpinnerHandler.getSelectedProjectId();
         byte type = _eventTypeSpinnerHandler.getSelectedType();
         byte state = _eventStateSpinnerHandler.getSelectedState();
         long timestamp = _eventDate.getTime();
@@ -304,7 +305,7 @@ public class AddEntryActivity extends Activity
         setContentView(R.layout.add_poc);
 
         // setup company spinner
-        _companySpinnerHandler = new CompanySpinnerHandler(this, getLoaderManager(), null);
+        _companySpinnerHandler = new CompanySpinnerHandler(this, getLoaderManager(), this);
         Spinner spinner = (Spinner)findViewById(R.id.poc_company_spinner);
         _companySpinnerHandler.load(spinner);
     }
@@ -318,7 +319,7 @@ public class AddEntryActivity extends Activity
         _projectStateSpinnerHandler.populateSpinner(projectStateSpinner);
 
         // setup company spinner
-        _companySpinnerHandler = new CompanySpinnerHandler(this, getLoaderManager(), null);
+        _companySpinnerHandler = new CompanySpinnerHandler(this, getLoaderManager(), this);
         Spinner companySpinner = (Spinner)findViewById(R.id.project_company_spinner);
         _companySpinnerHandler.load(companySpinner);
     }

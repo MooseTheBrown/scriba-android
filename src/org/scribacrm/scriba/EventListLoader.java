@@ -24,6 +24,7 @@ import android.util.Log;
 import android.content.AsyncTaskLoader;
 import org.scribacrm.libscriba.*;
 import android.content.Context;
+import java.util.UUID;
 
 public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
@@ -35,26 +36,26 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
     }
 
     private FilterType _filterType = FilterType.ALL;
-    private long _searchId = 0;
+    private UUID _searchId = null;
 
     public EventListLoader(Context context) {
         super(context);
     }
 
     // search by company
-    public void setCompanySearch(long companyId) {
+    public void setCompanySearch(UUID companyId) {
         _filterType = FilterType.COMPANY;
         _searchId = companyId;
     }
 
     // search by POC
-    public void setPOCSearch(long pocId) {
+    public void setPOCSearch(UUID pocId) {
         _filterType = FilterType.POC;
         _searchId = pocId;
     }
 
     // search by project
-    public void setProjectSearch(long projectId) {
+    public void setProjectSearch(UUID projectId) {
         _filterType = FilterType.PROJECT;
         _searchId = projectId;
     }
