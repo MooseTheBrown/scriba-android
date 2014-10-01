@@ -36,6 +36,10 @@ public class DataDescriptorBundle {
 
     // serialize array of DataDescriptors to Bundle
     public static Bundle toBundle(DataDescriptor[] array) {
+        if (array == null) {
+            return null;
+        }
+
         String[] UUIDs = new String[array.length];
 
         for (int i = 0; i < array.length; i++) {
@@ -50,6 +54,10 @@ public class DataDescriptorBundle {
 
     // restore array of DataDescriptors from Bundle
     public static DataDescriptor[] fromBundle(Bundle bundle) {
+        if (bundle == null) {
+            return null;
+        }
+
         String[] UUIDs = bundle.getStringArray(BUNDLE_KEY);
         DataDescriptor[] array = new DataDescriptor[UUIDs.length];
         ArrayList<DataDescriptor> arrayList = new ArrayList<DataDescriptor>(UUIDs.length);

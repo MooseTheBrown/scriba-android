@@ -27,7 +27,9 @@ import android.os.Bundle;
 import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import android.content.Context;
 
 public class SerializationService extends IntentService {
 
@@ -66,6 +68,61 @@ public class SerializationService extends IntentService {
     public static final String REQUEST_DATA_PROJECTS = "rq_projects";
     public static final String REQUEST_DATA_MERGESTRAT = "rq_mergestrat";
 
+    // create valid serialize request for this service
+    public static Intent serializeRequest(Context context,
+                                          DataDescriptor[] companies,
+                                          DataDescriptor[] events,
+                                          DataDescriptor[] people,
+                                          DataDescriptor[] projects,
+                                          String filename) {
+        if (context == null) {
+            return null;
+        }
+
+        Intent intent = new Intent(context, SerializationService.class);
+
+        intent.putExtra(REQUEST_TYPE_KEY, REQUEST_TYPE_SERIALIZE);
+
+        Bundle company_bundle = DataDescriptorBundle.toBundle(companies);
+        Bundle event_bundle = DataDescriptorBundle.toBundle(events);
+        Bundle poc_bundle = DataDescriptorBundle.toBundle(people);
+        Bundle project_bundle = DataDescriptorBundle.toBundle(projects);
+
+        Bundle rqData = new Bundle();
+        rqData.putBundle(REQUEST_DATA_COMPANIES, company_bundle);
+        rqData.putBundle(REQUEST_DATA_EVENTS, event_bundle);
+        rqData.putBundle(REQUEST_DATA_PEOPLE, poc_bundle);
+        rqData.putBundle(REQUEST_DATA_PROJECTS, project_bundle);
+
+        intent.putExtra(REQUEST_DATA_KEY, rqData);
+
+        intent.putExtra(REQUEST_FILE_KEY, filename);
+
+        return intent;
+    }
+
+    // create valid deserialize request for this service
+    public static Intent deserializeRequest(Context context,
+                                            byte mergeStrat,
+                                            String filename) {
+        if (context == null) {
+            return null;
+        }
+
+        Intent intent = new Intent(context, SerializationService.class);
+
+        intent.putExtra(REQUEST_TYPE_KEY, REQUEST_TYPE_DESERIALIZE);
+
+        Bundle rqData = new Bundle();
+        rqData.putByte(REQUEST_DATA_MERGESTRAT, mergeStrat);
+
+        intent.putExtra(REQUEST_DATA_KEY, rqData);
+
+        intent.putExtra(REQUEST_FILE_KEY, filename);
+
+        return intent;
+    }
+
     public SerializationService() {
         super("SerializationThread");
     }
@@ -92,7 +149,7 @@ public class SerializationService extends IntentService {
         if ((rqData == null) || (filename == null) ||
             (rqType < REQUEST_TYPE_SERIALIZE) || (rqType > REQUEST_TYPE_DESERIALIZE)) {
             // invalid request
-            Log.e("[Scriba]", "SerializationService received invalid request");
+            Log.e("[Scriba]", "SerializationService received invalid serialize request");
             return;
         }
 
@@ -129,6 +186,28 @@ public class SerializationService extends IntentService {
         }
     }
 
-    private void deserialize(Bundle data, String filename) {
+    private void deserialize(Bundle rqData, String filename) {
+        byte mergeStrat = rqData.getByte(REQUEST_DATA_MERGESTRAT,
+                                         ScribaDB.MergeStrategy.LOCAL_OVERRIDE);
+
+        if ((mergeStrat < ScribaDB.MergeStrategy.LOCAL_OVERRIDE) ||
+            (mergeStrat > ScribaDB.MergeStrategy.MANUAL)) {
+            // invalid request
+            Log.e("[Scriba]", "SerializationService received invalid deserialize request");
+            return;
+        }
+
+        File file = new File(filename);
+        long filesize = file.length();
+        byte[] data = new byte[(int)filesize];
+        try {
+            FileInputStream stream = new FileInputStream(file);
+            stream.read(data, 0, (int)filesize);
+            stream.close();
+            ScribaDB.deserialize(data, mergeStrat);
+        }
+        catch (IOException e) {
+            // TODO: somehow indicate to user that serialization has failed
+        }
     }
 }
