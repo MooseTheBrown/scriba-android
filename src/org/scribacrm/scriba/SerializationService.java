@@ -30,6 +30,9 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import android.content.Context;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 
 public class SerializationService extends IntentService {
 
@@ -67,6 +70,9 @@ public class SerializationService extends IntentService {
     public static final String REQUEST_DATA_PEOPLE = "rq_people";
     public static final String REQUEST_DATA_PROJECTS = "rq_projects";
     public static final String REQUEST_DATA_MERGESTRAT = "rq_mergestrat";
+
+    // notification ID
+    private static final int NOTIFICATION_ID = 0;
 
     // create valid serialize request for this service
     public static Intent serializeRequest(Context context,
@@ -180,9 +186,10 @@ public class SerializationService extends IntentService {
             FileOutputStream stream = new FileOutputStream(file);
             stream.write(data, 0, data.length);
             stream.close();
+            notifyCompleted(R.string.notify_serialize_ok);
         }
         catch (IOException e) {
-            // TODO: somehow indicate to user that serialization has failed
+            notifyCompleted(R.string.notify_serialize_failed);
         }
     }
 
@@ -205,9 +212,29 @@ public class SerializationService extends IntentService {
             stream.read(data, 0, (int)filesize);
             stream.close();
             ScribaDB.deserialize(data, mergeStrat);
+            notifyCompleted(R.string.notify_deserialize_ok);
         }
         catch (IOException e) {
-            // TODO: somehow indicate to user that serialization has failed
+            notifyCompleted(R.string.notify_deserialize_failed);
         }
+    }
+
+    // show notification indicating completed data sync (either successful or failed)
+    private void notifyCompleted(int msgId) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle(getString(R.string.notify_file_sync_title));
+        builder.setContentText(getString(msgId));
+        builder.setSmallIcon(R.drawable.scriba_icon);
+        Intent intent = new Intent(this, EntryListActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                                          0,
+                                          intent,
+                                          PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+        Notification notification = builder.build();
+
+        NotificationManager nm = (NotificationManager)
+                                 getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(NOTIFICATION_ID, notification);
     }
 }

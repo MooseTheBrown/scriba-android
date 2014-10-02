@@ -106,4 +106,10 @@
     <string name="event_state_scheduled">Scheduled</string>
     <string name="event_state_cancelled">Cancelled</string>
     <string name="event_state_completed">Completed</string>
+    <!-- Notifications -->
+    <string name="notify_file_sync_title">File synchronization</string>
+    <string name="notify_serialize_ok">Data exported</string>
+    <string name="notify_serialize_failed">Data export failed</string>
+    <string name="notify_deserialize_ok">Data imported</string>
+    <string name="notify_deserialize_failed">Data import failed</string>
 </resources>
