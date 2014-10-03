@@ -189,6 +189,7 @@ public class SerializationService extends IntentService {
             notifyCompleted(R.string.notify_serialize_ok);
         }
         catch (IOException e) {
+            Log.d("[Scriba]", "SerializationService caught IOException: " + e.getMessage());
             notifyCompleted(R.string.notify_serialize_failed);
         }
     }
@@ -215,6 +216,7 @@ public class SerializationService extends IntentService {
             notifyCompleted(R.string.notify_deserialize_ok);
         }
         catch (IOException e) {
+            Log.d("[Scriba]", "SerializationService caught IOException: " + e.getMessage());
             notifyCompleted(R.string.notify_deserialize_failed);
         }
     }
@@ -231,6 +233,7 @@ public class SerializationService extends IntentService {
                                           intent,
                                           PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
         Notification notification = builder.build();
 
         NotificationManager nm = (NotificationManager)

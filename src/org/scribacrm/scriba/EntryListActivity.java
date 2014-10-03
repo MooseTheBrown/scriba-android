@@ -20,6 +20,7 @@
 
 package org.scribacrm.scriba;
 
+import org.scribacrm.libscriba.*;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -32,6 +33,12 @@ import android.util.Log;
 import android.app.Fragment;
 import android.widget.ArrayAdapter;
 import java.util.UUID;
+import java.io.File;
+import android.os.Environment;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
@@ -52,6 +59,9 @@ public class EntryListActivity extends Activity
 
     // saved state Bundle keys
     private static final String ENTRY_TYPE_KEY = "EntryType";
+
+    // directory on external storage to store backups to
+    private static final String BACKUP_DIR = "/scriba_backup/";
 
     // type of currently displayed items
     private EntryType _entryType = EntryType.COMPANY;
@@ -130,6 +140,9 @@ public class EntryListActivity extends Activity
         switch (item.getItemId()) {
             case R.id.action_add_record:
                 startAddEntryActivity();
+                return true;
+            case R.id.action_export_all:
+                exportAllRecords();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -258,5 +271,60 @@ public class EntryListActivity extends Activity
         else if (typeId == EntryType.EVENT.id()) { _entryType = EntryType.EVENT; }
         else if (typeId == EntryType.POC.id()) { _entryType = EntryType.POC; }
         else if (typeId == EntryType.PROJECT.id()) { _entryType = EntryType.PROJECT; }
+    }
+
+    // launch SerializationService to export all data to a file
+    private void exportAllRecords() {
+        // get descriptors for all entries
+        ScribaDBManager.useDB(this);
+        DataDescriptor[] companies = ScribaDB.getAllCompanies();
+        DataDescriptor[] events = ScribaDB.getAllEvents();
+        DataDescriptor[] people = ScribaDB.getAllPeople();
+        DataDescriptor[] projects = ScribaDB.getAllProjects();
+        ScribaDBManager.releaseDB();
+
+        // create backup file
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state)) {
+            // storage not available, display alert
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setMessage(R.string.alert_backup_no_storage);
+            alertBuilder.setNeutralButton(R.string.alert_ok,
+                                          new DialogInterface.OnClickListener() {
+                                              public void onClick(DialogInterface dialog,
+                                                                  int id) {
+                                                  // do nothing
+                                              }
+                                          });
+            alertBuilder.create().show();
+            return;
+        }
+        File storageDir = Environment.getExternalStorageDirectory();
+        String path = storageDir.getAbsolutePath();
+        path += BACKUP_DIR;
+        // create backup dir if it doesn't exist
+        File backupDir = new File(path);
+        backupDir.mkdir();
+        path += generateBakFileName();
+
+        // save data in background using serialization service
+        Intent request = SerializationService.serializeRequest(this,
+                             companies,
+                             events,
+                             people,
+                             projects,
+                             path);
+        startService(request);
+    }
+
+    // generate backup file name based on current time
+    private String generateBakFileName() {
+        String filename = "scriba-";
+        // append current timestamp
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-kkmmss");
+        filename += sdf.format(new Date());
+        filename += ".dat";
+
+        return filename;
     }
 }

@@ -64,6 +64,8 @@
     <string name="event_time_title">Time:</string>
     <!-- Actions -->
     <string name="add_record">Add record</string>
+    <string name="export_all_data">Export all records</string>
+    <string name="import_data">Import records</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
@@ -112,4 +114,7 @@
     <string name="notify_serialize_failed">Data export failed</string>
     <string name="notify_deserialize_ok">Data imported</string>
     <string name="notify_deserialize_failed">Data import failed</string>
+    <!-- Alerts -->
+    <string name="alert_backup_no_storage">External storage not available, backup aborted</string>
+    <string name="alert_ok">OK</string>
 </resources>
