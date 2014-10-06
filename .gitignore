@@ -4,7 +4,7 @@ jni/*
 # generated stuff
 bin/*
 gen/*
-libs/*
+libs/armeabi/*
 obj/*
 # libscriba code automatically imported to scriba-android
 src/org/scribacrm/libscriba/*
