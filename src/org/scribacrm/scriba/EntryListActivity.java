@@ -202,8 +202,10 @@ public class EntryListActivity extends Activity
             }
         }
         else if (requestCode == REQUEST_CHOOSE_FILE) {
-            // user has selected a file to import data from
-            importRecords(data.getData().getPath());
+            if (data != null) {
+                // user has selected a file to import data from
+                importRecords(data.getData().getPath());
+            }
         }
     }
 

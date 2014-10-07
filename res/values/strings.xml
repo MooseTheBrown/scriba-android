@@ -64,8 +64,8 @@
     <string name="event_time_title">Time:</string>
     <!-- Actions -->
     <string name="add_record">Add record</string>
-    <string name="export_all_data">Export all records</string>
-    <string name="import_data">Import records</string>
+    <string name="export_all_data">Export</string>
+    <string name="import_data">Import</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
