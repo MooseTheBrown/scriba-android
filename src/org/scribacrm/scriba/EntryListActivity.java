@@ -39,6 +39,9 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import java.util.List;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
@@ -47,6 +50,7 @@ public class EntryListActivity extends Activity
     // request codes for starting different activities
     public static final int REQUEST_ADD_ENTRY = 0;
     public static final int REQUEST_VIEW_ENTRY = 1;
+    public static final int REQUEST_CHOOSE_FILE = 2;
 
     // supported screen types
     private static final byte SCREEN_TYPE_SMALL = 0;
@@ -75,6 +79,9 @@ public class EntryListActivity extends Activity
     private String _entryTypeProjectStr = null;
     private String _entryTypePOCStr = null;
 
+    // broadcast receiver for deserialize completed event
+    private SerializationBroadcast.DeserializeReceiver _deserializeReceiver = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +89,7 @@ public class EntryListActivity extends Activity
         _entryTypeAdapter = ArrayAdapter.createFromResource(this,
                             R.array.entry_type_list,
                             android.R.layout.simple_spinner_dropdown_item);
+        _deserializeReceiver = new SerializationBroadcast.DeserializeReceiver(this);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         getActionBar().setListNavigationCallbacks(_entryTypeAdapter, this);
 
@@ -128,6 +136,18 @@ public class EntryListActivity extends Activity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        SerializationBroadcast.registerForDeserialization(this, _deserializeReceiver);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SerializationBroadcast.unregisterReceiver(this, _deserializeReceiver);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.entry_list_actions, menu);
@@ -143,6 +163,9 @@ public class EntryListActivity extends Activity
                 return true;
             case R.id.action_export_all:
                 exportAllRecords();
+                return true;
+            case R.id.action_import:
+                startFileSelection();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -177,6 +200,10 @@ public class EntryListActivity extends Activity
                 Toast toast = Toast.makeText(this, R.string.entry_added, Toast.LENGTH_SHORT);
                 toast.show();
             }
+        }
+        else if (requestCode == REQUEST_CHOOSE_FILE) {
+            // user has selected a file to import data from
+            importRecords(data.getData().getPath());
         }
     }
 
@@ -232,6 +259,34 @@ public class EntryListActivity extends Activity
         // set entry id
         intent.putExtra(EntryDetailsActivity.ENTRY_ID_INTENT_KEY, id.toString());
         startActivityForResult(intent, REQUEST_VIEW_ENTRY);
+    }
+
+    // launch file selection activity (whatever there is in the system)
+    private void startFileSelection() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("file/*");
+
+        // verify that there is some app, which is able to handle
+        // file selection
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> list = pm.queryIntentActivities(intent,
+                                    PackageManager.MATCH_DEFAULT_ONLY);
+        if (list.isEmpty()) {
+            // no application can select a file
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setMessage(R.string.alert_no_file_manager);
+            alertBuilder.setNeutralButton(R.string.alert_ok,
+                                          new DialogInterface.OnClickListener() {
+                                              public void onClick(DialogInterface dialog,
+                                                                  int id) {
+                                                  // do nothing
+                                              }
+                                          });
+            alertBuilder.create().show();
+            return;
+        }
+
+        startActivityForResult(intent, REQUEST_CHOOSE_FILE);
     }
 
     // determine current screen type
@@ -314,6 +369,13 @@ public class EntryListActivity extends Activity
                              people,
                              projects,
                              path);
+        startService(request);
+    }
+
+    private void importRecords(String filename) {
+        Intent request = SerializationService.deserializeRequest(this,
+                             ScribaDB.MergeStrategy.REMOTE_OVERRIDE,
+                             filename);
         startService(request);
     }
 

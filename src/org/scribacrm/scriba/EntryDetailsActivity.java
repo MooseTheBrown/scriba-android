@@ -57,9 +57,14 @@ public class EntryDetailsActivity extends Activity
     private EntryType _entryType = EntryType.COMPANY;
     private UUID _entryId = null;
 
+    // broadcast receiver for deserialize completed event
+    private SerializationBroadcast.DeserializeReceiver _deserializeReceiver = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        _deserializeReceiver = new SerializationBroadcast.DeserializeReceiver(this);
 
         // try to get entry type and id from saved state first
         if (savedInstanceState != null) {
@@ -91,6 +96,18 @@ public class EntryDetailsActivity extends Activity
         transaction.commit();
 
         setActionBarTitle();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SerializationBroadcast.registerForDeserialization(this, _deserializeReceiver);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SerializationBroadcast.unregisterReceiver(this, _deserializeReceiver);
     }
 
     @Override

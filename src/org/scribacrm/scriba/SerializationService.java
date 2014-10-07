@@ -214,6 +214,9 @@ public class SerializationService extends IntentService {
             stream.close();
             ScribaDB.deserialize(data, mergeStrat);
             notifyCompleted(R.string.notify_deserialize_ok);
+            // notify activities that are interested that data has been
+            // imported
+            SerializationBroadcast.sendDeserializationBroadcast(this);
         }
         catch (IOException e) {
             Log.d("[Scriba]", "SerializationService caught IOException: " + e.getMessage());

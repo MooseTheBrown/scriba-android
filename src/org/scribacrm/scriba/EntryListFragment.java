@@ -101,7 +101,7 @@ public class EntryListFragment extends ListFragment
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(this);
 
-        loadData(false);
+        loadData(true);
     }
 
     @Override

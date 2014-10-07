@@ -116,5 +116,6 @@
     <string name="notify_deserialize_failed">Data import failed</string>
     <!-- Alerts -->
     <string name="alert_backup_no_storage">External storage not available, backup aborted</string>
+    <string name="alert_no_file_manager">No file manager found, please install one</string>
     <string name="alert_ok">OK</string>
 </resources>
