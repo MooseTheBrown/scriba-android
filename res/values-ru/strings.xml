@@ -65,6 +65,7 @@
     <!-- Actions -->
     <string name="add_record">Добавить запись</string>
     <string name="export_all_data">Экспорт</string>
+    <string name="open_backup_dir">Экспортированные данные</string>
     <string name="import_data">Импорт</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>

@@ -42,6 +42,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import java.util.List;
+import android.net.Uri;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
@@ -163,6 +164,9 @@ public class EntryListActivity extends Activity
                 return true;
             case R.id.action_export_all:
                 exportAllRecords();
+                return true;
+            case R.id.action_open_backup_dir:
+                openBackupDir();
                 return true;
             case R.id.action_import:
                 startFileSelection();
@@ -390,5 +394,38 @@ public class EntryListActivity extends Activity
         filename += ".dat";
 
         return filename;
+    }
+
+    // view backup directory in external file manager
+    private void openBackupDir() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        File storageDir = Environment.getExternalStorageDirectory();
+        String path = storageDir.getAbsolutePath();
+        path += BACKUP_DIR;
+        File backupDir = new File(path);
+        Uri uri = Uri.fromFile(backupDir);
+        intent.setData(uri);
+
+        // verify that there is some app, which is able to open directory
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> list = pm.queryIntentActivities(intent,
+                                    PackageManager.MATCH_DEFAULT_ONLY);
+        if (list.isEmpty()) {
+            // no application can show a directory
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setMessage(R.string.alert_no_file_manager);
+            alertBuilder.setNeutralButton(R.string.alert_ok,
+                                          new DialogInterface.OnClickListener() {
+                                              public void onClick(DialogInterface dialog,
+                                                                  int id) {
+                                                  // do nothing
+                                              }
+                                          });
+            alertBuilder.create().show();
+            return;
+        }
+
+        // we do not need any results from this action, so just call startActivity
+        startActivity(intent);
     }
 }

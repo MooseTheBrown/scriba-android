@@ -65,6 +65,7 @@
     <!-- Actions -->
     <string name="add_record">Add record</string>
     <string name="export_all_data">Export</string>
+    <string name="open_backup_dir">View export files</string>
     <string name="import_data">Import</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
