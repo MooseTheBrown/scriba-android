@@ -43,6 +43,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import java.util.List;
 import android.net.Uri;
+import android.app.SearchManager;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
@@ -82,6 +83,9 @@ public class EntryListActivity extends Activity
 
     // broadcast receiver for deserialize completed event
     private SerializationBroadcast.DeserializeReceiver _deserializeReceiver = null;
+
+    // search query; if it is not null, we are in search mode
+    private String _searchQuery = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,11 @@ public class EntryListActivity extends Activity
 
                 getActionBar().setSelectedNavigationItem(pos);
             }
+        }
+
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            _searchQuery = intent.getStringExtra(SearchManager.QUERY);
         }
 
         getActionBar().setTitle(null);
