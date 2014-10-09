@@ -28,36 +28,14 @@ import java.util.UUID;
 
 public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
-    public enum FilterType {
-        ALL,
-        COMPANY,
-        POC,
-        PROJECT
-    }
-
-    private FilterType _filterType = FilterType.ALL;
-    private UUID _searchId = null;
+    private SearchInfo _searchInfo = null;
 
     public EventListLoader(Context context) {
         super(context);
     }
 
-    // search by company
-    public void setCompanySearch(UUID companyId) {
-        _filterType = FilterType.COMPANY;
-        _searchId = companyId;
-    }
-
-    // search by POC
-    public void setPOCSearch(UUID pocId) {
-        _filterType = FilterType.POC;
-        _searchId = pocId;
-    }
-
-    // search by project
-    public void setProjectSearch(UUID projectId) {
-        _filterType = FilterType.PROJECT;
-        _searchId = projectId;
+    public void setSearchInfo(SearchInfo info) {
+        _searchInfo = info;
     }
 
     @Override
@@ -76,26 +54,38 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
     @Override
     public DataDescriptor[] loadInBackground() {
         Log.d("[Scriba]", "EventListLoader.loadInBackground()");
-        Log.d("[Scriba]", "_filterType = " + _filterType);
 
         DataDescriptor[] result = null;
 
-        switch (_filterType) {
-            case ALL:
-                result = ScribaDB.getAllEvents();
-                break;
-            case COMPANY:
-                result = ScribaDB.getEventsByCompany(_searchId);
-                break;
-            case POC:
-                result = ScribaDB.getEventsByPOC(_searchId);
-                break;
-            case PROJECT:
-                result = ScribaDB.getEventsByProject(_searchId);
-                break;
+        if (_searchInfo == null) {
+            // no search info, get all events
+            result = ScribaDB.getAllEvents();
+        }
+        else {
+            Log.d("[Scriba]", "search type: " + _searchInfo.searchType());
+            switch (_searchInfo.searchType()) {
+                case EVENT_COMPANY:
+                    result = ScribaDB.getEventsByCompany(_searchInfo.uuidParam());
+                    break;
+                case EVENT_POC:
+                    result = ScribaDB.getEventsByPOC(_searchInfo.uuidParam());
+                    break;
+                case EVENT_PROJECT:
+                    result = ScribaDB.getEventsByProject(_searchInfo.uuidParam());
+                    break;
+                case EVENT_GENERIC:
+                    result = genericSearch(_searchInfo.stringParam());
+                    break;
+                default:
+                    Log.e("[Scriba]", "Unsupported event search type");
+                    break;
+            }
         }
 
-        Log.d("[Scriba]", "EventListLoader - loading finished, result length is " + result.length);
+        if (result != null) {
+            Log.d("[Scriba]", "EventListLoader - loading finished, result length is " +
+                  result.length);
+        }
         return result;
     }
 
@@ -111,5 +101,15 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
         // our task cannot be canceled
         Log.d("[Scriba]", "EventListLoader.onCancelLoad()");
         return false;
+    }
+
+    // perform generic event search by string parameter
+    private DataDescriptor[] genericSearch(String param) {
+        if (param == null) {
+            return null;
+        }
+        // TODO: add event search by description once such method is
+        // available in libscriba
+        return null;
     }
 }

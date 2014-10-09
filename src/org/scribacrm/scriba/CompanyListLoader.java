@@ -27,23 +27,14 @@ import android.content.Context;
 
 public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
-    public enum FilterType {
-        ALL,
-        NAME,
-        JUR_NAME,
-        ADDRESS
-    }
-
-    private FilterType _filterType = FilterType.ALL;
-    private String _searchParam = null;
+    private SearchInfo _searchInfo = null;
 
     public CompanyListLoader(Context context) {
         super(context);
     }
 
-    public void setSearchFilter(FilterType type, String param) {
-        _filterType = type;
-        _searchParam = param;
+    public void setSearchInfo(SearchInfo info) {
+        _searchInfo = info;
     }
 
     @Override
@@ -62,26 +53,41 @@ public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
     @Override
     public DataDescriptor[] loadInBackground() {
         Log.d("[Scriba]", "CompanyListLoader.loadInBackground()");
-        Log.d("[Scriba]", "_filterType = " + _filterType);
 
         DataDescriptor[] result = null;
 
-        switch (_filterType) {
-            case ALL:
-                result = ScribaDB.getAllCompanies();
-                break;
-            case NAME:
-                result = ScribaDB.getCompaniesByName(_searchParam);
-                break;
-            case JUR_NAME:
-                result = ScribaDB.getCompaniesByJurName(_searchParam);
-                break;
-            case ADDRESS:
-                result = ScribaDB.getCompaniesByAddress(_searchParam);
-                break;
+        if (_searchInfo == null) {
+            // retrieve all companies
+            result = ScribaDB.getAllCompanies();
+        }
+        else {
+            Log.d("[Scriba]", "search type: " + _searchInfo.searchType());
+            switch (_searchInfo.searchType()) {
+                case COMPANY_NAME:
+                    String name = _searchInfo.stringParam();
+                    result = ScribaDB.getCompaniesByName(name);
+                    break;
+                case COMPANY_JUR_NAME:
+                    String jur_name = _searchInfo.stringParam();
+                    result = ScribaDB.getCompaniesByJurName(jur_name);
+                    break;
+                case COMPANY_ADDRESS:
+                    String addr = _searchInfo.stringParam();
+                    result = ScribaDB.getCompaniesByAddress(addr);
+                    break;
+                case COMPANY_GENERIC:
+                    result = genericSearch(_searchInfo.stringParam());
+                    break;
+                default:
+                    Log.e("[Scriba]", "Unsupported company search type");
+                    break;
+            }
         }
 
-        Log.d("[Scriba]", "CompanyListLoader - loading finished, result length is " + result.length);
+        if (result != null) {
+            Log.d("[Scriba]", "CompanyListLoader - loading finished, result length is " +
+                  result.length);
+        }
         return result;
     }
 
@@ -97,5 +103,30 @@ public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
         // our task cannot be canceled
         Log.d("[Scriba]", "CompanyListLoader.onCancelLoad()");
         return false;
+    }
+
+    // perform generic company search by given String parameter
+    private DataDescriptor[] genericSearch(String param) {
+        if (param == null) {
+            Log.e("[Scriba]", "attempted generic search with null parameter");
+            return null;
+        }
+
+        DataDescriptor[] nameResults = ScribaDB.getCompaniesByName(param);
+        DataDescriptor[] jurNameResults = ScribaDB.getCompaniesByJurName(param);
+        DataDescriptor[] addrResults = ScribaDB.getCompaniesByAddress(param);
+        int totalLength = nameResults.length + jurNameResults.length + addrResults.length;
+        DataDescriptor[] result = new DataDescriptor[totalLength];
+        for (int i = 0; i < nameResults.length; i++) {
+            result[i] = nameResults[i];
+        }
+        for (int i = 0; i < jurNameResults.length; i++) {
+            result[i + nameResults.length] = jurNameResults[i];
+        }
+        for (int i = 0; i < addrResults.length; i++) {
+            result[i + nameResults.length + jurNameResults.length] = addrResults[i];
+        }
+
+        return result;
     }
 }
