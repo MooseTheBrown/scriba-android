@@ -65,7 +65,8 @@ public class ProjectSpinnerHandler implements
             // if there's a company id set, get projects for selected
             // company only
             if (_companyId != null) {
-                loader.setCompanySearch(_companyId);
+                loader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.PROJECT_COMPANY,
+                                                    _companyId));
             }
 
             return (Loader<DataDescriptor[]>) loader;

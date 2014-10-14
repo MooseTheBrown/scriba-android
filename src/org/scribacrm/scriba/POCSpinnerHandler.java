@@ -64,7 +64,8 @@ public class POCSpinnerHandler implements
             // if there's a company id set, get people for selected
             // company only
             if (_companyId != null) {
-                loader.setCompanySearch(_companyId);
+                loader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.POC_COMPANY,
+                                                    _companyId));
             }
 
             return (Loader<DataDescriptor[]>) loader;
