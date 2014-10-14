@@ -28,43 +28,14 @@ import java.util.UUID;
 
 public class POCListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
-    public enum FilterType {
-        ALL,
-        NAME,
-        COMPANY,
-        POSITION,
-        EMAIL
-    }
-
-    private FilterType _filterType = FilterType.ALL;
-    private String _firstname = null;
-    private String _secondname = null;
-    private String _lastname = null;
-    private String _searchParam = null;
-    private UUID _companyId = null;
+    private SearchInfo _searchInfo = null;
 
     public POCListLoader(Context context) {
         super(context);
     }
 
-    // search by name
-    public void setNameSearch(String firstname, String secondname, String lastname) {
-        _filterType = FilterType.NAME;
-        _firstname = firstname;
-        _secondname = secondname;
-        _lastname = lastname;
-    }
-
-    // search by company
-    public void setCompanySearch(UUID companyId) {
-        _filterType = FilterType.COMPANY;
-        _companyId = companyId;
-    }
-
-    // search by string according to search type
-    public void setSearch(FilterType type, String param) {
-        _filterType = type;
-        _searchParam = param;
+    public void setSearchInfo(SearchInfo info) {
+        _searchInfo = info;
     }
 
     @Override
@@ -83,29 +54,53 @@ public class POCListLoader extends AsyncTaskLoader<DataDescriptor []> {
     @Override
     public DataDescriptor[] loadInBackground() {
         Log.d("[Scriba]", "POCListLoader.loadInBackground()");
-        Log.d("[Scriba]", "_filterType = " + _filterType);
 
         DataDescriptor[] result = null;
 
-        switch (_filterType) {
-            case ALL:
-                result = ScribaDB.getAllPeople();
-                break;
-            case NAME:
-                result = ScribaDB.getPOCByName(_firstname, _secondname, _lastname);
-                break;
-            case COMPANY:
-                result = ScribaDB.getPOCByCompany(_companyId);
-                break;
-            case POSITION:
-                result = ScribaDB.getPOCByPosition(_searchParam);
-                break;
-            case EMAIL:
-                result = ScribaDB.getPOCByEmail(_searchParam);
-                break;
+        if (_searchInfo == null) {
+            // no search info, get all people
+            result = ScribaDB.getAllPeople();
+        }
+        else {
+            Log.d("[Scriba]", "search type: " + _searchInfo.searchType());
+
+            switch (_searchInfo.searchType()) {
+                case POC_NAME:
+                    String[] params = _searchInfo.stringParams();
+                    String firstname = null;
+                    String secondname = null;
+                    String lastname = null;
+
+                    if (params.length > 0) {
+                        lastname = params[0];
+                    }
+                    if (params.length > 1) {
+                        firstname = params[1];
+                    }
+                    if (params.length > 2) {
+                        secondname = params[2];
+                    }
+
+                    result = ScribaDB.getPOCByName(firstname, secondname, lastname);
+                    break;
+                case POC_COMPANY:
+                    result = ScribaDB.getPOCByCompany(_searchInfo.uuidParam());
+                    break;
+                case POC_POSITION:
+                    result = ScribaDB.getPOCByPosition(_searchInfo.stringParam());
+                    break;
+                case POC_EMAIL:
+                    result = ScribaDB.getPOCByEmail(_searchInfo.stringParam());
+                    break;
+                case POC_GENERIC:
+                    result = genericSearch(_searchInfo.stringParam());
+                    break;
+                default:
+                    Log.e("[Scriba]", "unsupported POC search type");
+                    break;
+            }
         }
 
-        Log.d("[Scriba]", "POCListLoader - loading finished, result length is " + result.length);
         return result;
     }
 
@@ -121,5 +116,40 @@ public class POCListLoader extends AsyncTaskLoader<DataDescriptor []> {
         // our task cannot be canceled
         Log.d("[Scriba]", "POCListLoader.onCancelLoad()");
         return false;
+    }
+
+    private DataDescriptor[] genericSearch(String param) {
+        if (param == null) {
+            return null;
+        }
+
+        DataDescriptor[] firstnameResults = ScribaDB.getPOCByName(param, null, null);
+        DataDescriptor[] secondnameResults = ScribaDB.getPOCByName(null, param, null);
+        DataDescriptor[] lastnameResults = ScribaDB.getPOCByName(null, null, param);
+        DataDescriptor[] positionResults = ScribaDB.getPOCByPosition(param);
+        DataDescriptor[] emailResults = ScribaDB.getPOCByEmail(param);
+
+        int resultLength = firstnameResults.length + secondnameResults.length +
+                            lastnameResults.length + positionResults.length +
+                            emailResults.length;
+        DataDescriptor[] results = new DataDescriptor[resultLength];
+        int i = 0;
+        for (DataDescriptor entry : firstnameResults) {
+            results[i++] = entry;
+        }
+        for (DataDescriptor entry : secondnameResults) {
+            results[i++] = entry;
+        }
+        for (DataDescriptor entry : lastnameResults) {
+            results[i++] = entry;
+        }
+        for (DataDescriptor entry : positionResults) {
+            results[i++] = entry;
+        }
+        for (DataDescriptor entry : emailResults) {
+            results[i++] = entry;
+        }
+
+        return results;
     }
 }

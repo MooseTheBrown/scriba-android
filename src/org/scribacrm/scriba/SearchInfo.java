@@ -47,6 +47,7 @@ public class SearchInfo {
 
     // different parameter types for different search types
     private String _stringParam = null;
+    private String[] _stringParams = null;
     private UUID _uuidParam = null;
     private byte _byteParam = 0;
 
@@ -65,8 +66,14 @@ public class SearchInfo {
         _byteParam = param;
     }
 
+    public SearchInfo(SearchType type, String[] params) {
+        _searchType = type;
+        _stringParams = params;
+    }
+
     public SearchType searchType() { return _searchType; }
     public String stringParam() { return _stringParam; }
+    public String[] stringParams() { return _stringParams; }
     public UUID uuidParam() { return _uuidParam; }
     public byte byteParam() { return _byteParam; }
 }

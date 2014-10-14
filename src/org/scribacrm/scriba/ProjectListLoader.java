@@ -28,30 +28,14 @@ import java.util.UUID;
 
 public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
-    public enum FilterType {
-        ALL,
-        COMPANY,
-        STATE
-    }
-
-    private FilterType _filterType = FilterType.ALL;
-    private UUID _companyId = null;
-    private byte _state = Project.State.INITIAL;
+    private SearchInfo _searchInfo = null;
 
     public ProjectListLoader(Context context) {
         super(context);
     }
 
-    // search by company
-    public void setCompanySearch(UUID companyId) {
-        _filterType = FilterType.COMPANY;
-        _companyId = companyId;
-    }
-
-    // search by state
-    public void setStateSearch(byte state) {
-        _filterType = FilterType.STATE;
-        _state = state;
+    public void setSearchInfo(SearchInfo info) {
+        _searchInfo = info;
     }
 
     @Override
@@ -70,20 +54,30 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
     @Override
     public DataDescriptor[] loadInBackground() {
         Log.d("[Scriba]", "ProjectListLoader.loadInBackground()");
-        Log.d("[Scriba]", "_filterType = " + _filterType);
 
         DataDescriptor[] result = null;
 
-        switch (_filterType) {
-            case ALL:
-                result = ScribaDB.getAllProjects();
-                break;
-            case COMPANY:
-                result = ScribaDB.getProjectsByCompany(_companyId);
-                break;
-            case STATE:
-                result = ScribaDB.getProjectsByState(_state);
-                break;
+        if (_searchInfo == null) {
+            // no search info, get all projects
+            result = ScribaDB.getAllProjects();
+        }
+        else {
+            Log.d("[Scriba]", "search type: " + _searchInfo.searchType());
+
+            switch (_searchInfo.searchType()) {
+                case PROJECT_COMPANY:
+                    result = ScribaDB.getProjectsByCompany(_searchInfo.uuidParam());
+                    break;
+                case PROJECT_STATE:
+                    result = ScribaDB.getProjectsByState(_searchInfo.byteParam());
+                    break;
+                case PROJECT_GENERIC:
+                    result = genericSearch(_searchInfo.stringParam());
+                    break;
+                default:
+                    Log.e("[Scriba]", "Unsupported project search type");
+                    break;
+            }
         }
 
         Log.d("[Scriba]", "ProjectListLoader - loading finished, result length is " + result.length);
@@ -102,5 +96,15 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
         // our task cannot be canceled
         Log.d("[Scriba]", "ProjectListLoader.onCancelLoad()");
         return false;
+    }
+
+    private DataDescriptor[] genericSearch(String param) {
+        if (param == null) {
+            return null;
+        }
+
+        // TODO: search projects by title once this feature is available
+        // in libscriba
+        return null;
     }
 }
