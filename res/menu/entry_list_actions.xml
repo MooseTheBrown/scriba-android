@@ -19,6 +19,11 @@
  -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_search"
+          android:title="@string/search"
+          android:icon="@drawable/search"
+          android:showAsAction="always|collapseActionView"
+          android:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/action_add_record"
           android:icon="@drawable/plus"
           android:title="@string/add_record"

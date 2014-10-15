@@ -80,7 +80,10 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
             }
         }
 
-        Log.d("[Scriba]", "ProjectListLoader - loading finished, result length is " + result.length);
+        if (result != null) {
+            Log.d("[Scriba]", "ProjectListLoader - loading finished, result length is " +
+                  result.length);
+        }
         return result;
     }
 

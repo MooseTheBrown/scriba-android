@@ -23,6 +23,7 @@
 <resources>
     <string name="app_name">Scriba</string>
     <string name="no_records">Нет записей</string>
+    <string name="search_hint">Поиск записей</string>
     <!-- Entry data -->
     <string name="company_name_title">Название:</string>
     <string name="company_jur_name_title">Юридическое имя:</string>
@@ -73,6 +74,7 @@
     <string name="entry_added">Добавлена новая запись</string>
     <string name="saved">Сохранено</string>
     <string name="delete_record">Удалить</string>
+    <string name="search">Поиск</string>
     <!-- Entry types -->
     <string name="Companies">Компании</string>
     <string name="People">Контакты</string>

@@ -51,6 +51,7 @@ public class EntryListFragment extends ListFragment
         void onPOCClicked(UUID id);
         void onProjectClicked(UUID id);
         EntryType getEntryType();
+        String getSearchQuery();
     }
     
     // type of currently displayed items
@@ -61,6 +62,8 @@ public class EntryListFragment extends ListFragment
     private EventListAdapter _eventAdapter = null;
     // activity handling entry clicks
     private ActivityInterface _activityInterface = null;
+    // user search query
+    private String _searchQuery = null;
 
     public EntryListFragment() {
     }
@@ -86,6 +89,8 @@ public class EntryListFragment extends ListFragment
 
         _entryType = _activityInterface.getEntryType();
         Log.d("[Scriba]", "EntryListFragment.onActivityCreated(), _entryType=" + _entryType);
+
+        _searchQuery = _activityInterface.getSearchQuery();
 
         if (_entryType == EntryType.EVENT) {
             // events require different adapter
@@ -135,16 +140,36 @@ public class EntryListFragment extends ListFragment
         Loader<DataDescriptor[]> loader = null;
 
         if (id == EntryType.COMPANY.loaderId()) {
-            loader = (Loader<DataDescriptor[]>)(new CompanyListLoader(getActivity()));
+            CompanyListLoader compLoader = new CompanyListLoader(getActivity());
+            if (_searchQuery != null) {
+                compLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.COMPANY_GENERIC,
+                                                        _searchQuery));
+            }
+            loader = (Loader<DataDescriptor[]>)compLoader;
         }
         else if (id == EntryType.EVENT.loaderId()) {
-            loader = (Loader<DataDescriptor[]>)(new EventListLoader(getActivity()));
+            EventListLoader eventLoader = new EventListLoader(getActivity());
+            if (_searchQuery != null) {
+                eventLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.EVENT_GENERIC,
+                                                         _searchQuery));
+            }
+            loader = (Loader<DataDescriptor[]>)eventLoader;
         }
         else if (id == EntryType.POC.loaderId()) {
-            loader = (Loader<DataDescriptor[]>)(new POCListLoader(getActivity()));
+            POCListLoader pocLoader = new POCListLoader(getActivity());
+            if (_searchQuery != null) {
+                pocLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.POC_GENERIC,
+                                                       _searchQuery));
+            }
+            loader = (Loader<DataDescriptor[]>)pocLoader;
         }
         else if (id == EntryType.PROJECT.loaderId()) {
-            loader = (Loader<DataDescriptor[]>)(new ProjectListLoader(getActivity()));
+            ProjectListLoader projLoader = new ProjectListLoader(getActivity());
+            if (_searchQuery != null) {
+                projLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.PROJECT_GENERIC,
+                                                        _searchQuery));
+            }
+            loader = (Loader<DataDescriptor[]>)projLoader;
         }
 
         return loader;
@@ -153,7 +178,9 @@ public class EntryListFragment extends ListFragment
     @Override
     public void onLoadFinished(Loader<DataDescriptor[]> loader, DataDescriptor[] data) {
         Log.d("[Scriba]", "EntryListFragment.onLoadFinished()");
-        Log.d("[Scriba]", "data length is " + data.length);
+        if (data != null) {
+            Log.d("[Scriba]", "data length is " + data.length);
+        }
 
         EntryListAdapter adapter = _adapter;
         // different adapter is used for event list
@@ -163,8 +190,10 @@ public class EntryListFragment extends ListFragment
 
         // populate ListView adapter with data
         adapter.clear();
-        for (DataDescriptor item : data) {
-            adapter.add(item);
+        if (data != null) {
+            for (DataDescriptor item : data) {
+                adapter.add(item);
+            }
         }
     }
 
@@ -239,6 +268,13 @@ public class EntryListFragment extends ListFragment
         _entryType = newType;
 
         // force data loading for new type of entries
+        loadData(true);
+    }
+
+    // called by activity when user enters new search query
+    public void onNewSearch() {
+        _searchQuery = _activityInterface.getSearchQuery();
+        // force data reload using new search query
         loadData(true);
     }
 

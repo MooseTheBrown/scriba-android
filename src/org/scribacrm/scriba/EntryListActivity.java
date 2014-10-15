@@ -44,6 +44,9 @@ import android.content.pm.ResolveInfo;
 import java.util.List;
 import android.net.Uri;
 import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.widget.SearchView;
+import android.content.Context;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
@@ -134,9 +137,32 @@ public class EntryListActivity extends Activity
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             _searchQuery = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("[Scriba]", "EntryListActivity.onCreate() received search query " +
+                  _searchQuery);
         }
 
         getActionBar().setTitle(null);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // it must be a search request
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            _searchQuery = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("[Scriba]", "EntryListActivity.onNewIntent() received search query " +
+                  _searchQuery);
+
+            // tell entry list fragment to update contents according to the new
+            // search query
+            EntryListFragment listFragment = (EntryListFragment)getFragmentManager().
+                                             findFragmentByTag(LIST_FRAG_TAG);
+            if (listFragment != null) {
+                listFragment.onNewSearch();
+            }
+            else {
+                Log.e("[Scriba]", "EntryListActivity: could not find EntryListFragment!");
+            }
+        }
     }
 
     @Override
@@ -161,6 +187,38 @@ public class EntryListActivity extends Activity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.entry_list_actions, menu);
+
+        // configure search widget
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchViewItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)searchViewItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        searchViewItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Log.d("[Scriba]", "Search view is closed");
+
+                // user dismisses search view, show all entries of current type
+                _searchQuery = null;
+                EntryListFragment listFragment = (EntryListFragment)getFragmentManager().
+                                                 findFragmentByTag(LIST_FRAG_TAG);
+                if (listFragment != null) {
+                    listFragment.onNewSearch();
+                }
+                else {
+                    Log.e("[Scriba]", "EntryListActivity: could not find EntryListFragment!");
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -204,6 +262,10 @@ public class EntryListActivity extends Activity
 
     public EntryType getEntryType() {
         return _entryType;
+    }
+
+    public String getSearchQuery() {
+        return _searchQuery;
     }
 
     @Override

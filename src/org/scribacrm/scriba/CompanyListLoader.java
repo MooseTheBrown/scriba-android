@@ -114,17 +114,13 @@ public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
         DataDescriptor[] nameResults = ScribaDB.getCompaniesByName(param);
         DataDescriptor[] jurNameResults = ScribaDB.getCompaniesByJurName(param);
-        DataDescriptor[] addrResults = ScribaDB.getCompaniesByAddress(param);
-        int totalLength = nameResults.length + jurNameResults.length + addrResults.length;
+        int totalLength = nameResults.length + jurNameResults.length;
         DataDescriptor[] result = new DataDescriptor[totalLength];
         for (int i = 0; i < nameResults.length; i++) {
             result[i] = nameResults[i];
         }
         for (int i = 0; i < jurNameResults.length; i++) {
             result[i + nameResults.length] = jurNameResults[i];
-        }
-        for (int i = 0; i < addrResults.length; i++) {
-            result[i + nameResults.length + jurNameResults.length] = addrResults[i];
         }
 
         return result;

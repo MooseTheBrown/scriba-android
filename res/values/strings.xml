@@ -23,6 +23,7 @@
 <resources>
     <string name="app_name">Scriba</string>
     <string name="no_records">No records</string>
+    <string name="search_hint">Search records</string>
     <!-- Entry data -->
     <string name="company_name_title">Name:</string>
     <string name="company_jur_name_title">Legal name:</string>
@@ -73,6 +74,7 @@
     <string name="entry_added">New entry added</string>
     <string name="saved">Saved</string>
     <string name="delete_record">Delete</string>
+    <string name="search">Search</string>
     <!-- Entry types -->
     <string name="Companies">Companies</string>
     <string name="People">People</string>
