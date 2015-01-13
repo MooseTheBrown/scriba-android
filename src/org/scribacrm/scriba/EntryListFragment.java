@@ -65,6 +65,8 @@ public class EntryListFragment extends ListFragment
     private ActivityInterface _activityInterface = null;
     // user search query
     private String _searchQuery = null;
+    // project state filter dialog instance
+    ProjStateFilterDialog _projStateFilterDialog = null;
 
     public EntryListFragment() {
     }
@@ -81,6 +83,7 @@ public class EntryListFragment extends ListFragment
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.entry_list, container, false);
     }
 
@@ -108,6 +111,55 @@ public class EntryListFragment extends ListFragment
         listView.setMultiChoiceModeListener(this);
 
         loadData(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.entry_list_frag_actions, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_filter);
+        if ((_activityInterface.getEntryType() == EntryType.PROJECT) &&
+            (_searchQuery == null)) {
+            item.setVisible(true);
+        }
+        else {
+            item.setVisible(false);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                byte currState = Project.State.INITIAL;
+                if (_projStateFilterDialog != null) {
+                    currState = _projStateFilterDialog.getProjectState();
+                }
+                ProjStateFilterDialog.DismissListener listener =
+                    new ProjStateFilterDialog.DismissListener() {
+                        public void onDismiss() {
+                            // force data reload when new filter type is
+                            // selected by user
+                            loadData(true);
+                        }
+                    };
+                _projStateFilterDialog = new ProjStateFilterDialog(currState, listener);
+                _projStateFilterDialog.show(getActivity().getFragmentManager(),
+                                            "filterDialog");
+                break;
+            case R.id.action_reset_filter:
+                // reset filter and force data reload
+                _projStateFilterDialog = null;
+                loadData(true);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
     }
 
     @Override
@@ -168,9 +220,12 @@ public class EntryListFragment extends ListFragment
         else if (id == EntryType.PROJECT.loaderId()) {
             ProjectListLoader projLoader = new ProjectListLoader(getActivity());
             if (_searchQuery != null) {
-                // TODO: set correct search info for searching projects by state
                 projLoader.setSearchInfo(new SearchInfo(searchType,
                                                         _searchQuery));
+            }
+            else if (_projStateFilterDialog != null) {
+                projLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.PROJECT_STATE,
+                                                        _projStateFilterDialog.getProjectState()));
             }
             loader = (Loader<DataDescriptor[]>)projLoader;
         }

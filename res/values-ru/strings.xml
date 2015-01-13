@@ -76,6 +76,8 @@
     <string name="delete_record">Удалить</string>
     <string name="search">Поиск</string>
     <string name="search_type">Тип поиска</string>
+    <string name="filter">Фильтровать</string>
+    <string name="reset_filter">Сбросить фильтр</string>
     <!-- Entry types -->
     <string name="Companies">Компании</string>
     <string name="People">Контакты</string>

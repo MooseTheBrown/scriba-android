@@ -76,6 +76,8 @@
     <string name="delete_record">Delete</string>
     <string name="search">Search</string>
     <string name="search_type">Search type</string>
+    <string name="filter">Filter</string>
+    <string name="reset_filter">Reset filter</string>
     <!-- Entry types -->
     <string name="Companies">Companies</string>
     <string name="People">People</string>
