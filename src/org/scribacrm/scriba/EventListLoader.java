@@ -64,6 +64,9 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
         else {
             Log.d("[Scriba]", "search type: " + _searchInfo.searchType());
             switch (_searchInfo.searchType()) {
+                case EVENT_DESCR:
+                    result = ScribaDB.getEventsByDescr(_searchInfo.stringParam());
+                    break;
                 case EVENT_COMPANY:
                     result = ScribaDB.getEventsByCompany(_searchInfo.uuidParam());
                     break;
@@ -72,9 +75,6 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
                     break;
                 case EVENT_PROJECT:
                     result = ScribaDB.getEventsByProject(_searchInfo.uuidParam());
-                    break;
-                case EVENT_GENERIC:
-                    result = genericSearch(_searchInfo.stringParam());
                     break;
                 default:
                     Log.e("[Scriba]", "Unsupported event search type");
@@ -101,15 +101,5 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
         // our task cannot be canceled
         Log.d("[Scriba]", "EventListLoader.onCancelLoad()");
         return false;
-    }
-
-    // perform generic event search by string parameter
-    private DataDescriptor[] genericSearch(String param) {
-        if (param == null) {
-            return null;
-        }
-        // TODO: add event search by description once such method is
-        // available in libscriba
-        return null;
     }
 }

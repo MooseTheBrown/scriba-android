@@ -51,6 +51,7 @@ public class EntryListFragment extends ListFragment
         void onPOCClicked(UUID id);
         void onProjectClicked(UUID id);
         EntryType getEntryType();
+        SearchInfo.SearchType getSearchType();
         String getSearchQuery();
     }
     
@@ -138,11 +139,12 @@ public class EntryListFragment extends ListFragment
         Log.d("[Scriba]", "EntryListFragment.onCreateLoader(), id = " + id);
 
         Loader<DataDescriptor[]> loader = null;
+        SearchInfo.SearchType searchType = _activityInterface.getSearchType();
 
         if (id == EntryType.COMPANY.loaderId()) {
             CompanyListLoader compLoader = new CompanyListLoader(getActivity());
             if (_searchQuery != null) {
-                compLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.COMPANY_GENERIC,
+                compLoader.setSearchInfo(new SearchInfo(searchType,
                                                         _searchQuery));
             }
             loader = (Loader<DataDescriptor[]>)compLoader;
@@ -150,7 +152,7 @@ public class EntryListFragment extends ListFragment
         else if (id == EntryType.EVENT.loaderId()) {
             EventListLoader eventLoader = new EventListLoader(getActivity());
             if (_searchQuery != null) {
-                eventLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.EVENT_GENERIC,
+                eventLoader.setSearchInfo(new SearchInfo(searchType,
                                                          _searchQuery));
             }
             loader = (Loader<DataDescriptor[]>)eventLoader;
@@ -158,7 +160,7 @@ public class EntryListFragment extends ListFragment
         else if (id == EntryType.POC.loaderId()) {
             POCListLoader pocLoader = new POCListLoader(getActivity());
             if (_searchQuery != null) {
-                pocLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.POC_GENERIC,
+                pocLoader.setSearchInfo(new SearchInfo(searchType,
                                                        _searchQuery));
             }
             loader = (Loader<DataDescriptor[]>)pocLoader;
@@ -166,7 +168,8 @@ public class EntryListFragment extends ListFragment
         else if (id == EntryType.PROJECT.loaderId()) {
             ProjectListLoader projLoader = new ProjectListLoader(getActivity());
             if (_searchQuery != null) {
-                projLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.PROJECT_GENERIC,
+                // TODO: set correct search info for searching projects by state
+                projLoader.setSearchInfo(new SearchInfo(searchType,
                                                         _searchQuery));
             }
             loader = (Loader<DataDescriptor[]>)projLoader;

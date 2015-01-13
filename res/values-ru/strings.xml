@@ -75,6 +75,7 @@
     <string name="saved">Сохранено</string>
     <string name="delete_record">Удалить</string>
     <string name="search">Поиск</string>
+    <string name="search_type">Тип поиска</string>
     <!-- Entry types -->
     <string name="Companies">Компании</string>
     <string name="People">Контакты</string>
@@ -111,6 +112,21 @@
     <string name="event_state_scheduled">Запланировано</string>
     <string name="event_state_cancelled">Отменено</string>
     <string name="event_state_completed">Завершено</string>
+    <!-- Search types -->
+    <string name="comp_search_name">По имени</string>
+    <string name="comp_search_jur_name">По юридическому имени</string>
+    <string name="comp_search_address">По адресу</string>
+    <string name="event_search_descr">По описание</string>
+    <string name="event_search_company">По компании</string>
+    <string name="event_search_poc">По контактному лицу</string>
+    <string name="event_search_project">По проекту</string>
+    <string name="poc_search_name">По имени</string>
+    <string name="poc_search_company">По компании</string>
+    <string name="poc_search_position">По должности</string>
+    <string name="poc_search_email">По email</string>
+    <string name="proj_search_title">По названию</string>
+    <string name="proj_search_company">По компании</string>
+    <string name="proj_search_state">По состоянию</string>
     <!-- Notifications -->
     <string name="notify_file_sync_title">Файловая синхронизация</string>
     <string name="notify_serialize_ok">Экспорт завершен</string>

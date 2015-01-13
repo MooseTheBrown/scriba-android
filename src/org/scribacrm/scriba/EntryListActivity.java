@@ -27,6 +27,7 @@ import android.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.content.Intent;
 import android.widget.Toast;
 import android.util.Log;
@@ -47,6 +48,8 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.widget.SearchView;
 import android.content.Context;
+import android.widget.PopupMenu;
+import android.view.View;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
@@ -68,6 +71,7 @@ public class EntryListActivity extends Activity
 
     // saved state Bundle keys
     private static final String ENTRY_TYPE_KEY = "EntryType";
+    private static final String SEARCH_TYPE_KEY = "SearchType";
 
     // directory on external storage to store backups to
     private static final String BACKUP_DIR = "/scriba_backup/";
@@ -89,6 +93,11 @@ public class EntryListActivity extends Activity
 
     // search query; if it is not null, we are in search mode
     private String _searchQuery = null;
+    // search type set by user
+    private SearchInfo.SearchType _searchType = SearchInfo.SearchType.COMPANY_NAME;
+    // menu item id of currently selected search type
+    // this is used for saving instance state in a Bundle
+    private int _searchTypeId = R.id.comp_search_name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -132,6 +141,8 @@ public class EntryListActivity extends Activity
 
                 getActionBar().setSelectedNavigationItem(pos);
             }
+            _searchTypeId = savedInstanceState.getInt(SEARCH_TYPE_KEY, R.id.comp_search_name);
+            handleSearchType(_searchTypeId);
         }
 
         Intent intent = getIntent();
@@ -169,6 +180,8 @@ public class EntryListActivity extends Activity
     public void onSaveInstanceState(Bundle outState) {
         // save entry type
         outState.putInt(ENTRY_TYPE_KEY, _entryType.id());
+        // save search type
+        outState.putInt(SEARCH_TYPE_KEY, _searchTypeId);
     }
 
     @Override
@@ -223,11 +236,36 @@ public class EntryListActivity extends Activity
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        configureSearchTypeMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        switch (item.getItemId()) {
+        int itemId = item.getItemId();
+        switch (itemId) {
             case R.id.action_add_record:
                 startAddEntryActivity();
+                return true;
+            case R.id.comp_search_name:
+            case R.id.comp_search_jur_name:
+            case R.id.comp_search_address:
+            case R.id.event_search_descr:
+            case R.id.poc_search_name:
+            case R.id.poc_search_position:
+            case R.id.poc_search_email:
+            case R.id.proj_search_title:
+            case R.id.proj_search_state:
+                if (item.isChecked() == false) {
+                    item.setChecked(true);
+                }
+                else {
+                    item.setChecked(false);
+                }
+                _searchTypeId = itemId;
+                handleSearchType(itemId);
                 return true;
             case R.id.action_export_all:
                 exportAllRecords();
@@ -264,6 +302,10 @@ public class EntryListActivity extends Activity
         return _entryType;
     }
 
+    public SearchInfo.SearchType getSearchType() {
+        return _searchType;
+    }
+
     public String getSearchQuery() {
         return _searchQuery;
     }
@@ -289,17 +331,23 @@ public class EntryListActivity extends Activity
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         EntryType prevType = _entryType;
         String selected = (String)_entryTypeAdapter.getItem(itemPosition);
+        int defaultSearchTypeId = R.id.comp_search_name;
+
         if (selected.equals(_entryTypeCompanyStr)) {
             _entryType = EntryType.COMPANY;
+            defaultSearchTypeId = R.id.comp_search_name;
         }
         else if (selected.equals(_entryTypeEventStr)) {
             _entryType = EntryType.EVENT;
+            defaultSearchTypeId = R.id.event_search_descr;
         }
         else if (selected.equals(_entryTypeProjectStr)) {
             _entryType = EntryType.PROJECT;
+            defaultSearchTypeId = R.id.proj_search_title;
         }
         else if (selected.equals(_entryTypePOCStr)) {
             _entryType = EntryType.POC;
+            defaultSearchTypeId = R.id.poc_search_name;
         }
 
         // has entry type changed?
@@ -313,6 +361,10 @@ public class EntryListActivity extends Activity
             else {
                 Log.e("[Scriba]", "EntryListActivity: could not find EntryListFragment!");
             }
+
+            // set search type to default for current entry type
+            _searchTypeId = defaultSearchTypeId;
+            handleSearchType(_searchTypeId);
         }
 
         return true;
@@ -498,5 +550,66 @@ public class EntryListActivity extends Activity
 
         // we do not need any results from this action, so just call startActivity
         startActivity(intent);
+    }
+
+    private void configureSearchTypeMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_set_search_type);
+        SubMenu submenu = item.getSubMenu();
+
+        // show search type menu items relevant to current entry type
+        switch (_entryType) {
+            case COMPANY:
+                submenu.setGroupVisible(R.id.group_search_type_company, true);
+                submenu.setGroupVisible(R.id.group_search_type_poc, false);
+                submenu.setGroupVisible(R.id.group_search_type_project, false);
+                break;
+            case EVENT:
+                submenu.setGroupVisible(R.id.group_search_type_company, false);
+                submenu.setGroupVisible(R.id.group_search_type_poc, false);
+                submenu.setGroupVisible(R.id.group_search_type_project, false);
+                break;
+            case POC:
+                submenu.setGroupVisible(R.id.group_search_type_company, false);
+                submenu.setGroupVisible(R.id.group_search_type_poc, true);
+                submenu.setGroupVisible(R.id.group_search_type_project, false);
+                break;
+            case PROJECT:
+                submenu.setGroupVisible(R.id.group_search_type_company, false);
+                submenu.setGroupVisible(R.id.group_search_type_poc, false);
+                submenu.setGroupVisible(R.id.group_search_type_project, true);
+                break;
+        }
+    }
+
+    private void handleSearchType(int id) {
+        switch (id) {
+            case R.id.comp_search_name:
+                _searchType = SearchInfo.SearchType.COMPANY_NAME;
+                break;
+            case R.id.comp_search_jur_name:
+                _searchType = SearchInfo.SearchType.COMPANY_JUR_NAME;
+                break;
+            case R.id.comp_search_address:
+                _searchType = SearchInfo.SearchType.COMPANY_ADDRESS;
+                break;
+            case R.id.event_search_descr:
+                _searchType = SearchInfo.SearchType.EVENT_DESCR;
+                break;
+            case R.id.poc_search_name:
+                _searchType = SearchInfo.SearchType.POC_NAME;
+                break;
+            case R.id.poc_search_position:
+                _searchType = SearchInfo.SearchType.POC_POSITION;
+                break;
+            case R.id.poc_search_email:
+                _searchType = SearchInfo.SearchType.POC_EMAIL;
+                break;
+            case R.id.proj_search_title:
+                _searchType = SearchInfo.SearchType.PROJECT_TITLE;
+                break;
+            case R.id.proj_search_state:
+                _searchType = SearchInfo.SearchType.PROJECT_STATE;
+                break;
+        }
     }
 }

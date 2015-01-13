@@ -75,6 +75,7 @@
     <string name="saved">Saved</string>
     <string name="delete_record">Delete</string>
     <string name="search">Search</string>
+    <string name="search_type">Search type</string>
     <!-- Entry types -->
     <string name="Companies">Companies</string>
     <string name="People">People</string>
@@ -111,6 +112,21 @@
     <string name="event_state_scheduled">Scheduled</string>
     <string name="event_state_cancelled">Cancelled</string>
     <string name="event_state_completed">Completed</string>
+    <!-- Search types -->
+    <string name="comp_search_name">By name</string>
+    <string name="comp_search_jur_name">By Juridicial name</string>
+    <string name="comp_search_address">By address</string>
+    <string name="event_search_descr">By description</string>
+    <string name="event_search_company">By company</string>
+    <string name="event_search_poc">By contact</string>
+    <string name="event_search_project">By project</string>
+    <string name="poc_search_name">By name</string>
+    <string name="poc_search_company">By company</string>
+    <string name="poc_search_position">By position</string>
+    <string name="poc_search_email">By email</string>
+    <string name="proj_search_title">By title</string>
+    <string name="proj_search_company">By company</string>
+    <string name="proj_search_state">By state</string>
     <!-- Notifications -->
     <string name="notify_file_sync_title">File synchronization</string>
     <string name="notify_serialize_ok">Data exported</string>

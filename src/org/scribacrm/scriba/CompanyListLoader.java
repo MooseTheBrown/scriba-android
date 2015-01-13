@@ -75,9 +75,6 @@ public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
                     String addr = _searchInfo.stringParam();
                     result = ScribaDB.getCompaniesByAddress(addr);
                     break;
-                case COMPANY_GENERIC:
-                    result = genericSearch(_searchInfo.stringParam());
-                    break;
                 default:
                     Log.e("[Scriba]", "Unsupported company search type");
                     break;
@@ -103,26 +100,5 @@ public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
         // our task cannot be canceled
         Log.d("[Scriba]", "CompanyListLoader.onCancelLoad()");
         return false;
-    }
-
-    // perform generic company search by given String parameter
-    private DataDescriptor[] genericSearch(String param) {
-        if (param == null) {
-            Log.e("[Scriba]", "attempted generic search with null parameter");
-            return null;
-        }
-
-        DataDescriptor[] nameResults = ScribaDB.getCompaniesByName(param);
-        DataDescriptor[] jurNameResults = ScribaDB.getCompaniesByJurName(param);
-        int totalLength = nameResults.length + jurNameResults.length;
-        DataDescriptor[] result = new DataDescriptor[totalLength];
-        for (int i = 0; i < nameResults.length; i++) {
-            result[i] = nameResults[i];
-        }
-        for (int i = 0; i < jurNameResults.length; i++) {
-            result[i + nameResults.length] = jurNameResults[i];
-        }
-
-        return result;
     }
 }

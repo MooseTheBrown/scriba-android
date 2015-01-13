@@ -65,14 +65,14 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
             Log.d("[Scriba]", "search type: " + _searchInfo.searchType());
 
             switch (_searchInfo.searchType()) {
+                case PROJECT_TITLE:
+                    result = ScribaDB.getProjectsByTitle(_searchInfo.stringParam());
+                    break;
                 case PROJECT_COMPANY:
                     result = ScribaDB.getProjectsByCompany(_searchInfo.uuidParam());
                     break;
                 case PROJECT_STATE:
                     result = ScribaDB.getProjectsByState(_searchInfo.byteParam());
-                    break;
-                case PROJECT_GENERIC:
-                    result = genericSearch(_searchInfo.stringParam());
                     break;
                 default:
                     Log.e("[Scriba]", "Unsupported project search type");
@@ -99,15 +99,5 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
         // our task cannot be canceled
         Log.d("[Scriba]", "ProjectListLoader.onCancelLoad()");
         return false;
-    }
-
-    private DataDescriptor[] genericSearch(String param) {
-        if (param == null) {
-            return null;
-        }
-
-        // TODO: search projects by title once this feature is available
-        // in libscriba
-        return null;
     }
 }

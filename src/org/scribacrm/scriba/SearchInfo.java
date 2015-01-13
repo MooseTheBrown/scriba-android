@@ -28,26 +28,23 @@ public class SearchInfo {
         COMPANY_NAME,
         COMPANY_JUR_NAME,
         COMPANY_ADDRESS,
-        COMPANY_GENERIC,
+        EVENT_DESCR,
         EVENT_COMPANY,
         EVENT_POC,
         EVENT_PROJECT,
-        EVENT_GENERIC,
         POC_NAME,
         POC_COMPANY,
         POC_POSITION,
         POC_EMAIL,
-        POC_GENERIC,
+        PROJECT_TITLE,
         PROJECT_COMPANY,
         PROJECT_STATE,
-        PROJECT_GENERIC
     }
 
     private SearchType _searchType;
 
     // different parameter types for different search types
     private String _stringParam = null;
-    private String[] _stringParams = null;
     private UUID _uuidParam = null;
     private byte _byteParam = 0;
 
@@ -66,14 +63,8 @@ public class SearchInfo {
         _byteParam = param;
     }
 
-    public SearchInfo(SearchType type, String[] params) {
-        _searchType = type;
-        _stringParams = params;
-    }
-
     public SearchType searchType() { return _searchType; }
     public String stringParam() { return _stringParam; }
-    public String[] stringParams() { return _stringParams; }
     public UUID uuidParam() { return _uuidParam; }
     public byte byteParam() { return _byteParam; }
 }

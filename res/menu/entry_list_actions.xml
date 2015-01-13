@@ -28,6 +28,52 @@
           android:icon="@drawable/plus"
           android:title="@string/add_record"
           android:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_set_search_type"
+          android:title="@string/search_type"
+          android:showAsAction="never">
+          <menu>
+              <group android:id="@+id/group_search_type_company"
+                     android:visible="false"
+                     android:checkableBehavior="single"
+                     android:showAsAction="never">
+                  <item android:id="@+id/comp_search_name"
+                        android:title="@string/comp_search_name"/>
+                  <item android:id="@+id/comp_search_jur_name"
+                        android:title="@string/comp_search_jur_name"/>
+                  <item android:id="@+id/comp_search_address"
+                        android:title="@string/comp_search_address"/>
+              </group>
+              <group android:id="@+id/group_search_type_event"
+                     android:visible="false"
+                     android:checkableBehavior="single"
+                     android:showAsAction="never">
+                  <item android:id="@+id/event_search_descr"
+                        android:title="@string/event_search_descr"/>
+              </group>
+              <group android:id="@+id/group_search_type_poc"
+                     android:visible="false"
+                     android:checkableBehavior="single"
+                     android:showAsAction="never">
+                  <item android:id="@+id/poc_search_name"
+                        android:title="@string/poc_search_name"/>
+                  <item android:id="@+id/poc_search_position"
+                        android:title="@string/poc_search_position"/>
+                  <item android:id="@+id/poc_search_email"
+                        android:title="@string/poc_search_email"/>
+              </group>
+              <group android:id="@+id/group_search_type_project"
+                     android:visible="false"
+                     android:checkableBehavior="single"
+                     android:showAsAction="never">
+                  <item android:id="@+id/proj_search_title"
+                        android:title="@string/proj_search_title"
+                        android:showAsAction="never"/>
+                  <item android:id="@+id/proj_search_state"
+                        android:title="@string/proj_search_state"
+                        android:showAsAction="never"/>
+              </group>
+          </menu>
+    </item>
     <item android:id="@+id/action_export_all"
           android:icon="@drawable/export_data"
           android:title="@string/export_all_data"
