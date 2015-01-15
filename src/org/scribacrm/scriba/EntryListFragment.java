@@ -120,13 +120,16 @@ public class EntryListFragment extends ListFragment
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_filter);
+        MenuItem filterItem = menu.findItem(R.id.action_filter);
+        MenuItem resetFilterItem = menu.findItem(R.id.action_reset_filter);
         if ((_activityInterface.getEntryType() == EntryType.PROJECT) &&
             (_searchQuery == null)) {
-            item.setVisible(true);
+            filterItem.setVisible(true);
+            resetFilterItem.setVisible(true);
         }
         else {
-            item.setVisible(false);
+            filterItem.setVisible(false);
+            resetFilterItem.setVisible(false);
         }
     }
 
