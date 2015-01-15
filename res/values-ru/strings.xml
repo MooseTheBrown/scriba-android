@@ -118,7 +118,7 @@
     <string name="comp_search_name">По имени</string>
     <string name="comp_search_jur_name">По юридическому имени</string>
     <string name="comp_search_address">По адресу</string>
-    <string name="event_search_descr">По описание</string>
+    <string name="event_search_descr">По описанию</string>
     <string name="event_search_company">По компании</string>
     <string name="event_search_poc">По контактному лицу</string>
     <string name="event_search_project">По проекту</string>
