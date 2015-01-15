@@ -559,21 +559,25 @@ public class EntryListActivity extends Activity
         // show search type menu items relevant to current entry type
         switch (_entryType) {
             case COMPANY:
+                item.setVisible(true);
                 submenu.setGroupVisible(R.id.group_search_type_company, true);
                 submenu.setGroupVisible(R.id.group_search_type_poc, false);
                 submenu.setGroupVisible(R.id.group_search_type_project, false);
                 break;
             case EVENT:
+                item.setVisible(false);
                 submenu.setGroupVisible(R.id.group_search_type_company, false);
                 submenu.setGroupVisible(R.id.group_search_type_poc, false);
                 submenu.setGroupVisible(R.id.group_search_type_project, false);
                 break;
             case POC:
+                item.setVisible(true);
                 submenu.setGroupVisible(R.id.group_search_type_company, false);
                 submenu.setGroupVisible(R.id.group_search_type_poc, true);
                 submenu.setGroupVisible(R.id.group_search_type_project, false);
                 break;
             case PROJECT:
+                item.setVisible(true);
                 submenu.setGroupVisible(R.id.group_search_type_company, false);
                 submenu.setGroupVisible(R.id.group_search_type_poc, false);
                 submenu.setGroupVisible(R.id.group_search_type_project, true);
