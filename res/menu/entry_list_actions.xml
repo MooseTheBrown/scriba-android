@@ -68,9 +68,6 @@
                   <item android:id="@+id/proj_search_title"
                         android:title="@string/proj_search_title"
                         android:showAsAction="never"/>
-                  <item android:id="@+id/proj_search_state"
-                        android:title="@string/proj_search_state"
-                        android:showAsAction="never"/>
               </group>
           </menu>
     </item>

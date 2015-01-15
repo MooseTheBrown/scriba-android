@@ -98,6 +98,8 @@ public class EntryListActivity extends Activity
     // menu item id of currently selected search type
     // this is used for saving instance state in a Bundle
     private int _searchTypeId = R.id.comp_search_name;
+    // SearchView reference is used to update search hints
+    private SearchView _searchView = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -204,9 +206,10 @@ public class EntryListActivity extends Activity
         // configure search widget
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchViewItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView)searchViewItem.getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(true);
+        _searchView = (SearchView)searchViewItem.getActionView();
+        _searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        _searchView.setIconifiedByDefault(true);
+        setSearchHint();
         searchViewItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
@@ -228,6 +231,8 @@ public class EntryListActivity extends Activity
 
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
+                // adjust search hint according to currently selected search type
+                setSearchHint();
                 return true;
             }
         });
@@ -257,7 +262,6 @@ public class EntryListActivity extends Activity
             case R.id.poc_search_position:
             case R.id.poc_search_email:
             case R.id.proj_search_title:
-            case R.id.proj_search_state:
                 if (item.isChecked() == false) {
                     item.setChecked(true);
                 }
@@ -266,6 +270,7 @@ public class EntryListActivity extends Activity
                 }
                 _searchTypeId = itemId;
                 handleSearchType(itemId);
+                setSearchHint();
                 return true;
             case R.id.action_export_all:
                 exportAllRecords();
@@ -562,25 +567,15 @@ public class EntryListActivity extends Activity
                 item.setVisible(true);
                 submenu.setGroupVisible(R.id.group_search_type_company, true);
                 submenu.setGroupVisible(R.id.group_search_type_poc, false);
-                submenu.setGroupVisible(R.id.group_search_type_project, false);
                 break;
             case EVENT:
+            case PROJECT:
                 item.setVisible(false);
-                submenu.setGroupVisible(R.id.group_search_type_company, false);
-                submenu.setGroupVisible(R.id.group_search_type_poc, false);
-                submenu.setGroupVisible(R.id.group_search_type_project, false);
                 break;
             case POC:
                 item.setVisible(true);
                 submenu.setGroupVisible(R.id.group_search_type_company, false);
                 submenu.setGroupVisible(R.id.group_search_type_poc, true);
-                submenu.setGroupVisible(R.id.group_search_type_project, false);
-                break;
-            case PROJECT:
-                item.setVisible(true);
-                submenu.setGroupVisible(R.id.group_search_type_company, false);
-                submenu.setGroupVisible(R.id.group_search_type_poc, false);
-                submenu.setGroupVisible(R.id.group_search_type_project, true);
                 break;
         }
     }
@@ -611,9 +606,41 @@ public class EntryListActivity extends Activity
             case R.id.proj_search_title:
                 _searchType = SearchInfo.SearchType.PROJECT_TITLE;
                 break;
-            case R.id.proj_search_state:
-                _searchType = SearchInfo.SearchType.PROJECT_STATE;
+        }
+    }
+
+    // set search hint depending on current entry type and search type
+    private void setSearchHint() {
+        String base = getResources().getString(R.string.search);
+        int resid = R.string.comp_search_name;
+
+        switch (_searchType) {
+            case COMPANY_JUR_NAME:
+                resid = R.string.comp_search_jur_name;
+                break;
+            case COMPANY_ADDRESS:
+                resid = R.string.comp_search_address;
+                break;
+            case EVENT_DESCR:
+                resid = R.string.event_search_descr;
+                break;
+            case POC_NAME:
+                resid = R.string.poc_search_name;
+                break;
+            case POC_POSITION:
+                resid = R.string.poc_search_position;
+                break;
+            case POC_EMAIL:
+                resid = R.string.poc_search_email;
+                break;
+            case PROJECT_TITLE:
+                resid = R.string.proj_search_title;
+                break;
+            default:
                 break;
         }
+        String searchType = getResources().getString(resid).toLowerCase();
+
+        _searchView.setQueryHint(base + " " + searchType);
     }
 }
