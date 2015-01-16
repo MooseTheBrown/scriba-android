@@ -51,8 +51,7 @@ public class EntryListFragment extends ListFragment
         void onPOCClicked(UUID id);
         void onProjectClicked(UUID id);
         EntryType getEntryType();
-        SearchInfo.SearchType getSearchType();
-        String getSearchQuery();
+        SearchInfo getSearchInfo();
     }
     
     // type of currently displayed items
@@ -63,8 +62,6 @@ public class EntryListFragment extends ListFragment
     private EventListAdapter _eventAdapter = null;
     // activity handling entry clicks
     private ActivityInterface _activityInterface = null;
-    // user search query
-    private String _searchQuery = null;
     // project state filter dialog instance
     ProjStateFilterDialog _projStateFilterDialog = null;
 
@@ -94,8 +91,6 @@ public class EntryListFragment extends ListFragment
         _entryType = _activityInterface.getEntryType();
         Log.d("[Scriba]", "EntryListFragment.onActivityCreated(), _entryType=" + _entryType);
 
-        _searchQuery = _activityInterface.getSearchQuery();
-
         if (_entryType == EntryType.EVENT) {
             // events require different adapter
             _eventAdapter = new EventListAdapter(getActivity(),
@@ -123,7 +118,7 @@ public class EntryListFragment extends ListFragment
         MenuItem filterItem = menu.findItem(R.id.action_filter);
         MenuItem resetFilterItem = menu.findItem(R.id.action_reset_filter);
         if ((_activityInterface.getEntryType() == EntryType.PROJECT) &&
-            (_searchQuery == null)) {
+            (_activityInterface.getSearchInfo() == null)) {
             filterItem.setVisible(true);
             resetFilterItem.setVisible(true);
         }
@@ -194,37 +189,33 @@ public class EntryListFragment extends ListFragment
         Log.d("[Scriba]", "EntryListFragment.onCreateLoader(), id = " + id);
 
         Loader<DataDescriptor[]> loader = null;
-        SearchInfo.SearchType searchType = _activityInterface.getSearchType();
+        SearchInfo searchInfo = _activityInterface.getSearchInfo();
 
         if (id == EntryType.COMPANY.loaderId()) {
             CompanyListLoader compLoader = new CompanyListLoader(getActivity());
-            if (_searchQuery != null) {
-                compLoader.setSearchInfo(new SearchInfo(searchType,
-                                                        _searchQuery));
+            if (searchInfo != null) {
+                compLoader.setSearchInfo(searchInfo);
             }
             loader = (Loader<DataDescriptor[]>)compLoader;
         }
         else if (id == EntryType.EVENT.loaderId()) {
             EventListLoader eventLoader = new EventListLoader(getActivity());
-            if (_searchQuery != null) {
-                eventLoader.setSearchInfo(new SearchInfo(searchType,
-                                                         _searchQuery));
+            if (searchInfo != null) {
+                eventLoader.setSearchInfo(searchInfo);
             }
             loader = (Loader<DataDescriptor[]>)eventLoader;
         }
         else if (id == EntryType.POC.loaderId()) {
             POCListLoader pocLoader = new POCListLoader(getActivity());
-            if (_searchQuery != null) {
-                pocLoader.setSearchInfo(new SearchInfo(searchType,
-                                                       _searchQuery));
+            if (searchInfo != null) {
+                pocLoader.setSearchInfo(searchInfo);
             }
             loader = (Loader<DataDescriptor[]>)pocLoader;
         }
         else if (id == EntryType.PROJECT.loaderId()) {
             ProjectListLoader projLoader = new ProjectListLoader(getActivity());
-            if (_searchQuery != null) {
-                projLoader.setSearchInfo(new SearchInfo(searchType,
-                                                        _searchQuery));
+            if (searchInfo != null) {
+                projLoader.setSearchInfo(searchInfo);
             }
             else if (_projStateFilterDialog != null) {
                 projLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.PROJECT_STATE,
@@ -334,7 +325,6 @@ public class EntryListFragment extends ListFragment
 
     // called by activity when user enters new search query
     public void onNewSearch() {
-        _searchQuery = _activityInterface.getSearchQuery();
         // force data reload using new search query
         loadData(true);
     }

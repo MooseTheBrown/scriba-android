@@ -71,7 +71,7 @@ public class EntryListActivity extends Activity
 
     // saved state Bundle keys
     private static final String ENTRY_TYPE_KEY = "EntryType";
-    private static final String SEARCH_TYPE_KEY = "SearchType";
+    private static final String SEARCH_INFO_KEY = "SearchInfo";
 
     // directory on external storage to store backups to
     private static final String BACKUP_DIR = "/scriba_backup/";
@@ -91,13 +91,8 @@ public class EntryListActivity extends Activity
     // broadcast receiver for deserialize completed event
     private SerializationBroadcast.DeserializeReceiver _deserializeReceiver = null;
 
-    // search query; if it is not null, we are in search mode
-    private String _searchQuery = null;
-    // search type set by user
-    private SearchInfo.SearchType _searchType = SearchInfo.SearchType.COMPANY_NAME;
-    // menu item id of currently selected search type
-    // this is used for saving instance state in a Bundle
-    private int _searchTypeId = R.id.comp_search_name;
+    // search info
+    private SearchInfo _searchInfo = null;
     // SearchView reference is used to update search hints
     private SearchView _searchView = null;
 
@@ -143,15 +138,20 @@ public class EntryListActivity extends Activity
 
                 getActionBar().setSelectedNavigationItem(pos);
             }
-            _searchTypeId = savedInstanceState.getInt(SEARCH_TYPE_KEY, R.id.comp_search_name);
-            handleSearchType(_searchTypeId);
+
+            // get search info from saved state
+            Bundle searchInfoBundle = savedInstanceState.getBundle(SEARCH_INFO_KEY);
+            if (searchInfoBundle != null) {
+                _searchInfo = SearchInfo.fromBundle(searchInfoBundle);
+            }
         }
 
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            _searchQuery = intent.getStringExtra(SearchManager.QUERY);
+            String searchQuery = intent.getStringExtra(SearchManager.QUERY);
             Log.d("[Scriba]", "EntryListActivity.onCreate() received search query " +
-                  _searchQuery);
+                  searchQuery);
+            setSearchQuery(searchQuery);
         }
 
         getActionBar().setTitle(null);
@@ -161,9 +161,10 @@ public class EntryListActivity extends Activity
     protected void onNewIntent(Intent intent) {
         // it must be a search request
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            _searchQuery = intent.getStringExtra(SearchManager.QUERY);
+            String searchQuery = intent.getStringExtra(SearchManager.QUERY);
             Log.d("[Scriba]", "EntryListActivity.onNewIntent() received search query " +
-                  _searchQuery);
+                  searchQuery);
+            setSearchQuery(searchQuery);
 
             // tell entry list fragment to update contents according to the new
             // search query
@@ -182,8 +183,12 @@ public class EntryListActivity extends Activity
     public void onSaveInstanceState(Bundle outState) {
         // save entry type
         outState.putInt(ENTRY_TYPE_KEY, _entryType.id());
-        // save search type
-        outState.putInt(SEARCH_TYPE_KEY, _searchTypeId);
+        // save search info
+        if (_searchInfo != null) {
+            Bundle searchInfoBundle = new Bundle();
+            _searchInfo.toBundle(searchInfoBundle);
+            outState.putBundle(SEARCH_INFO_KEY, searchInfoBundle);
+        }
     }
 
     @Override
@@ -216,7 +221,7 @@ public class EntryListActivity extends Activity
                 Log.d("[Scriba]", "Search view is closed");
 
                 // user dismisses search view, show all entries of current type
-                _searchQuery = null;
+                _searchInfo = null;
                 EntryListFragment listFragment = (EntryListFragment)getFragmentManager().
                                                  findFragmentByTag(LIST_FRAG_TAG);
                 if (listFragment != null) {
@@ -268,8 +273,7 @@ public class EntryListActivity extends Activity
                 else {
                     item.setChecked(false);
                 }
-                _searchTypeId = itemId;
-                handleSearchType(itemId);
+                setSearchType(itemId);
                 setSearchHint();
                 return true;
             case R.id.action_export_all:
@@ -307,12 +311,8 @@ public class EntryListActivity extends Activity
         return _entryType;
     }
 
-    public SearchInfo.SearchType getSearchType() {
-        return _searchType;
-    }
-
-    public String getSearchQuery() {
-        return _searchQuery;
+    public SearchInfo getSearchInfo() {
+        return _searchInfo;
     }
 
     @Override
@@ -368,8 +368,7 @@ public class EntryListActivity extends Activity
             }
 
             // set search type to default for current entry type
-            _searchTypeId = defaultSearchTypeId;
-            handleSearchType(_searchTypeId);
+            setSearchType(defaultSearchTypeId);
         }
 
         return true;
@@ -580,41 +579,64 @@ public class EntryListActivity extends Activity
         }
     }
 
-    private void handleSearchType(int id) {
+    private void setSearchType(int id) {
+        SearchInfo.SearchType searchType;
         switch (id) {
             case R.id.comp_search_name:
-                _searchType = SearchInfo.SearchType.COMPANY_NAME;
+                searchType = SearchInfo.SearchType.COMPANY_NAME;
                 break;
             case R.id.comp_search_jur_name:
-                _searchType = SearchInfo.SearchType.COMPANY_JUR_NAME;
+                searchType = SearchInfo.SearchType.COMPANY_JUR_NAME;
                 break;
             case R.id.comp_search_address:
-                _searchType = SearchInfo.SearchType.COMPANY_ADDRESS;
+                searchType = SearchInfo.SearchType.COMPANY_ADDRESS;
                 break;
             case R.id.event_search_descr:
-                _searchType = SearchInfo.SearchType.EVENT_DESCR;
+                searchType = SearchInfo.SearchType.EVENT_DESCR;
                 break;
             case R.id.poc_search_name:
-                _searchType = SearchInfo.SearchType.POC_NAME;
+                searchType = SearchInfo.SearchType.POC_NAME;
                 break;
             case R.id.poc_search_position:
-                _searchType = SearchInfo.SearchType.POC_POSITION;
+                searchType = SearchInfo.SearchType.POC_POSITION;
                 break;
             case R.id.poc_search_email:
-                _searchType = SearchInfo.SearchType.POC_EMAIL;
+                searchType = SearchInfo.SearchType.POC_EMAIL;
                 break;
             case R.id.proj_search_title:
-                _searchType = SearchInfo.SearchType.PROJECT_TITLE;
+                searchType = SearchInfo.SearchType.PROJECT_TITLE;
                 break;
+            default:
+                searchType = SearchInfo.SearchType.COMPANY_NAME;
+                break;
+        }
+
+        _searchInfo = new SearchInfo(searchType, "");
+    }
+
+    private void setSearchQuery(String query) {
+        if (_searchInfo == null) {
+            _searchInfo = new SearchInfo(defaultSearchType(), query);
+        }
+        else {
+            _searchInfo.setString(query);
         }
     }
 
     // set search hint depending on current entry type and search type
     private void setSearchHint() {
         String base = getResources().getString(R.string.search);
+        SearchInfo.SearchType searchType;
         int resid = R.string.comp_search_name;
 
-        switch (_searchType) {
+        if (_searchInfo != null) {
+            searchType = _searchInfo.searchType();
+        }
+        else {
+            searchType = defaultSearchType();
+        }
+
+        switch (searchType) {
             case COMPANY_JUR_NAME:
                 resid = R.string.comp_search_jur_name;
                 break;
@@ -639,8 +661,24 @@ public class EntryListActivity extends Activity
             default:
                 break;
         }
-        String searchType = getResources().getString(resid).toLowerCase();
+        String searchTypeStr = getResources().getString(resid).toLowerCase();
 
-        _searchView.setQueryHint(base + " " + searchType);
+        _searchView.setQueryHint(base + " " + searchTypeStr);
+    }
+
+    // get default search type for current entry type
+    private SearchInfo.SearchType defaultSearchType() {
+        switch (_entryType) {
+            case COMPANY:
+                return SearchInfo.SearchType.COMPANY_NAME;
+            case EVENT:
+                return SearchInfo.SearchType.EVENT_DESCR;
+            case PROJECT:
+                return SearchInfo.SearchType.PROJECT_TITLE;
+            case POC:
+                return SearchInfo.SearchType.POC_NAME;
+            default:
+                return SearchInfo.SearchType.COMPANY_NAME;
+        }
     }
 }
