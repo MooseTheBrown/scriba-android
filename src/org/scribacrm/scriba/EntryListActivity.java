@@ -336,27 +336,25 @@ public class EntryListActivity extends Activity
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         EntryType prevType = _entryType;
         String selected = (String)_entryTypeAdapter.getItem(itemPosition);
-        int defaultSearchTypeId = R.id.comp_search_name;
 
         if (selected.equals(_entryTypeCompanyStr)) {
             _entryType = EntryType.COMPANY;
-            defaultSearchTypeId = R.id.comp_search_name;
         }
         else if (selected.equals(_entryTypeEventStr)) {
             _entryType = EntryType.EVENT;
-            defaultSearchTypeId = R.id.event_search_descr;
         }
         else if (selected.equals(_entryTypeProjectStr)) {
             _entryType = EntryType.PROJECT;
-            defaultSearchTypeId = R.id.proj_search_title;
         }
         else if (selected.equals(_entryTypePOCStr)) {
             _entryType = EntryType.POC;
-            defaultSearchTypeId = R.id.poc_search_name;
         }
 
         // has entry type changed?
         if (_entryType != prevType) {
+            // reset search info
+            _searchInfo = null;
+
             // tell entry list fragment to update contents
             EntryListFragment listFragment = (EntryListFragment)getFragmentManager().
                                              findFragmentByTag(LIST_FRAG_TAG);
@@ -366,9 +364,6 @@ public class EntryListActivity extends Activity
             else {
                 Log.e("[Scriba]", "EntryListActivity: could not find EntryListFragment!");
             }
-
-            // set search type to default for current entry type
-            setSearchType(defaultSearchTypeId);
         }
 
         return true;
