@@ -88,7 +88,11 @@ public class SearchInfo {
     public void toBundle(Bundle bundle) {
         bundle.putInt(SEARCH_TYPE_KEY, _searchType.getId());
         bundle.putString(STRING_PARAM_KEY, _stringParam);
-        bundle.putString(UUID_PARAM_KEY, _uuidParam.toString());
+        String temp = null;
+        if (_uuidParam != null) {
+            temp = _uuidParam.toString();
+        }
+        bundle.putString(UUID_PARAM_KEY, temp);
         bundle.putByte(BYTE_PARAM_KEY, _byteParam);
     }
 
