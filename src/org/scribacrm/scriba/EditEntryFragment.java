@@ -169,7 +169,7 @@ public class EditEntryFragment extends Fragment
         TextView timeText = (TextView)getActivity().findViewById(R.id.event_time_text);
 
         DateFormat dateFormat = DateFormat.getDateInstance();
-        DateFormat timeFormat = DateFormat.getTimeInstance();
+        DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 
         dateText.setText(dateFormat.format(_eventDate));
         timeText.setText(timeFormat.format(_eventDate));

@@ -97,6 +97,7 @@ public class DateTimeHandler {
             calendar.setTime(_date);
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND, 0);
             _date = calendar.getTime();
             _listener.onDateChanged(_date);
         }

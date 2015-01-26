@@ -519,7 +519,7 @@ public class EntryDetailsFragment extends Fragment {
         // event date and time
         Date date = new Date(_event.timestamp);
         DateFormat dateFormat = DateFormat.getDateInstance();
-        DateFormat timeFormat = DateFormat.getTimeInstance();
+        DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 
         txt = (TextView)getActivity().findViewById(R.id.event_date_text);
         txt.setText(dateFormat.format(date));
