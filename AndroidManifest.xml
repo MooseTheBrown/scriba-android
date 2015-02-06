@@ -51,5 +51,9 @@
         </activity>
 
         <service android:name="SerializationService" />
+
+        <receiver android:name=".EventAlarmReceiver"
+                  android:enabled="true">
+        </receiver>
     </application>
 </manifest>
