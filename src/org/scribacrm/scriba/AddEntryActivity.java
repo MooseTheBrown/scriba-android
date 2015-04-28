@@ -371,7 +371,7 @@ public class AddEntryActivity extends Activity
             }
         });
 
-        View reminderView = findViewById(R.id.event_reminder);
+        View reminderView = findViewById(R.id.event_add_reminder);
         reminderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
