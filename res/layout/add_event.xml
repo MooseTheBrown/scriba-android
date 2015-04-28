@@ -28,7 +28,6 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     >
 
     <!-- Event description -->
@@ -207,5 +206,28 @@
             android:inputType="text"
             />
     </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_delim"
+        >
+    </LinearLayout>
+
+    <!-- Reminders -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/event_add_reminder"
+        style="@style/scriba_action_item"
+        android:clickable="true"
+        >
+        <TextView
+            android:id="@+id/event_time_text"
+            android:text="@string/event_add_reminder"
+            style="@style/scriba_entry_item_text"
+            />
+        <ImageView
+            android:src="@drawable/plus"
+            style="@style/scriba_action_image"
+          >
+        </ImageView>
+    </RelativeLayout>
 </LinearLayout>
 </ScrollView>

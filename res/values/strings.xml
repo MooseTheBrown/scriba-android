@@ -78,6 +78,7 @@
     <string name="search_type">Search type</string>
     <string name="filter">Filter</string>
     <string name="reset_filter">Reset filter</string>
+    <string name="event_add_reminder">Add reminder</string>
     <!-- Entry types -->
     <string name="Companies">Companies</string>
     <string name="People">People</string>

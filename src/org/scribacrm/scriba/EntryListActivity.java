@@ -153,6 +153,21 @@ public class EntryListActivity extends Activity
                   searchQuery);
             setSearchQuery(searchQuery);
         }
+        else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            // event alarm?
+            Uri uri = intent.getData();
+            EntryURI entryUri = new EntryURI(uri);
+            if (entryUri.getType() == EntryType.EVENT) {
+                if (getScreenType() == SCREEN_TYPE_SMALL) {
+                    // we're on a small screen device,
+                    // launch separate activity for entry details
+                    startEntryDetailsActivity(entryUri.getId());
+                }
+                else {
+                    // TODO: large screen devices
+                }
+            }
+        }
 
         getActionBar().setTitle(null);
     }

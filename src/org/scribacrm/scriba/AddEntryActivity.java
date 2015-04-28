@@ -370,6 +370,13 @@ public class AddEntryActivity extends Activity
                 _dateTimeHandler.showTimePicker();
             }
         });
+
+        View reminderView = findViewById(R.id.event_reminder);
+        reminderView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     // set action bar title according to current entry type
