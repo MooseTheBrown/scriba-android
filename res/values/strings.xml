@@ -140,4 +140,15 @@
     <string name="alert_backup_no_storage">External storage not available, backup aborted</string>
     <string name="alert_no_file_manager">No file manager found, please install one</string>
     <string name="alert_ok">OK</string>
+    <!-- Event reminder dialog -->
+    <string name="event_reminder_title">Event reminder</string>
+    <string name="event_reminder_minutes">min</string>
+    <string name="event_reminder_hours">hr</string>
+    <string-array name="event_reminder_list">
+        <item>@string/event_reminder_minutes</item>
+        <item>@string/event_reminder_hours</item>
+    </string-array>
+    <string name="event_reminder_ok">OK</string>
+    <string name="event_reminder_cancel">Cancel</string>
+    <string name="event_reminder_header">Reminders</string>
 </resources>

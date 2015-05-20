@@ -152,6 +152,24 @@ public class EventAlarmMgr {
         }
     }
 
+    // get alarms for given event
+    public Set<Long> getAlarms(UUID eventId) {
+        String uuidStr = eventId.toString();
+        Set<String> alarms = _prefs.getStringSet(uuidStr, null);
+
+        if (alarms == null) {
+            return null;
+        }
+
+        Set<Long> timestamps = new HashSet<Long>();
+        for (String alarm : alarms) {
+            long val = Long.parseLong(alarm, 10);
+            timestamps.add(val);
+        }
+
+        return timestamps;
+    }
+
     // create PendingIntent to pass it to AlarmManager
     private PendingIntent buildIntent(UUID eventId, long timestamp) {
         EntryURI entryURI = new EntryURI(EntryType.EVENT, eventId);

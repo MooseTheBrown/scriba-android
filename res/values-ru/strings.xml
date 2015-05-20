@@ -140,4 +140,15 @@
     <string name="alert_backup_no_storage">Внешнее хранилище недоступно, экспорт данных отменен</string>
     <string name="alert_no_file_manager">Для экспорта данных небходимо установить файловый менеджер</string>
     <string name="alert_ok">OK</string>
+    <!-- Event reminder dialog -->
+    <string name="event_reminder_title">Напоминание о событии</string>
+    <string name="event_reminder_minutes">мин</string>
+    <string name="event_reminder_hours">ч</string>
+    <string-array name="event_reminder_list">
+        <item>@string/event_reminder_minutes</item>
+        <item>@string/event_reminder_hours</item>
+    </string-array>
+    <string name="event_reminder_ok">OK</string>
+    <string name="event_reminder_cancel">Отмена</string>
+    <string name="event_reminder_header">Напоминания</string>
 </resources>

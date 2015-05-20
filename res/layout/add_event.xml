@@ -208,26 +208,46 @@
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/event_reminder_delim"
         style="@style/scriba_entry_delim"
         >
     </LinearLayout>
 
     <!-- Reminders -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/event_add_reminder"
-        style="@style/scriba_action_item"
-        android:clickable="true"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/event_reminder_container"
+        style="@style/scriba_add_entry_item"
         >
+        <!-- Header -->
         <TextView
             android:id="@+id/event_time_text"
-            android:text="@string/event_add_reminder"
-            style="@style/scriba_entry_item_text"
+            android:text="@string/event_reminder_header"
+            style="@style/scriba_entry_item_header"
             />
-        <ImageView
-            android:src="@drawable/plus"
-            style="@style/scriba_action_image"
-          >
-        </ImageView>
-    </RelativeLayout>
+
+        <!-- Reminder list -->
+        <LinearLayout
+            android:id="@+id/event_reminder_list"
+            style="@style/scriba_list_container"
+            />
+
+        <!-- Add button -->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/event_add_reminder"
+            style="@style/scriba_action_item"
+            android:clickable="true"
+            >
+            <TextView
+                android:id="@+id/event_time_text"
+                android:text="@string/event_add_reminder"
+                style="@style/scriba_entry_item_text"
+                />
+            <ImageView
+                android:src="@drawable/plus"
+                style="@style/scriba_action_image"
+              >
+            </ImageView>
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>

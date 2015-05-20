@@ -371,12 +371,10 @@ public class AddEntryActivity extends Activity
             }
         });
 
-        View reminderView = findViewById(R.id.event_add_reminder);
-        reminderView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        View reminderView = findViewById(R.id.event_reminder_container);
+        reminderView.setVisibility(View.GONE);
+        View delimiter = findViewById(R.id.event_reminder_delim);
+        delimiter.setVisibility(View.GONE);
     }
 
     // set action bar title according to current entry type

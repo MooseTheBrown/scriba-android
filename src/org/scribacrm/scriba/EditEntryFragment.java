@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -38,10 +38,32 @@ import android.widget.Spinner;
 import java.util.Date;
 import java.text.DateFormat;
 import java.util.UUID;
+import java.util.Set;
+import java.util.HashSet;
+import android.widget.LinearLayout;
 
 public class EditEntryFragment extends Fragment
                                implements CompanySpinnerHandler.OnSelectedListener,
-                                          DateTimeHandler.OnDateChangedListener {
+                                          DateTimeHandler.OnDateChangedListener,
+                                          ReminderDialog.ReminderSetListener {
+
+    private class ReminderListClickListener implements View.OnClickListener {
+
+        private EventAlarm _alarm = null;
+
+        public ReminderListClickListener(EventAlarm alarm) {
+            _alarm = alarm;
+        }
+
+        @Override
+        public void onClick(View v) {
+            // remove alarm from adapter and its view from reminder list
+            _eventAlarmAdapter.remove(_alarm);
+            LinearLayout reminderList = (LinearLayout)getActivity().
+                findViewById(R.id.event_reminder_list);
+            reminderList.removeView(v);
+        }
+    }
 
     // entry data for each entry type
     private Company _company = null;
@@ -62,9 +84,11 @@ public class EditEntryFragment extends Fragment
     // event state spinner handler instance
     private EventStateSpinnerHandler _eventStateSpinnerHandler = null; 
     // event date
-    Date _eventDate = null;
+    private Date _eventDate = null;
     // date/time handler instance
-    DateTimeHandler _dateTimeHandler = null;
+    private DateTimeHandler _dateTimeHandler = null;
+    // event reminder adapter
+    private ArrayAdapter<EventAlarm> _eventAlarmAdapter = null;
 
     public EditEntryFragment(Company company) {
         _company = company;
@@ -175,6 +199,30 @@ public class EditEntryFragment extends Fragment
         timeText.setText(timeFormat.format(_eventDate));
     }
 
+    // ReminderDialog.ReminderSetListener implementation
+    @Override
+    public void onReminderSet(byte type, int value) {
+        if (_eventAlarmAdapter == null) {
+            // this is the first one, create adapter
+            _eventAlarmAdapter = new ArrayAdapter<EventAlarm>(getActivity(),
+                R.layout.reminder_item, R.id.event_reminder_text);
+        }
+
+        EventAlarm alarm = new EventAlarm(getActivity(), value, type, _eventDate.getTime());
+        _eventAlarmAdapter.add(alarm);
+
+        // get view and add it to the reminder list
+        int pos = _eventAlarmAdapter.getPosition(alarm);
+        LinearLayout reminderList = (LinearLayout)getActivity().
+            findViewById(R.id.event_reminder_list);
+        View alarmView = _eventAlarmAdapter.getView(pos, null, (ViewGroup)reminderList);
+        ViewGroup.LayoutParams params =
+            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                       ViewGroup.LayoutParams.WRAP_CONTENT);
+        reminderList.addView(alarmView, params);
+        alarmView.setOnClickListener(new ReminderListClickListener(alarm));
+    }
+
     // populate view with company data
     private void populateCompanyView() {
         EditText txt = (EditText)getActivity().findViewById(R.id.company_name_text);
@@ -253,6 +301,16 @@ public class EditEntryFragment extends Fragment
         });
         // populate date and time text fields - onDateChanged() will do the job
         onDateChanged(_eventDate);
+
+        View reminderView = getActivity().findViewById(R.id.event_add_reminder);
+        reminderView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReminderDialog dialog = new ReminderDialog(EditEntryFragment.this,
+                    getActivity());
+                dialog.show(getActivity().getFragmentManager(), "ReminderDialog");
+            }
+        });
     }
 
     // populate view with project data
