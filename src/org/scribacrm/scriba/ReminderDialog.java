@@ -37,12 +37,12 @@ import android.app.Dialog;
 public class ReminderDialog extends DialogFragment {
 
     public interface ReminderSetListener {
-        void onReminderSet(byte type, int value);
+        void onReminderSet(byte type, long value);
     }
 
     ReminderSetListener _listener = null;
     Context _context = null;
-    int _value = 5;
+    long _value = 5;
     byte _type = EventAlarm.INTERVAL_MINUTES;
     ArrayAdapter<CharSequence> _typeAdapter = null;
     String _minutesTypeStr = null;
@@ -72,7 +72,7 @@ public class ReminderDialog extends DialogFragment {
             (Context.LAYOUT_INFLATER_SERVICE);
         View content = inflater.inflate(R.layout.reminder_dialog, null);
         _valueText = (EditText)content.findViewById(R.id.reminder_time);
-        _valueText.setText(Integer.toString(_value));
+        _valueText.setText(Long.toString(_value));
         Spinner valueTypeSpinner = (Spinner)content.findViewById(R.id.reminder_spinner);
         valueTypeSpinner.setAdapter(_typeAdapter);
         valueTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

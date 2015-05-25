@@ -40,9 +40,17 @@ public class EventAlarm {
         _context = context;
         _alarm = alm;
         _event = event;
+        long interval = _event - _alarm;
+        // determine the type automatically
+        if ((interval >= 3600) && ((interval % 3600) == 0)) {
+            _type = INTERVAL_HOURS;
+        }
+        else {
+            _type = INTERVAL_MINUTES;
+        }
     }
 
-    public EventAlarm(Context context, int interval, byte type, long event) {
+    public EventAlarm(Context context, long interval, byte type, long event) {
         _context = context;
         _event = event;
         _type = type;
@@ -55,22 +63,20 @@ public class EventAlarm {
         }
     }
 
-    public EventAlarm(Context context, int interval, long event) {
-        _context = context;
-        _event = event;
-        _alarm = _event - interval;
-        // determine the type automatically
-        if ((_alarm >= 3600) && ((_alarm % 3600) == 0)) {
-            _type = INTERVAL_HOURS;
-        }
-        else {
-            _type = INTERVAL_MINUTES;
-        }
-    }
-
     public long getEventTimestamp() { return _event; }
     public long getAlarmTimestamp() { return _alarm; }
     public byte getIntervalType() { return _type; }
+    public long getInterval() {
+        if (_type == INTERVAL_MINUTES) {
+            return ((_event - _alarm) / 60);
+        }
+        else if (_type == INTERVAL_HOURS) {
+            return ((_event - _alarm) / 3600);
+        }
+        else {
+            return 0;
+        }
+    }
 
     @Override
     public String toString() {

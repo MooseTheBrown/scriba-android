@@ -82,6 +82,7 @@ public class EventAlarmMgr {
         if (exists == false) {
             _prefs.edit().putStringSet(uuidStr, updAlarms).apply();
             _almMgr.set(AlarmManager.RTC_WAKEUP, timestamp, buildIntent(eventId, timestamp));
+            Log.d("[Scriba]", "EventAlarmMgr set alarm for timestamp=" + timestamp);
         }
     }
 
@@ -107,6 +108,12 @@ public class EventAlarmMgr {
 
         // store remaining alarms
         _prefs.edit().putStringSet(uuidStr, updAlarms).apply();
+    }
+
+    // remove all alarms for the given event
+    public void removeAlarms(UUID eventId) {
+        String uuidStr = eventId.toString();
+        _prefs.edit().remove(uuidStr).apply();
     }
 
     // used by alarm broadcast receiver to remove alarm that has been just delivered
@@ -148,6 +155,7 @@ public class EventAlarmMgr {
             for (String alarm : alarms) {
                 long timestamp = Long.parseLong(alarm, 10);
                 _almMgr.set(AlarmManager.RTC_WAKEUP, timestamp, buildIntent(eventId, timestamp));
+                Log.d("[Scriba]", "EventAlarmMgr set alarm for timestamp=" + timestamp);
             }
         }
     }

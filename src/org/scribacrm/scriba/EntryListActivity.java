@@ -118,25 +118,6 @@ public class EntryListActivity extends Activity
             int entryTypeId = savedInstanceState.getInt(ENTRY_TYPE_KEY, -1);
             if (entryTypeId != -1) {
                 setEntryType(entryTypeId);
-
-                // set current entry type as selected in drop-down navigation list
-                int pos = -1;
-                switch(_entryType) {
-                    case COMPANY:
-                        pos = _entryTypeAdapter.getPosition(_entryTypeCompanyStr);
-                        break;
-                    case EVENT:
-                        pos = _entryTypeAdapter.getPosition(_entryTypeEventStr);
-                        break;
-                    case PROJECT:
-                        pos = _entryTypeAdapter.getPosition(_entryTypeProjectStr);
-                        break;
-                    case POC:
-                        pos = _entryTypeAdapter.getPosition(_entryTypePOCStr);
-                        break;
-                }
-
-                getActionBar().setSelectedNavigationItem(pos);
             }
 
             // get search info from saved state
@@ -158,6 +139,7 @@ public class EntryListActivity extends Activity
             Uri uri = intent.getData();
             EntryURI entryUri = new EntryURI(uri);
             if (entryUri.getType() == EntryType.EVENT) {
+                setEntryType(EntryType.EVENT.id());
                 if (getScreenType() == SCREEN_TYPE_SMALL) {
                     // we're on a small screen device,
                     // launch separate activity for entry details
@@ -463,12 +445,32 @@ public class EntryListActivity extends Activity
         }
     }
 
-    // set entry type based on its integer representation
+    // set entry type based on its integer representation and update
+    // entry type in the action bar
     private void setEntryType(int typeId) {
         if (typeId == EntryType.COMPANY.id()) { _entryType = EntryType.COMPANY; }
         else if (typeId == EntryType.EVENT.id()) { _entryType = EntryType.EVENT; }
         else if (typeId == EntryType.POC.id()) { _entryType = EntryType.POC; }
         else if (typeId == EntryType.PROJECT.id()) { _entryType = EntryType.PROJECT; }
+
+        // set current entry type as selected in drop-down navigation list
+        int pos = -1;
+        switch(_entryType) {
+            case COMPANY:
+                pos = _entryTypeAdapter.getPosition(_entryTypeCompanyStr);
+                break;
+            case EVENT:
+                pos = _entryTypeAdapter.getPosition(_entryTypeEventStr);
+                break;
+            case PROJECT:
+                pos = _entryTypeAdapter.getPosition(_entryTypeProjectStr);
+                break;
+            case POC:
+                pos = _entryTypeAdapter.getPosition(_entryTypePOCStr);
+                break;
+        }
+
+        getActionBar().setSelectedNavigationItem(pos);
     }
 
     // launch SerializationService to export all data to a file

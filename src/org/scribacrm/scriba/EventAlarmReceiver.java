@@ -40,6 +40,7 @@ public class EventAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("[Scriba]", "EventAlarmReceiver.onReceive()");
         // event alarm has been triggered
         Event event = getEventData(context, intent);
         if (event == null) {

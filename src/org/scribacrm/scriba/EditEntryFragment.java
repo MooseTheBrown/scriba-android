@@ -201,7 +201,7 @@ public class EditEntryFragment extends Fragment
 
     // ReminderDialog.ReminderSetListener implementation
     @Override
-    public void onReminderSet(byte type, int value) {
+    public void onReminderSet(byte type, long value) {
         if (_eventAlarmAdapter == null) {
             // this is the first one, create adapter
             _eventAlarmAdapter = new ArrayAdapter<EventAlarm>(getActivity(),
@@ -302,6 +302,7 @@ public class EditEntryFragment extends Fragment
         // populate date and time text fields - onDateChanged() will do the job
         onDateChanged(_eventDate);
 
+        // setup "add reminder" button
         View reminderView = getActivity().findViewById(R.id.event_add_reminder);
         reminderView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,6 +312,17 @@ public class EditEntryFragment extends Fragment
                 dialog.show(getActivity().getFragmentManager(), "ReminderDialog");
             }
         });
+        // create views for already existing reminders
+        EventAlarmMgr eventAlarmMgr = new EventAlarmMgr(getActivity());
+        Set<Long> existingAlarms = eventAlarmMgr.getAlarms(_event.id);
+        if (existingAlarms != null) {
+            for (Long ts : existingAlarms) {
+                EventAlarm eventAlarm = new EventAlarm(getActivity(), ts.longValue(),
+                    _event.timestamp);
+                // onReminderSet will create the view for each reminder
+                onReminderSet(eventAlarm.getIntervalType(), eventAlarm.getInterval());
+            }
+        }
     }
 
     // populate view with project data
@@ -415,6 +427,29 @@ public class EditEntryFragment extends Fragment
         ScribaDBManager.useDB(getActivity());
         ScribaDB.updateEvent(event);
         ScribaDBManager.releaseDB();
+
+        saveEventReminders(event);
+    }
+
+    // save event reminder modifications
+    private void saveEventReminders(Event event) {
+        EventAlarmMgr evtAlarmMgr = new EventAlarmMgr(getActivity());
+
+        if (_eventAlarmAdapter != null) {
+            // remove all alarms and add only those that are present
+            // in the alarm adapter
+            evtAlarmMgr.removeAlarms(event.id);
+            for (int i = 0; i < _eventAlarmAdapter.getCount(); i++) {
+                EventAlarm alarm = _eventAlarmAdapter.getItem(i);
+                // event timestamp may have changed since EventAlarm object
+                // creation, so make new object with updated event time
+                EventAlarm updAlarm = new EventAlarm(getActivity(),
+                    alarm.getInterval(), alarm.getIntervalType(), event.timestamp);
+                evtAlarmMgr.addAlarm(event.id, updAlarm.getAlarmTimestamp());
+            }
+        }
+        // if the alarm adapter is not instantiated at this moment, it
+        // means there were no reminders set for this event, so do nothing
     }
 
     // save project modifications

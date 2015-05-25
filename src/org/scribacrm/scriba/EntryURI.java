@@ -45,16 +45,16 @@ public class EntryURI {
         try {
             if (uri.getScheme().equals(SCHEME)) {
                 String path = uri.getPath();
-                if (path.equals(COMPANY_PATH)) {
+                if (path.equals("/" + COMPANY_PATH)) {
                     _type = EntryType.COMPANY;
                 }
-                else if (path.equals(EVENT_PATH)) {
+                else if (path.equals("/" + EVENT_PATH)) {
                     _type = EntryType.EVENT;
                 }
-                else if (path.equals(POC_PATH)) {
+                else if (path.equals("/" + POC_PATH)) {
                     _type = EntryType.POC;
                 }
-                else if (path.equals(PROJECT_PATH)) {
+                else if (path.equals("/" + PROJECT_PATH)) {
                     _type = EntryType.PROJECT;
                 }
                 else {
