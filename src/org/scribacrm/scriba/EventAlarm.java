@@ -42,7 +42,7 @@ public class EventAlarm {
         _event = event;
         long interval = _event - _alarm;
         // determine the type automatically
-        if ((interval >= 3600) && ((interval % 3600) == 0)) {
+        if ((interval >= 3600000) && ((interval % 3600000) == 0)) {
             _type = INTERVAL_HOURS;
         }
         else {
@@ -56,10 +56,10 @@ public class EventAlarm {
         _type = type;
 
         if (_type == INTERVAL_MINUTES) {
-            _alarm = _event - interval * 60;
+            _alarm = _event - interval * 60000;
         }
         else if (_type == INTERVAL_HOURS) {
-            _alarm = _event - interval * 3600;
+            _alarm = _event - interval * 3600000;
         }
     }
 
@@ -68,10 +68,10 @@ public class EventAlarm {
     public byte getIntervalType() { return _type; }
     public long getInterval() {
         if (_type == INTERVAL_MINUTES) {
-            return ((_event - _alarm) / 60);
+            return ((_event - _alarm) / 60000);
         }
         else if (_type == INTERVAL_HOURS) {
-            return ((_event - _alarm) / 3600);
+            return ((_event - _alarm) / 3600000);
         }
         else {
             return 0;
@@ -84,11 +84,11 @@ public class EventAlarm {
         int resid = 0;
 
         if (_type == INTERVAL_MINUTES) {
-            interval /= 60;
+            interval /= 60000;
             resid = R.string.event_reminder_minutes;
         }
         else if (_type == INTERVAL_HOURS) {
-            interval /= 3600;
+            interval /= 3600000;
             resid = R.string.event_reminder_hours;
         }
 

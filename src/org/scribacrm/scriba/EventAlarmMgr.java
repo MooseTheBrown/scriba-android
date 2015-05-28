@@ -113,6 +113,15 @@ public class EventAlarmMgr {
     // remove all alarms for the given event
     public void removeAlarms(UUID eventId) {
         String uuidStr = eventId.toString();
+        Set<String> alarms = _prefs.getStringSet(uuidStr, null);
+        if (alarms != null) {
+            for (String alarm : alarms) {
+                long timestamp = Long.parseLong(alarm, 10);
+                // cancel alarm in AlarmManager
+                _almMgr.cancel(buildIntent(eventId, timestamp));
+            }
+        }
+        // remove alarms from SharedPreferences
         _prefs.edit().remove(uuidStr).apply();
     }
 
