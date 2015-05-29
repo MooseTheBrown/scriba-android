@@ -29,6 +29,7 @@
         style="@style/scriba_entry_item_text"
         />
     <ImageView
+        android:id="@+id/reminder_remove_button"
         android:src="@drawable/cancel"
         style="@style/scriba_action_image"
       >

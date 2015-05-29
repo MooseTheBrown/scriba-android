@@ -39,6 +39,7 @@ import android.widget.AdapterView;
 import java.util.Date;
 import java.text.DateFormat;
 import java.util.UUID;
+import java.util.Set;
 
 public class EntryDetailsFragment extends Fragment {
 
@@ -189,6 +190,9 @@ public class EntryDetailsFragment extends Fragment {
     private ArrayAdapter<DataDescriptor> _poc_list_adapter = null;
     private ArrayAdapter<DataDescriptor> _project_list_adapter = null;
     private ArrayAdapter<DataDescriptor> _event_list_adapter = null;
+
+    // adapter for event reminders
+    private ArrayAdapter<EventAlarm> _eventAlarmAdapter = null;
 
     public Company getCompany() { return _company; }
     public Event getEvent() { return _event; }
@@ -526,6 +530,43 @@ public class EntryDetailsFragment extends Fragment {
 
         txt = (TextView)getActivity().findViewById(R.id.event_time_text);
         txt.setText(timeFormat.format(date));
+
+        populateEventReminders();
+    }
+
+    // populate list of event reminders
+    private void populateEventReminders() {
+        if (_event == null) {
+            return;
+        }
+
+        _eventAlarmAdapter = new ArrayAdapter<EventAlarm>(getActivity(),
+            R.layout.reminder_item, R.id.event_reminder_text);
+
+        EventAlarmMgr alarmMgr = new EventAlarmMgr(getActivity());
+        Set<Long> alarms = alarmMgr.getAlarms(_event.id);
+        if (alarms == null) {
+            return;
+        }
+
+        LinearLayout reminderList = (LinearLayout)getActivity().
+            findViewById(R.id.event_reminder_list);
+
+        for (Long alarm : alarms) {
+            long ts = alarm.longValue();
+            EventAlarm eventAlarm = new EventAlarm(getActivity(), ts, _event.timestamp);
+            _eventAlarmAdapter.add(eventAlarm);
+            int pos = _eventAlarmAdapter.getPosition(eventAlarm);
+            // get view and add it to the reminder list
+            View alarmView = _eventAlarmAdapter.getView(pos, null, (ViewGroup)reminderList);
+            // disable "delete" button, it should be present only in entry editor
+            View button = alarmView.findViewById(R.id.reminder_remove_button);
+            button.setVisibility(View.GONE);
+            ViewGroup.LayoutParams params =
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                           ViewGroup.LayoutParams.WRAP_CONTENT);
+            reminderList.addView(alarmView, params);
+        }
     }
 
     // populate UI controls with project data received from Loader

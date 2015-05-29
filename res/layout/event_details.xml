@@ -191,5 +191,23 @@
             style="@style/scriba_entry_item_text"
             />
     </LinearLayout>
+
+    <!-- Event reminders -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <!-- Header -->
+        <TextView
+            android:id="@+id/event_reminder_header_text"
+            android:text="@string/event_reminder_header"
+            style="@style/scriba_entry_item_header"
+            />
+
+        <!-- Reminder list -->
+        <LinearLayout
+            android:id="@+id/event_reminder_list"
+            style="@style/scriba_list_container"
+            />
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>

@@ -220,7 +220,7 @@
         >
         <!-- Header -->
         <TextView
-            android:id="@+id/event_time_text"
+            android:id="@+id/event_reminder_header_text"
             android:text="@string/event_reminder_header"
             style="@style/scriba_entry_item_header"
             />

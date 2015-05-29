@@ -150,5 +150,5 @@
     </string-array>
     <string name="event_reminder_ok">OK</string>
     <string name="event_reminder_cancel">Cancel</string>
-    <string name="event_reminder_header">Reminders</string>
+    <string name="event_reminder_header">Reminders:</string>
 </resources>
