@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -218,7 +218,12 @@ public class EntryListActivity extends Activity
                 Log.d("[Scriba]", "Search view is closed");
 
                 // user dismisses search view, show all entries of current type
-                _searchInfo = null;
+                if (_searchInfo != null) {
+                    // we need to preserve only search type, old query should be
+                    // discarded
+                    SearchInfo.SearchType searchType = _searchInfo.searchType();
+                    _searchInfo = new SearchInfo(searchType, "");
+                }
                 EntryListFragment listFragment = (EntryListFragment)getFragmentManager().
                                                  findFragmentByTag(LIST_FRAG_TAG);
                 if (listFragment != null) {
@@ -578,6 +583,11 @@ public class EntryListActivity extends Activity
                 item.setVisible(true);
                 submenu.setGroupVisible(R.id.group_search_type_company, true);
                 submenu.setGroupVisible(R.id.group_search_type_poc, false);
+                if (_searchInfo == null) {
+                    // default company search type
+                    MenuItem defaultItem = menu.findItem(R.id.comp_search_name);
+                    defaultItem.setChecked(true);
+                }
                 break;
             case EVENT:
             case PROJECT:
@@ -587,6 +597,11 @@ public class EntryListActivity extends Activity
                 item.setVisible(true);
                 submenu.setGroupVisible(R.id.group_search_type_company, false);
                 submenu.setGroupVisible(R.id.group_search_type_poc, true);
+                if (_searchInfo == null) {
+                    // default POC search type
+                    MenuItem defaultItem = menu.findItem(R.id.poc_search_name);
+                    defaultItem.setChecked(true);
+                }
                 break;
         }
     }
