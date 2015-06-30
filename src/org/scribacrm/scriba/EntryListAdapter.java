@@ -53,10 +53,10 @@ public class EntryListAdapter implements ListAdapter {
     }
 
     public void clear() {
-        _entries.clear();
         for (DataSetObserver obs : _observers) {
             obs.onInvalidated();
         }
+        _entries.clear();
     }
 
     // ListAdapter implementation
