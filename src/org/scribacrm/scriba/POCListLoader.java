@@ -83,6 +83,12 @@ public class POCListLoader extends AsyncTaskLoader<DataDescriptor []> {
             }
         }
 
+        if (result != null) {
+            Log.d("[Scriba]", "POCListLoader - loading finished, result length is " +
+                  result.length);
+            result = ScribaDB.fetchAll(result);
+        }
+
         return result;
     }
 

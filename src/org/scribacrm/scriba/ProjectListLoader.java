@@ -81,6 +81,7 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
         }
 
         if (result != null) {
+            result = ScribaDB.fetchAll(result);
             Log.d("[Scriba]", "ProjectListLoader - loading finished, result length is " +
                   result.length);
         }

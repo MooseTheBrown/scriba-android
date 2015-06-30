@@ -24,6 +24,7 @@ import android.util.Log;
 import android.content.AsyncTaskLoader;
 import org.scribacrm.libscriba.*;
 import android.content.Context;
+import java.util.ArrayList;
 
 public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
 
@@ -82,6 +83,7 @@ public class CompanyListLoader extends AsyncTaskLoader<DataDescriptor []> {
         }
 
         if (result != null) {
+            result = ScribaDB.fetchAll(result);
             Log.d("[Scriba]", "CompanyListLoader - loading finished, result length is " +
                   result.length);
         }
