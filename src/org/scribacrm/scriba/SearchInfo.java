@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Mikhail Sapozhnikov
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -33,13 +33,14 @@ public class SearchInfo {
         EVENT_COMPANY(4),
         EVENT_POC(5),
         EVENT_PROJECT(6),
-        POC_NAME(7),
-        POC_COMPANY(8),
-        POC_POSITION(9),
-        POC_EMAIL(10),
-        PROJECT_TITLE(11),
-        PROJECT_COMPANY(12),
-        PROJECT_STATE(13);
+        EVENT_STATE(7),
+        POC_NAME(8),
+        POC_COMPANY(9),
+        POC_POSITION(10),
+        POC_EMAIL(11),
+        PROJECT_TITLE(12),
+        PROJECT_COMPANY(13),
+        PROJECT_STATE(14);
 
         private final int _id;
 

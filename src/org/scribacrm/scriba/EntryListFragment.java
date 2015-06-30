@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -64,6 +64,8 @@ public class EntryListFragment extends ListFragment
     private ActivityInterface _activityInterface = null;
     // project state filter dialog instance
     ProjStateFilterDialog _projStateFilterDialog = null;
+    // event state filter dialog instance
+    EventStateFilterDialog _eventStateFilterDialog = null;
 
     public EntryListFragment() {
     }
@@ -117,7 +119,8 @@ public class EntryListFragment extends ListFragment
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem filterItem = menu.findItem(R.id.action_filter);
         MenuItem resetFilterItem = menu.findItem(R.id.action_reset_filter);
-        if ((_activityInterface.getEntryType() == EntryType.PROJECT) &&
+        if (((_entryType == EntryType.PROJECT) ||
+            (_entryType == EntryType.EVENT)) &&
             (_activityInterface.getSearchInfo() == null)) {
             filterItem.setVisible(true);
             resetFilterItem.setVisible(true);
@@ -132,25 +135,49 @@ public class EntryListFragment extends ListFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_filter:
-                byte currState = Project.State.INITIAL;
-                if (_projStateFilterDialog != null) {
-                    currState = _projStateFilterDialog.getProjectState();
+                if (_entryType == EntryType.PROJECT) {
+                    // project filter
+                    byte currState = Project.State.INITIAL;
+                    if (_projStateFilterDialog != null) {
+                        currState = _projStateFilterDialog.getProjectState();
+                    }
+                    ProjStateFilterDialog.DismissListener listener =
+                        new ProjStateFilterDialog.DismissListener() {
+                            public void onDismiss() {
+                                // force data reload when new filter type is
+                                // selected by user
+                                loadData(true);
+                            }
+                        };
+                    _projStateFilterDialog = new ProjStateFilterDialog(currState, listener);
+                    _projStateFilterDialog.show(getActivity().getFragmentManager(),
+                                                "projFilterDialog");
                 }
-                ProjStateFilterDialog.DismissListener listener =
-                    new ProjStateFilterDialog.DismissListener() {
-                        public void onDismiss() {
-                            // force data reload when new filter type is
-                            // selected by user
-                            loadData(true);
-                        }
-                    };
-                _projStateFilterDialog = new ProjStateFilterDialog(currState, listener);
-                _projStateFilterDialog.show(getActivity().getFragmentManager(),
-                                            "filterDialog");
+                else {
+                    // event filter
+                    byte currState = Event.State.SCHEDULED;
+                    if (_eventStateFilterDialog != null) {
+                        currState = _eventStateFilterDialog.getEventState();
+                    }
+                    EventStateFilterDialog.DismissListener listener = 
+                        new EventStateFilterDialog.DismissListener() {
+                            public void onDismiss() {
+                                loadData(true);
+                            }
+                        };
+                    _eventStateFilterDialog = new EventStateFilterDialog(currState, listener);
+                    _eventStateFilterDialog.show(getActivity().getFragmentManager(),
+                                                 "evtFilterDialog");
+                }
                 break;
             case R.id.action_reset_filter:
                 // reset filter and force data reload
-                _projStateFilterDialog = null;
+                if (_entryType == EntryType.PROJECT) {
+                    _projStateFilterDialog = null;
+                }
+                else {
+                    _eventStateFilterDialog = null;
+                }
                 loadData(true);
                 break;
             default:
@@ -202,6 +229,10 @@ public class EntryListFragment extends ListFragment
             EventListLoader eventLoader = new EventListLoader(getActivity());
             if (searchInfo != null) {
                 eventLoader.setSearchInfo(searchInfo);
+            }
+            else if (_eventStateFilterDialog != null) {
+                eventLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.EVENT_STATE,
+                    _eventStateFilterDialog.getEventState()));
             }
             loader = (Loader<DataDescriptor[]>)eventLoader;
         }

@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -67,6 +67,7 @@ public class EventListAdapter extends EntryListAdapter {
                 break;
             default:
                 Log.d("[Scriba]", "EventListAdapter.getView(), event state scheduled");
+                textView.setBackgroundResource(R.drawable.entry_item_bg);
                 break;
         }
 

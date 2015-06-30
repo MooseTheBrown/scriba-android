@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -75,6 +75,9 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
                     break;
                 case EVENT_PROJECT:
                     result = ScribaDB.getEventsByProject(_searchInfo.uuidParam());
+                    break;
+                case EVENT_STATE:
+                    result = ScribaDB.getEventsByState(_searchInfo.byteParam());
                     break;
                 default:
                     Log.e("[Scriba]", "Unsupported event search type");
