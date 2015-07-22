@@ -132,6 +132,8 @@
     <string name="proj_search_state">By state</string>
     <!-- Notifications -->
     <string name="notify_file_sync_title">File synchronization</string>
+    <string name="notify_serialize_in_progress">Data export is in progress...</string>
+    <string name="notify_deserialize_in_progress">Data import is in progress...</string>
     <string name="notify_serialize_ok">Data exported</string>
     <string name="notify_serialize_failed">Data export failed</string>
     <string name="notify_deserialize_ok">Data imported</string>

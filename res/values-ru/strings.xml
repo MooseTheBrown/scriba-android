@@ -132,6 +132,8 @@
     <string name="proj_search_state">По состоянию</string>
     <!-- Notifications -->
     <string name="notify_file_sync_title">Файловая синхронизация</string>
+    <string name="notify_serialize_in_progress">Идет экспорт данных...</string>
+    <string name="notify_deserialize_in_progress">Идет импорт данных...</string>
     <string name="notify_serialize_ok">Экспорт завершен</string>
     <string name="notify_serialize_failed">Не удалось экспортировать данные</string>
     <string name="notify_deserialize_ok">Импорт завершен</string>

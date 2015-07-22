@@ -169,6 +169,7 @@ public class SerializationService extends IntentService {
     }
 
     private void serialize(Bundle rqData, String filename) {
+        notify(R.string.notify_serialize_in_progress);
         Bundle company_bundle = rqData.getBundle(REQUEST_DATA_COMPANIES);
         Bundle event_bundle = rqData.getBundle(REQUEST_DATA_EVENTS);
         Bundle poc_bundle = rqData.getBundle(REQUEST_DATA_PEOPLE);
@@ -186,15 +187,16 @@ public class SerializationService extends IntentService {
             FileOutputStream stream = new FileOutputStream(file);
             stream.write(data, 0, data.length);
             stream.close();
-            notifyCompleted(R.string.notify_serialize_ok);
+            notify(R.string.notify_serialize_ok);
         }
         catch (IOException e) {
             Log.d("[Scriba]", "SerializationService caught IOException: " + e.getMessage());
-            notifyCompleted(R.string.notify_serialize_failed);
+            notify(R.string.notify_serialize_failed);
         }
     }
 
     private void deserialize(Bundle rqData, String filename) {
+        notify(R.string.notify_deserialize_in_progress);
         byte mergeStrat = rqData.getByte(REQUEST_DATA_MERGESTRAT,
                                          ScribaDB.MergeStrategy.LOCAL_OVERRIDE);
 
@@ -213,19 +215,19 @@ public class SerializationService extends IntentService {
             stream.read(data, 0, (int)filesize);
             stream.close();
             ScribaDB.deserialize(data, mergeStrat);
-            notifyCompleted(R.string.notify_deserialize_ok);
+            notify(R.string.notify_deserialize_ok);
             // notify activities that are interested that data has been
             // imported
             SerializationBroadcast.sendDeserializationBroadcast(this);
         }
         catch (IOException e) {
             Log.d("[Scriba]", "SerializationService caught IOException: " + e.getMessage());
-            notifyCompleted(R.string.notify_deserialize_failed);
+            notify(R.string.notify_deserialize_failed);
         }
     }
 
     // show notification indicating completed data sync (either successful or failed)
-    private void notifyCompleted(int msgId) {
+    private void notify(int msgId) {
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle(getString(R.string.notify_file_sync_title));
         builder.setContentText(getString(msgId));
