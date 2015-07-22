@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -41,18 +41,17 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
     @Override
     public void onStartLoading() {
         Log.d("[Scriba]", "ProjectListLoader.onStartLoading()");
-        ScribaDBManager.useDB(getContext());
         forceLoad();
     }
 
     @Override
     public void onReset() {
         Log.d("[Scriba]", "ProjectListLoader.onReset()");
-        ScribaDBManager.releaseDB();
     }
 
     @Override
     public DataDescriptor[] loadInBackground() {
+        ScribaDBManager.useDB(getContext());
         Log.d("[Scriba]", "ProjectListLoader.loadInBackground()");
 
         DataDescriptor[] result = null;
@@ -85,6 +84,8 @@ public class ProjectListLoader extends AsyncTaskLoader<DataDescriptor []> {
             Log.d("[Scriba]", "ProjectListLoader - loading finished, result length is " +
                   result.length);
         }
+
+        ScribaDBManager.releaseDB();
         return result;
     }
 

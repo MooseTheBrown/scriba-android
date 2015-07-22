@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Mikhail Sapozhnikov
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -135,7 +135,7 @@ public class SerializationService extends IntentService {
 
     @Override
     public void onCreate() {
-        ScribaDBManager.useDB(this);
+        ScribaDBManager.useDBNosync(this);
         super.onCreate();
     }
 

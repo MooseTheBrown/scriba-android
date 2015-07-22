@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -49,6 +49,28 @@ public class ScribaDBManager {
             params[0].value = db_location;
             Log.d("[Scriba]", "Trying to init scriba DB using db file " + db_location);
 
+            int ret = ScribaDB.init(descr, params);
+            Log.d("[Scriba]", "ScribaDB.init() returned " + ret);
+        }
+        users++;
+    }
+
+    public static void useDBNosync(Context context) {
+        if (users == 0) {
+            ScribaDB.DBDescr descr = new ScribaDB.DBDescr();
+            descr.name = "scriba_sqlite";
+            descr.type = ScribaDB.DBType.BUILTIN;
+
+            ScribaDB.DBParam[] params = new ScribaDB.DBParam[2];
+            params[0] = new ScribaDB.DBParam();
+            params[0].key = "db_loc";
+            String db_location = context.getFilesDir().getAbsolutePath() + "/" + DB_FILE_NAME;
+            params[0].value = db_location;
+            params[1] = new ScribaDB.DBParam();
+            params[1].key = "db_sync";
+            params[1].value = "off";
+
+            Log.d("[Scriba]", "Trying to init scriba DB using db file " + db_location);
             int ret = ScribaDB.init(descr, params);
             Log.d("[Scriba]", "ScribaDB.init() returned " + ret);
         }

@@ -41,18 +41,17 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
     @Override
     public void onStartLoading() {
         Log.d("[Scriba]", "EventListLoader.onStartLoading()");
-        ScribaDBManager.useDB(getContext());
         forceLoad();
     }
 
     @Override
     public void onReset() {
         Log.d("[Scriba]", "EventListLoader.onReset()");
-        ScribaDBManager.releaseDB();
     }
 
     @Override
     public DataDescriptor[] loadInBackground() {
+        ScribaDBManager.useDB(getContext());
         Log.d("[Scriba]", "EventListLoader.loadInBackground()");
 
         DataDescriptor[] result = null;
@@ -90,6 +89,7 @@ public class EventListLoader extends AsyncTaskLoader<DataDescriptor []> {
             Log.d("[Scriba]", "EventListLoader - loading finished, result length is " +
                   result.length);
         }
+        ScribaDBManager.releaseDB();
         return result;
     }
 
