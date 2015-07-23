@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+<!--
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -99,6 +99,42 @@
             android:gravity="left"
             android:spinnerMode="dialog"
             android:prompt="@string/project_state_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <!-- Currency -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_currency_header"
+            android:text="@string/project_currency_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/project_currency_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dialog"
+            android:prompt="@string/project_currency_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <!-- Project cost -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_add_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_cost_header"
+            android:text="@string/project_cost_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <EditText
+            android:id="@+id/project_cost_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
             />
     </LinearLayout>
 </LinearLayout>

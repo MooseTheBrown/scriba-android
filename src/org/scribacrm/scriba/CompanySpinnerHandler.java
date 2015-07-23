@@ -79,11 +79,13 @@ public class CompanySpinnerHandler implements
     public void onLoadFinished(Loader<DataDescriptor[]> loader, DataDescriptor[] data) {
         _companyListAdapter.clear();
         DataDescriptor selectedItem = null;
-        for (DataDescriptor item : data) {
-            _companyListAdapter.add(item);
-            if (item.id.equals(_companyId)) {
-                // remember company, which has to be selected
-                selectedItem = item;
+        if (data != null) {
+            for (DataDescriptor item : data) {
+                _companyListAdapter.add(item);
+                if (item.id.equals(_companyId)) {
+                    // remember company, which has to be selected
+                    selectedItem = item;
+                }
             }
         }
 

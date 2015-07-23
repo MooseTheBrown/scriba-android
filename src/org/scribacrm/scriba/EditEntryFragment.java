@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
@@ -79,6 +79,8 @@ public class EditEntryFragment extends Fragment
     private POCSpinnerHandler _pocSpinnerHandler = null;
     // project spinner handler instance
     private ProjectSpinnerHandler _projectSpinnerHandler = null;
+    // currency spinner handler instance
+    private CurrencySpinnerHandler _currencySpinnerHandler = null;
     // event type spinner handler instance
     private EventTypeSpinnerHandler _eventTypeSpinnerHandler = null;
     // event state spinner handler instance
@@ -344,6 +346,14 @@ public class EditEntryFragment extends Fragment
         Spinner projStateSpinner = (Spinner)getActivity().findViewById(R.id.project_state_spinner);
         _projectStateSpinnerHandler = new ProjectStateSpinnerHandler(getActivity());
         _projectStateSpinnerHandler.populateSpinner(projStateSpinner, _project.state);
+
+        // setup currency spinner
+        Spinner currencySpinner = (Spinner)getActivity().findViewById(R.id.project_currency_spinner);
+        _currencySpinnerHandler = new CurrencySpinnerHandler(getActivity());
+        _currencySpinnerHandler.populateSpinner(currencySpinner, _project.currency);
+
+        txt = (EditText)getActivity().findViewById(R.id.project_cost_text);
+        txt.setText((new Long(_project.cost)).toString());
     }
 
     // populate view with poc data
@@ -462,9 +472,14 @@ public class EditEntryFragment extends Fragment
 
         UUID selectedCompanyId = _companySpinnerHandler.getSelectedCompanyId();
         byte selectedState = _projectStateSpinnerHandler.getSelectedState();
+        byte selectedCurrency = _currencySpinnerHandler.getSelectedCurrency();
+
+        txt = (EditText)getActivity().findViewById(R.id.project_cost_text);
+        long cost = Long.parseLong(txt.getText().toString(), 10);
 
         Project project = new Project(_project.id, title, descr,
-                                      selectedCompanyId, selectedState);
+                                      selectedCompanyId, selectedState,
+                                      selectedCurrency, cost);
 
         ScribaDBManager.useDB(getActivity());
         ScribaDB.updateProject(project);

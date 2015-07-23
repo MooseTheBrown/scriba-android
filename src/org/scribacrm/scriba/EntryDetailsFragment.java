@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -614,6 +614,12 @@ public class EntryDetailsFragment extends Fragment {
         String stateStr = projectStateMapper.getString(_project.state);
         txt = (TextView)getActivity().findViewById(R.id.project_state_text);
         txt.setText(stateStr);
+
+        CurrencyMapper currencyMapper = new CurrencyMapper(getActivity());
+        String currencyStr = currencyMapper.getString(_project.currency);
+
+        txt = (TextView)getActivity().findViewById(R.id.project_cost_text);
+        txt.setText((new Long(_project.cost)).toString() + " " + currencyStr);
     }
 
     // populate UI controls with POC data received from Loader

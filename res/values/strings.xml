@@ -46,10 +46,13 @@
     <string name="poc_company_spinner_prompt">Select company</string>
     <string name="project_title_title">Title:</string>
     <string name="project_descr_title">Description:</string>
+    <string name="project_cost_title">Price:</string>
     <string name="project_company_title">Company:</string>
     <string name="project_state_title">State:</string>
+    <string name="project_currency_title">Currency:</string>
     <string name="project_company_spinner_prompt">Select company</string>
     <string name="project_state_spinner_prompt">Select project state</string>
+    <string name="project_currency_spinner_prompt">Select currency</string>
     <string name="event_descr_title">Description:</string>
     <string name="event_company_title">Company:</string>
     <string name="event_company_spinner_prompt">Select company</string>
@@ -108,6 +111,10 @@
     <string name="proj_state_contract_signed">Contract signed</string>
     <string name="proj_state_execution">Execution</string>
     <string name="proj_state_payment">Payment</string>
+    <!-- Currency types -->
+    <string name="currency_rub">RUB</string>
+    <string name="currency_usd">USD</string>
+    <string name="currency_eur">EUR</string>
     <!-- Event types -->
     <string name="event_type_meeting">Meeting</string>
     <string name="event_type_call">Call</string>

@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -60,6 +60,8 @@ public class AddEntryActivity extends Activity
     private POCSpinnerHandler _pocSpinnerHandler = null;
     // Project spinner handler instance
     private ProjectSpinnerHandler _projectSpinnerHandler = null;
+    // Currency spinner handler instance
+    private CurrencySpinnerHandler _currencySpinnerHandler = null;
     // event type spinner handler instance
     private EventTypeSpinnerHandler _eventTypeSpinnerHandler = null;
     // event state spinner handler instance
@@ -260,10 +262,14 @@ public class AddEntryActivity extends Activity
 
         UUID companyId = _companySpinnerHandler.getSelectedCompanyId();
         byte state = _projectStateSpinnerHandler.getSelectedState();
+        byte currency = _currencySpinnerHandler.getSelectedCurrency();
+
+        txt = (EditText)findViewById(R.id.project_cost_text);
+        long cost = Long.parseLong(txt.getText().toString(), 10);
 
         // add new project to the database
         ScribaDBManager.useDB(this);
-        ScribaDB.addProject(title, descr, companyId, state);
+        ScribaDB.addProject(title, descr, companyId, state, currency, cost);
         ScribaDBManager.releaseDB();
     }
 
@@ -317,6 +323,11 @@ public class AddEntryActivity extends Activity
         Spinner projectStateSpinner = (Spinner)findViewById(R.id.project_state_spinner);
         _projectStateSpinnerHandler = new ProjectStateSpinnerHandler(this);
         _projectStateSpinnerHandler.populateSpinner(projectStateSpinner);
+
+        // setup currency spinner
+        Spinner currencySpinner = (Spinner)findViewById(R.id.project_currency_spinner);
+        _currencySpinnerHandler = new CurrencySpinnerHandler(this);
+        _currencySpinnerHandler.populateSpinner(currencySpinner);
 
         // setup company spinner
         _companySpinnerHandler = new CompanySpinnerHandler(this, getLoaderManager(), this);

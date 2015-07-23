@@ -46,10 +46,13 @@
     <string name="poc_company_spinner_prompt">Выберите компанию</string>
     <string name="project_title_title">Название:</string>
     <string name="project_descr_title">Описание:</string>
+    <string name="project_cost_title">Стоимость:</string>
     <string name="project_company_title">Компания:</string>
     <string name="project_state_title">Статус:</string>
+    <string name="project_currency_title">Валюта:</string>
     <string name="project_company_spinner_prompt">Выберите компанию</string>
     <string name="project_state_spinner_prompt">Выберите статус проекта</string>
+    <string name="project_currency_spinner_prompt">Выберите валюту</string>
     <string name="event_descr_title">Описание:</string>
     <string name="event_company_title">Компания:</string>
     <string name="event_company_spinner_prompt">Выберите компанию</string>
