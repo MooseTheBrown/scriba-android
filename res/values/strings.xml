@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+<!--
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -23,6 +23,7 @@
 <resources>
     <string name="app_name">Scriba</string>
     <string name="no_records">No records</string>
+    <string name="loading_data">Loading data...</string>
     <string name="search_hint">Search records</string>
     <!-- Entry data -->
     <string name="company_name_title">Name:</string>

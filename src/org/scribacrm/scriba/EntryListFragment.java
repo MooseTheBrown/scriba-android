@@ -40,6 +40,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
 import java.util.UUID;
+import android.widget.TextView;
 
 public class EntryListFragment extends ListFragment
                                implements LoaderManager.LoaderCallbacks<DataDescriptor[]>,
@@ -278,6 +279,11 @@ public class EntryListFragment extends ListFragment
                 adapter.add(item);
             }
         }
+
+        TextView textView = (TextView)getActivity().findViewById(android.R.id.empty);
+        if (textView != null) {
+            textView.setText(R.string.no_records);
+        }
     }
 
     @Override
@@ -363,6 +369,11 @@ public class EntryListFragment extends ListFragment
     // initiate data loading in background using appropriate loader
     private void loadData(boolean forceReload) {
         Log.d("[Scriba]", "EntryListFragment.loadData(" + forceReload + ")");
+        TextView textView = (TextView)getActivity().findViewById(android.R.id.empty);
+        if (textView != null) {
+            textView.setText(R.string.loading_data);
+        }
+
         if (forceReload == true) {
             getLoaderManager().restartLoader(_entryType.loaderId(), null, this);
         }
