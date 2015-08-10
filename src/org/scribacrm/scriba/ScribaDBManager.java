@@ -27,16 +27,14 @@ import android.content.Context;
 /* Before calling any method from ScribaDB every component should first call
  * ScribaDBManager.useDB() to make sure that the database is initialized and ready.
  * Once database is no longer needed, component may call releaseDB() to close
- * the database if it's not used by anyone else.
- * Note that this class is not thread-safe, its methods have to be called on
- * UI thread only. */
+ * the database if it's not used by anyone else. */
 public class ScribaDBManager {
 
     private static final String DB_FILE_NAME = "scriba.db";
 
     private static int users = 0;
 
-    public static void useDB(Context context) {
+    public static synchronized void useDB(Context context) {
         if (users == 0) {
             ScribaDB.DBDescr descr = new ScribaDB.DBDescr();
             descr.name = "scriba_sqlite";
@@ -55,7 +53,7 @@ public class ScribaDBManager {
         users++;
     }
 
-    public static void useDBNosync(Context context) {
+    public static synchronized void useDBNosync(Context context) {
         if (users == 0) {
             ScribaDB.DBDescr descr = new ScribaDB.DBDescr();
             descr.name = "scriba_sqlite";
@@ -77,13 +75,13 @@ public class ScribaDBManager {
         users++;
     }
 
-    public static void releaseDB() {
+    public static synchronized void releaseDB() {
         if (users > 0) {
             users--;
-        }
-        if (users == 0) {
-            Log.d("[Scriba]", "Calling ScribaDB.cleanup()");
-            ScribaDB.cleanup();
+            if (users == 0) {
+                Log.d("[Scriba]", "Calling ScribaDB.cleanup()");
+                ScribaDB.cleanup();
+            }
         }
     }
 }
