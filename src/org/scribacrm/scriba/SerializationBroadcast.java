@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Mikhail Sapozhnikov
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -32,8 +32,10 @@ import android.util.Log;
 // SerializationService using Android local broadcast mechanism
 public class SerializationBroadcast {
 
-    private static String ACTION_DESERIALIZATION_COMPLETED =
+    public static String ACTION_DESERIALIZATION_COMPLETED =
         "Scriba.DESERIALIZATION_COMPLETED";
+    public static String ACTION_SERIALIZATION_COMPLETED =
+        "Scriba.SERIALIZATION_COMPLETED";
 
     // register broadcast receiver for deserialization completed event
     public static void registerForDeserialization(Context context,
@@ -43,10 +45,25 @@ public class SerializationBroadcast {
         manager.registerReceiver(receiver, filter);
     }
 
+    // register broadcast receiver for serialization completed event
+    public static void registerForSerialization(Context context,
+                                                BroadcastReceiver receiver) {
+        IntentFilter filter = new IntentFilter(ACTION_SERIALIZATION_COMPLETED);
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
+        manager.registerReceiver(receiver, filter);
+    }
+
     // broadcast deserialization completed event
     public static void sendDeserializationBroadcast(Context context) {
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
         Intent intent = new Intent(ACTION_DESERIALIZATION_COMPLETED);
+        manager.sendBroadcast(intent);
+    }
+
+    // broadcast serialization completed event
+    public static void sendSerializationBroadcast(Context context) {
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
+        Intent intent = new Intent(ACTION_SERIALIZATION_COMPLETED);
         manager.sendBroadcast(intent);
     }
 

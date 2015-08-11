@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
@@ -50,10 +50,23 @@ import android.widget.SearchView;
 import android.content.Context;
 import android.widget.PopupMenu;
 import android.view.View;
+import android.content.BroadcastReceiver;
 
 public class EntryListActivity extends Activity
                                implements EntryListFragment.ActivityInterface,
                                ActionBar.OnNavigationListener {
+
+    // BroadcastReceiver implementation for serialization completed event
+    private class SerializeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(SerializationBroadcast.ACTION_SERIALIZATION_COMPLETED)) {
+                // release the database
+                ScribaDBManager.releaseDB();
+            }
+        }
+    }
 
     // request codes for starting different activities
     public static final int REQUEST_ADD_ENTRY = 0;
@@ -88,8 +101,9 @@ public class EntryListActivity extends Activity
     private String _entryTypeProjectStr = null;
     private String _entryTypePOCStr = null;
 
-    // broadcast receiver for deserialize completed event
+    // broadcast receivers for serialization events
     private SerializationBroadcast.DeserializeReceiver _deserializeReceiver = null;
+    private SerializeReceiver _serializeReceiver = null;
 
     // search info
     private SearchInfo _searchInfo = null;
@@ -104,6 +118,7 @@ public class EntryListActivity extends Activity
                             R.array.entry_type_list,
                             android.R.layout.simple_spinner_dropdown_item);
         _deserializeReceiver = new SerializationBroadcast.DeserializeReceiver(this);
+        _serializeReceiver = new SerializeReceiver();
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         getActionBar().setListNavigationCallbacks(_entryTypeAdapter, this);
 
@@ -192,12 +207,14 @@ public class EntryListActivity extends Activity
     protected void onResume() {
         super.onResume();
         SerializationBroadcast.registerForDeserialization(this, _deserializeReceiver);
+        SerializationBroadcast.registerForSerialization(this, _serializeReceiver);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         SerializationBroadcast.unregisterReceiver(this, _deserializeReceiver);
+        SerializationBroadcast.unregisterReceiver(this, _serializeReceiver);
     }
 
     @Override
@@ -486,7 +503,8 @@ public class EntryListActivity extends Activity
         DataDescriptor[] events = ScribaDB.getAllEvents();
         DataDescriptor[] people = ScribaDB.getAllPeople();
         DataDescriptor[] projects = ScribaDB.getAllProjects();
-        ScribaDBManager.releaseDB();
+        // don't release DB until serialization service finishes its job
+        // because entry lists might be incomplete at this point
 
         // create backup file
         String state = Environment.getExternalStorageState();

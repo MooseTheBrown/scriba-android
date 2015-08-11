@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Mikhail Sapozhnikov
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 public class DataDescriptorBundle {
 
     private static final String BUNDLE_KEY = "DataDescriptors";
+    private static final String NEXTID_KEY = "NextId";
 
     // serialize array of DataDescriptors to Bundle
     public static Bundle toBundle(DataDescriptor[] array) {
@@ -40,14 +41,21 @@ public class DataDescriptorBundle {
             return null;
         }
 
-        String[] UUIDs = new String[array.length];
+        int length = array.length;
+        if (array[length - 1].nextId != DataDescriptor.NONEXT) {
+            length--;
+        }
+        String[] UUIDs = new String[length];
 
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < length; i++) {
             UUIDs[i] = array[i].id.toString();
         }
 
         Bundle bundle = new Bundle();
         bundle.putStringArray(BUNDLE_KEY, UUIDs);
+        if (length < array.length) {
+            bundle.putLong(NEXTID_KEY, array[array.length - 1].nextId);
+        }
 
         return bundle;
     }
@@ -64,6 +72,12 @@ public class DataDescriptorBundle {
 
         for (int i = 0; i < UUIDs.length; i++) {
             DataDescriptor descr = new DataDescriptor(UUID.fromString(UUIDs[i]), null);
+            arrayList.add(descr);
+        }
+
+        long nextId = bundle.getLong(NEXTID_KEY, DataDescriptor.NONEXT);
+        if (nextId != DataDescriptor.NONEXT) {
+            DataDescriptor descr = new DataDescriptor(nextId);
             arrayList.add(descr);
         }
 

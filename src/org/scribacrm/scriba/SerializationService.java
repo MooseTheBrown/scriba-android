@@ -188,6 +188,7 @@ public class SerializationService extends IntentService {
             stream.write(data, 0, data.length);
             stream.close();
             notify(R.string.notify_serialize_ok);
+            SerializationBroadcast.sendSerializationBroadcast(this);
         }
         catch (IOException e) {
             Log.d("[Scriba]", "SerializationService caught IOException: " + e.getMessage());
