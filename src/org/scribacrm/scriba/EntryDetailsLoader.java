@@ -44,14 +44,12 @@ public class EntryDetailsLoader<EntryType> extends AsyncTaskLoader<EntryType> {
     @Override
     public void onStartLoading() {
         Log.d("[Scriba]", "EntryDetailsLoader.onStartLoading()");
-        ScribaDBManager.useDB(getContext());
         forceLoad();
     }
 
     @Override
     public void onReset() {
         Log.d("[Scriba]", "EntryDetailsLoader.onReset()");
-        ScribaDBManager.releaseDB();
     }
 
     @Override
@@ -60,6 +58,7 @@ public class EntryDetailsLoader<EntryType> extends AsyncTaskLoader<EntryType> {
 
         Log.d("[Scriba]", "EntryDetailsLoader.loadInBackground()");
 
+        ScribaDBManager.useDB(getContext());
         if (_cls == Company.class) {
             result = (EntryType)ScribaDB.getCompany(_entryId);
         }
@@ -73,6 +72,7 @@ public class EntryDetailsLoader<EntryType> extends AsyncTaskLoader<EntryType> {
             result = (EntryType)ScribaDB.getProject(_entryId);
         }
 
+        ScribaDBManager.releaseDB();
         return result;
     }
 

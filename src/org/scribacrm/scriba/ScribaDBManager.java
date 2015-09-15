@@ -35,6 +35,7 @@ public class ScribaDBManager {
     private static int users = 0;
 
     public static synchronized void useDB(Context context) {
+        Log.d("[Scriba]", "useDB(), users = " + users);
         if (users == 0) {
             ScribaDB.DBDescr descr = new ScribaDB.DBDescr();
             descr.name = "scriba_sqlite";
@@ -76,6 +77,7 @@ public class ScribaDBManager {
     }
 
     public static synchronized void releaseDB() {
+        Log.d("[Scriba]", "releaseDB(), users = " + users);
         if (users > 0) {
             users--;
             if (users == 0) {
