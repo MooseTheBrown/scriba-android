@@ -478,9 +478,16 @@ public class EditEntryFragment extends Fragment
         txt = (EditText)getActivity().findViewById(R.id.project_cost_text);
         long cost = Long.parseLong(txt.getText().toString(), 10);
 
+        long mod_time = _project.mod_time;
+        // if project state has changed, update mod_time
+        if (_projectStateSpinnerHandler.hasChanged()) {
+            mod_time = (new Date()).getTime() / 1000;   // convert to seconds
+        }
+
         Project project = new Project(_project.id, title, descr,
                                       selectedCompanyId, selectedState,
-                                      selectedCurrency, cost);
+                                      selectedCurrency, cost,
+                                      _project.start_time, mod_time);
 
         ScribaDBManager.useDB(getActivity());
         ScribaDB.updateProject(project);

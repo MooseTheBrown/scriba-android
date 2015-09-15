@@ -113,5 +113,35 @@
             style="@style/scriba_entry_item_text"
             />
     </LinearLayout>
+
+    <!-- Project start time -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_start_time_header"
+            android:text="@string/project_start_time_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/project_start_time_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <!-- Project mod time -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/project_mod_time_header"
+            android:text="@string/project_mod_time_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/project_mod_time_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>

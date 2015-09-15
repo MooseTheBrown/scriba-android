@@ -50,6 +50,8 @@
     <string name="project_company_title">Компания:</string>
     <string name="project_state_title">Статус:</string>
     <string name="project_currency_title">Валюта:</string>
+    <string name="project_start_time_title">Время начала:</string>
+    <string name="project_mod_time_title">Время изменения статуса:</string>
     <string name="project_company_spinner_prompt">Выберите компанию</string>
     <string name="project_state_spinner_prompt">Выберите статус проекта</string>
     <string name="project_currency_spinner_prompt">Выберите валюту</string>

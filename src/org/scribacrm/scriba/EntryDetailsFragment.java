@@ -620,6 +620,18 @@ public class EntryDetailsFragment extends Fragment {
 
         txt = (TextView)getActivity().findViewById(R.id.project_cost_text);
         txt.setText((new Long(_project.cost)).toString() + " " + currencyStr);
+
+        // start time
+        Date date = new Date(_project.start_time * 1000); // convert to ms
+        DateFormat format = DateFormat.getDateTimeInstance();
+        txt = (TextView)getActivity().findViewById(R.id.project_start_time_text);
+        txt.setText(format.format(date));
+
+        // mod time
+        date = new Date(_project.mod_time * 1000); // convert to ms
+        format = DateFormat.getDateTimeInstance();
+        txt = (TextView)getActivity().findViewById(R.id.project_mod_time_text);
+        txt.setText(format.format(date));
     }
 
     // populate UI controls with POC data received from Loader

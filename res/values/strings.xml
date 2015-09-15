@@ -50,6 +50,8 @@
     <string name="project_company_title">Company:</string>
     <string name="project_state_title">State:</string>
     <string name="project_currency_title">Currency:</string>
+    <string name="project_start_time_title">Start time:</string>
+    <string name="project_mod_time_title">State change time:</string>
     <string name="project_company_spinner_prompt">Select company</string>
     <string name="project_state_spinner_prompt">Select project state</string>
     <string name="project_currency_spinner_prompt">Select currency</string>

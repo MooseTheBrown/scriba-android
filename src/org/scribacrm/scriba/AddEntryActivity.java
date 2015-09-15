@@ -267,9 +267,12 @@ public class AddEntryActivity extends Activity
         txt = (EditText)findViewById(R.id.project_cost_text);
         long cost = Long.parseLong(txt.getText().toString(), 10);
 
+        // libscriba expects timestamp values in seconds
+        long ts = (new Date()).getTime() / 1000;
+
         // add new project to the database
         ScribaDBManager.useDB(this);
-        ScribaDB.addProject(title, descr, companyId, state, currency, cost);
+        ScribaDB.addProject(title, descr, companyId, state, currency, cost, ts);
         ScribaDBManager.releaseDB();
     }
 

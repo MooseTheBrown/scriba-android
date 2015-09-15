@@ -33,6 +33,7 @@ public class ProjectStateSpinnerHandler implements AdapterView.OnItemSelectedLis
 
     private Context _context = null;
     private byte _state = Project.State.INITIAL;
+    private byte _start_state = Project.State.INITIAL;
     // adapter for project state list
     private ArrayAdapter<String> _projectStateListAdapter = null;
     // project state mapper instance
@@ -78,10 +79,21 @@ public class ProjectStateSpinnerHandler implements AdapterView.OnItemSelectedLis
                 spinner.setSelection(pos);
             }
         }
+
+        _start_state = selectedState;
     }
 
     // get currently selected state
     public byte getSelectedState() {
         return _state;
+    }
+
+    // returns true if user has changed the state
+    public boolean hasChanged() {
+        if (_start_state != _state) {
+            return true;
+        }
+
+        return false;
     }
 }
