@@ -521,7 +521,7 @@ public class EntryDetailsFragment extends Fragment {
         txt.setText(_event.outcome);
 
         // event date and time
-        Date date = new Date(_event.timestamp);
+        Date date = new Date(_event.timestamp * 1000); // convert to ms
         DateFormat dateFormat = DateFormat.getDateInstance();
         DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 

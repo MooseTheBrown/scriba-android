@@ -430,7 +430,8 @@ public class EditEntryFragment extends Fragment
         UUID projectId = _projectSpinnerHandler.getSelectedProjectId();
         byte type = _eventTypeSpinnerHandler.getSelectedType();
         byte state = _eventStateSpinnerHandler.getSelectedState();
-        long timestamp = _eventDate.getTime();
+        // libscriba expects timestamp in seconds
+        long timestamp = _eventDate.getTime() / 1000;
 
         Event event = new Event(_event.id, descr, companyId, pocId, projectId,
                                 type, outcome, timestamp, state);

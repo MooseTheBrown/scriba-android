@@ -283,7 +283,8 @@ public class AddEntryActivity extends Activity
         UUID projectId = _projectSpinnerHandler.getSelectedProjectId();
         byte type = _eventTypeSpinnerHandler.getSelectedType();
         byte state = _eventStateSpinnerHandler.getSelectedState();
-        long timestamp = _eventDate.getTime();
+        // libscriba expects timestamp in seconds
+        long timestamp = _eventDate.getTime() / 1000;
 
         txt = (EditText)findViewById(R.id.event_outcome_text);
         String outcome = txt.getText().toString();
