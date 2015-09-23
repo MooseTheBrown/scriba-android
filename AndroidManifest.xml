@@ -50,6 +50,9 @@
         <activity android:name="EntryDetailsActivity">
         </activity>
 
+        <activity android:name="ReportActivity">
+        </activity>
+
         <service android:name="SerializationService" />
 
         <receiver android:name=".EventAlarmReceiver"

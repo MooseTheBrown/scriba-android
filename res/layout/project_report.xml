@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * Copyright (C) 2015 Mikhail Sapozhnikov
+ *
+ * This file is part of scriba-android.
+ *
+ * scriba-android is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * scriba-android is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with scriba-android. If not, see <http://www.gnu.org/licenses/>.
+ *
+ -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <!-- Report period -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/report_period_header"
+            android:text="@string/report_period_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <Spinner
+            android:id="@+id/report_period_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:spinnerMode="dropdown"
+            android:prompt="@string/report_period_spinner_prompt"
+            />
+    </LinearLayout>
+
+    <!-- Total sales -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/total_sales_header"
+            android:text="@string/total_sales_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/total_sales_text"
+            style="@style/scriba_entry_item_text_large"
+            />
+    </LinearLayout>
+
+    <!-- Number of projects in progress -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/proj_in_progress_header"
+            android:text="@string/proj_in_progress_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/proj_in_progress_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <!-- Number of projects started during current period -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/scriba_entry_item"
+        >
+        <TextView
+            android:id="@+id/proj_started_header"
+            android:text="@string/proj_started_title"
+            style="@style/scriba_entry_item_header"
+            />
+        <TextView
+            android:id="@+id/proj_started_text"
+            style="@style/scriba_entry_item_text"
+            />
+    </LinearLayout>
+
+    <!-- Sales funnel -->
+
+</LinearLayout>
+</ScrollView>

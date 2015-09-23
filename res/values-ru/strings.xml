@@ -159,4 +159,11 @@
     <string name="event_reminder_ok">OK</string>
     <string name="event_reminder_cancel">Отмена</string>
     <string name="event_reminder_header">Напоминания:</string>
+    <!-- Report -->
+    <string name="report_title">Отчеты</string>
+    <string name="report_period_title">Период отчетности:</string>
+    <string name="report_period_spinner_prompt">Выберите период отчетности:</string>
+    <string name="total_sales_title">Продажи:</string>
+    <string name="proj_in_progress_title">Количество текущих проектов:</string>
+    <string name="proj_started_title">Проекты, начатые за текущий период:</string>
 </resources>
