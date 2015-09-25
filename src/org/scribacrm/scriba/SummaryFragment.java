@@ -28,11 +28,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-public class SummaryFragment extends Fragment {
+public class SummaryFragment extends Fragment
+                             implements AdapterView.OnItemSelectedListener  {
+
+    private StringResource _defaultRes = null;
+
+    private ArrayAdapter<StringResource> _periodAdapter = null;
 
     @Override
     public void onAttach(Activity activity) {
+        _defaultRes = new StringResource(activity, R.string.period_month);
         super.onAttach(activity);
     }
 
@@ -49,7 +58,52 @@ public class SummaryFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        populatePeriodSpinner();
+        super.onStart();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+    }
+
+    // AdapterView.OnItemSelectedLIstener implementation
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (_periodAdapter != null) {
+            StringResource res = _periodAdapter.getItem(position);
+            onPeriodChange(res);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // reset to default
+        onPeriodChange(_defaultRes);
+    }
+
+    private void populatePeriodSpinner() {
+        if (_periodAdapter == null) {
+            _periodAdapter = new ArrayAdapter<StringResource>(getActivity(),
+                android.R.layout.simple_spinner_item);
+            _periodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        }
+
+        _periodAdapter.add(_defaultRes);
+        _periodAdapter.add(new StringResource(getActivity(), R.string.period_week));
+        _periodAdapter.add(new StringResource(getActivity(), R.string.period_year));
+
+        Spinner spinner = (Spinner)getActivity().findViewById(R.id.report_period_spinner);
+        spinner.setAdapter(_periodAdapter);
+        spinner.setOnItemSelectedListener(this);
+        // set selection to default value
+        int pos = _periodAdapter.getPosition(_defaultRes);
+        spinner.setSelection(pos);
+        onPeriodChange(_defaultRes);
+    }
+
+    private void onPeriodChange(StringResource newPeriod) {
+        Log.d("[Scriba]", "SummaryFragment.onPeriodChange, newPeriod is " + newPeriod.toString());
     }
 }

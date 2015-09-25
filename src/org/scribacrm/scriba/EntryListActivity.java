@@ -304,6 +304,9 @@ public class EntryListActivity extends Activity
             case R.id.action_import:
                 startFileSelection();
                 return true;
+            case R.id.action_reports:
+                startActivity(new Intent(this, ReportActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

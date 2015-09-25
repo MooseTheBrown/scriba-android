@@ -85,6 +85,7 @@
     <string name="filter">Filter</string>
     <string name="reset_filter">Reset filter</string>
     <string name="event_add_reminder">Add reminder</string>
+    <string name="reports">Reports</string>
     <!-- Entry types -->
     <string name="Companies">Companies</string>
     <string name="People">People</string>
@@ -170,4 +171,8 @@
     <string name="total_sales_title">Total sales:</string>
     <string name="proj_in_progress_title">Projects in progress:</string>
     <string name="proj_started_title">Projects started during report period:</string>
+    <!-- Report periods -->
+    <string name="period_year">Year</string>
+    <string name="period_month">Month</string>
+    <string name="period_week">Week</string>
 </resources>

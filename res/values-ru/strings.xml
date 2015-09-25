@@ -85,6 +85,7 @@
     <string name="filter">Фильтровать</string>
     <string name="reset_filter">Сбросить фильтр</string>
     <string name="event_add_reminder">Добавить напоминание</string>
+    <string name="reports">Отчеты</string>
     <!-- Entry types -->
     <string name="Companies">Компании</string>
     <string name="People">Контакты</string>
@@ -166,4 +167,8 @@
     <string name="total_sales_title">Продажи:</string>
     <string name="proj_in_progress_title">Количество текущих проектов:</string>
     <string name="proj_started_title">Проекты, начатые за текущий период:</string>
+    <!-- Report periods -->
+    <string name="period_year">Год</string>
+    <string name="period_month">Месяц</string>
+    <string name="period_week">Неделя</string>
 </resources>

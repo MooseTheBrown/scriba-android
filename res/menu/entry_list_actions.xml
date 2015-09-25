@@ -1,5 +1,5 @@
-<!-- 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+<!--
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -82,5 +82,8 @@
     <item android:id="@+id/action_import"
           android:icon="@drawable/import_data"
           android:title="@string/import_data"
+          android:showAsAction="never"/>
+    <item android:id="@+id/action_reports"
+          android:title="@string/reports"
           android:showAsAction="never"/>
 </menu>
