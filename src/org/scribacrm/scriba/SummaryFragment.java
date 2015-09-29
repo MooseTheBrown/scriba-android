@@ -31,13 +31,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class SummaryFragment extends Fragment
-                             implements AdapterView.OnItemSelectedListener  {
+                             implements AdapterView.OnItemSelectedListener,
+                                        SummaryTask.Listener {
 
     private StringResource _defaultRes = null;
-
     private ArrayAdapter<StringResource> _periodAdapter = null;
+    private SummaryTask _summaryTask = null;
 
     @Override
     public void onAttach(Activity activity) {
@@ -83,6 +85,25 @@ public class SummaryFragment extends Fragment
         onPeriodChange(_defaultRes);
     }
 
+    // SummaryTask.Listener implementation
+    @Override
+    public void onSummaryReady(ProjectSummary summary) {
+        TextView txt = (TextView)getActivity().findViewById(R.id.total_sales_text);
+        String totalSalesStr = summary.rubSales + " " +
+            getActivity().getResources().getString(R.string.currency_rub) + "\n" +
+            summary.usdSales + " " +
+            getActivity().getResources().getString(R.string.currency_usd) + "\n" +
+            summary.eurSales + " " +
+            getActivity().getResources().getString(R.string.currency_eur);
+        txt.setText(totalSalesStr);
+
+        txt = (TextView)getActivity().findViewById(R.id.proj_in_progress_text);
+        txt.setText(new Long(summary.inProgress).toString());
+
+        txt = (TextView)getActivity().findViewById(R.id.proj_started_text);
+        txt.setText(new Long(summary.started).toString());
+    }
+
     private void populatePeriodSpinner() {
         if (_periodAdapter == null) {
             _periodAdapter = new ArrayAdapter<StringResource>(getActivity(),
@@ -105,5 +126,7 @@ public class SummaryFragment extends Fragment
 
     private void onPeriodChange(StringResource newPeriod) {
         Log.d("[Scriba]", "SummaryFragment.onPeriodChange, newPeriod is " + newPeriod.toString());
+        _summaryTask = new SummaryTask(getActivity(), this);
+        _summaryTask.execute(newPeriod);
     }
 }

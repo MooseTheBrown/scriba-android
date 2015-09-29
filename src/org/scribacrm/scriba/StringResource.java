@@ -22,7 +22,7 @@ package org.scribacrm.scriba;
 
 import android.content.Context;
 
-public class StringResource {
+public final class StringResource {
 
     private final int _resid;
     private final Context _context;
