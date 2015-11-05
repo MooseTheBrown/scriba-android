@@ -126,6 +126,7 @@
     <string name="event_state_scheduled">Scheduled</string>
     <string name="event_state_cancelled">Cancelled</string>
     <string name="event_state_completed">Completed</string>
+    <string name="event_state_all">All</string>
     <!-- Search types -->
     <string name="comp_search_name">By name</string>
     <string name="comp_search_jur_name">By Juridicial name</string>

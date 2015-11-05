@@ -26,7 +26,8 @@ import android.content.Context;
 // event state mapper maps event state codes defined in libscriba Event class
 // to Android resource strings
 public class EventStateMapper {
-    public static final byte NUM_STATES = 3;
+    public static final byte NUM_STATES = 4;
+    public static final byte ALL_EVENTS_STATE = -99;
 
     private Context _context = null;
 
@@ -48,6 +49,9 @@ public class EventStateMapper {
                 break;
             case Event.State.CANCELLED:
                 resid = R.string.event_state_cancelled;
+                break;
+            case ALL_EVENTS_STATE:
+                resid = R.string.event_state_all;
                 break;
         }
 
@@ -75,6 +79,11 @@ public class EventStateMapper {
             return Event.State.CANCELLED;
         }
 
+        cmp = _context.getResources().getString(R.string.event_state_all);
+        if (cmp.equals(stateStr)) {
+            return ALL_EVENTS_STATE;
+        }
+
         // nothing found
         return -1;
     }
@@ -86,6 +95,7 @@ public class EventStateMapper {
         ret[0] = _context.getResources().getString(R.string.event_state_scheduled);
         ret[1] = _context.getResources().getString(R.string.event_state_completed);
         ret[2] = _context.getResources().getString(R.string.event_state_cancelled);
+        ret[3] = _context.getResources().getString(R.string.event_state_all);
 
         return ret;
     }

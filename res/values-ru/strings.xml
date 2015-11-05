@@ -122,6 +122,7 @@
     <string name="event_state_scheduled">Запланировано</string>
     <string name="event_state_cancelled">Отменено</string>
     <string name="event_state_completed">Завершено</string>
+    <string name="event_state_all">Все</string>
     <!-- Search types -->
     <string name="comp_search_name">По имени</string>
     <string name="comp_search_jur_name">По юридическому имени</string>

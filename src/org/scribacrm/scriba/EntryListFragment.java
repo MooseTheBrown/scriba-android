@@ -108,6 +108,19 @@ public class EntryListFragment extends ListFragment
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(this);
 
+        // setup event filter and show only scheduled events by default
+        byte currState = Event.State.SCHEDULED;
+        if (_eventStateFilterDialog != null) {
+            currState = _eventStateFilterDialog.getEventState();
+        }
+        EventStateFilterDialog.DismissListener listener =
+            new EventStateFilterDialog.DismissListener() {
+                public void onDismiss() {
+                    loadData(true);
+                }
+            };
+        _eventStateFilterDialog = new EventStateFilterDialog(currState, listener);
+
         loadData(true);
     }
 
@@ -124,7 +137,9 @@ public class EntryListFragment extends ListFragment
             (_entryType == EntryType.EVENT)) &&
             (_activityInterface.getSearchInfo() == null)) {
             filterItem.setVisible(true);
-            resetFilterItem.setVisible(true);
+            if (_entryType == EntryType.PROJECT) {
+                resetFilterItem.setVisible(true);
+            }
         }
         else {
             filterItem.setVisible(false);
@@ -155,18 +170,6 @@ public class EntryListFragment extends ListFragment
                                                 "projFilterDialog");
                 }
                 else {
-                    // event filter
-                    byte currState = Event.State.SCHEDULED;
-                    if (_eventStateFilterDialog != null) {
-                        currState = _eventStateFilterDialog.getEventState();
-                    }
-                    EventStateFilterDialog.DismissListener listener = 
-                        new EventStateFilterDialog.DismissListener() {
-                            public void onDismiss() {
-                                loadData(true);
-                            }
-                        };
-                    _eventStateFilterDialog = new EventStateFilterDialog(currState, listener);
                     _eventStateFilterDialog.show(getActivity().getFragmentManager(),
                                                  "evtFilterDialog");
                 }
@@ -232,8 +235,11 @@ public class EntryListFragment extends ListFragment
                 eventLoader.setSearchInfo(searchInfo);
             }
             else if (_eventStateFilterDialog != null) {
-                eventLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.EVENT_STATE,
-                    _eventStateFilterDialog.getEventState()));
+                if (_eventStateFilterDialog.getEventState() !=
+                    EventStateMapper.ALL_EVENTS_STATE) {
+                    eventLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.EVENT_STATE,
+                        _eventStateFilterDialog.getEventState()));
+                }
             }
             loader = (Loader<DataDescriptor[]>)eventLoader;
         }
