@@ -26,8 +26,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.util.Log;
 import java.util.UUID;
+import java.util.Date;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 public class EventListAdapter extends EntryListAdapter {
 
@@ -38,9 +43,6 @@ public class EventListAdapter extends EntryListAdapter {
         _context = context;
     }
 
-    /* The only difference between event list view and generic entry
-       list view is that events should have different background based
-       on their state */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = null;
@@ -49,40 +51,67 @@ public class EventListAdapter extends EntryListAdapter {
             view = convertView;
         }
         else {
-            view = _inflater.inflate(R.layout.list_entry, parent, false);
+            view = _inflater.inflate(R.layout.event_list_entry, parent, false);
         }
 
+        CheckedTextView textView = (CheckedTextView)view.findViewById(R.id.event_list_item_text);
+        TextView smallText = (TextView)view.findViewById(R.id.event_list_item_text1);
+        LinearLayout layout = (LinearLayout)view.findViewById(R.id.event_list_entry_container);
+
         DataDescriptor entry = _entries.get(position);
-        CheckedTextView textView = (CheckedTextView)view.findViewById(R.id.list_item_text);
         textView.setText(entry.descr);
 
-        switch (getEventState(entry.id)) {
+        Event event = getEvent(entry.id);
+        switch (event.state) {
             case Event.State.COMPLETED:
                 Log.d("[Scriba]", "EventListAdapter.getView(), event state completed");
-                textView.setBackgroundResource(R.drawable.event_completed);
+                layout.setBackgroundResource(R.drawable.event_completed);
                 break;
             case Event.State.CANCELLED:
                 Log.d("[Scriba]", "EventListAdapter.getView(), event state cancelled");
-                textView.setBackgroundResource(R.drawable.event_cancelled);
+                layout.setBackgroundResource(R.drawable.event_cancelled);
                 break;
             default:
                 Log.d("[Scriba]", "EventListAdapter.getView(), event state scheduled");
-                textView.setBackgroundResource(R.drawable.entry_item_bg);
+                layout.setBackgroundResource(R.drawable.entry_item_bg);
                 break;
         }
+
+        // display event date and time
+        Date date = new Date(event.timestamp * 1000); // convert to ms
+        boolean showDate = true;
+        Calendar cal = Calendar.getInstance();
+        int cur_year = cal.get(Calendar.YEAR);
+        int cur_month = cal.get(Calendar.MONTH);
+        int cur_day = cal.get(Calendar.DAY_OF_MONTH);
+        cal.setTime(date);
+        int evt_year = cal.get(Calendar.YEAR);
+        int evt_month = cal.get(Calendar.MONTH);
+        int evt_day = cal.get(Calendar.DAY_OF_MONTH);
+        if ((cur_year == evt_year) && (cur_month == evt_month) &&
+            (cur_day == evt_day)) {
+            // don't show the date if it is today
+            showDate = false;
+        }
+
+        DateFormat format = null;
+        if (showDate) {
+            format = DateFormat.getDateTimeInstance();
+        }
+        else {
+            format = DateFormat.getTimeInstance(DateFormat.SHORT);
+        }
+
+        smallText.setText(format.format(date));
 
         return view;
     }
 
-    // get event state by event id
-    private byte getEventState(UUID eventId) {
+    // get event by id
+    private Event getEvent(UUID eventId) {
         ScribaDBManager.useDB(_context);
         Event event = ScribaDB.getEvent(eventId);
         ScribaDBManager.releaseDB();
-
-        if (event == null) {
-            return -1;
-        }
-        return event.state;
+        return event;
     }
 }

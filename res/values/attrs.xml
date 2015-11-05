@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+<!--
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -26,5 +26,8 @@
         <attr name="content" format="reference" />
         <attr name="collapsedHeight" format="dimension"/>
         <attr name="animationDuration" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="CheckableLinearLayout">
+        <attr name="checkId" format="reference" />
     </declare-styleable>
 </resources>
