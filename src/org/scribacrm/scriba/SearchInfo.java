@@ -25,6 +25,8 @@ import android.os.Bundle;
 
 public class SearchInfo {
 
+    public static final byte DEFAULT_BYTE_PARAM = -99;
+
     public enum SearchType {
         COMPANY_NAME(0),
         COMPANY_JUR_NAME(1),
@@ -59,7 +61,7 @@ public class SearchInfo {
     // different parameter types for different search types
     private String _stringParam = null;
     private UUID _uuidParam = null;
-    private byte _byteParam = 0;
+    private byte _byteParam = DEFAULT_BYTE_PARAM;
 
     public SearchInfo(SearchType type, String param) {
         _searchType = type;

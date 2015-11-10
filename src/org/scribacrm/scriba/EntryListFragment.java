@@ -133,12 +133,17 @@ public class EntryListFragment extends ListFragment
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem filterItem = menu.findItem(R.id.action_filter);
         MenuItem resetFilterItem = menu.findItem(R.id.action_reset_filter);
+        Log.d("[Scriba]", "EntryListFragment.onPrepareOptionsMenu(), _entryType = " +
+            _entryType);
         if (((_entryType == EntryType.PROJECT) ||
             (_entryType == EntryType.EVENT)) &&
-            (_activityInterface.getSearchInfo() == null)) {
+            !isSearchActive()) {
             filterItem.setVisible(true);
             if (_entryType == EntryType.PROJECT) {
                 resetFilterItem.setVisible(true);
+            }
+            else {
+                resetFilterItem.setVisible(false);
             }
         }
         else {
@@ -220,19 +225,18 @@ public class EntryListFragment extends ListFragment
         Log.d("[Scriba]", "EntryListFragment.onCreateLoader(), id = " + id);
 
         Loader<DataDescriptor[]> loader = null;
-        SearchInfo searchInfo = _activityInterface.getSearchInfo();
 
         if (id == EntryType.COMPANY.loaderId()) {
             CompanyListLoader compLoader = new CompanyListLoader(getActivity());
-            if (searchInfo != null) {
-                compLoader.setSearchInfo(searchInfo);
+            if (isSearchActive()) {
+                compLoader.setSearchInfo(_activityInterface.getSearchInfo());
             }
             loader = (Loader<DataDescriptor[]>)compLoader;
         }
         else if (id == EntryType.EVENT.loaderId()) {
             EventListLoader eventLoader = new EventListLoader(getActivity());
-            if (searchInfo != null) {
-                eventLoader.setSearchInfo(searchInfo);
+            if (isSearchActive()) {
+                eventLoader.setSearchInfo(_activityInterface.getSearchInfo());
             }
             else if (_eventStateFilterDialog != null) {
                 if (_eventStateFilterDialog.getEventState() !=
@@ -245,15 +249,15 @@ public class EntryListFragment extends ListFragment
         }
         else if (id == EntryType.POC.loaderId()) {
             POCListLoader pocLoader = new POCListLoader(getActivity());
-            if (searchInfo != null) {
-                pocLoader.setSearchInfo(searchInfo);
+            if (isSearchActive()) {
+                pocLoader.setSearchInfo(_activityInterface.getSearchInfo());
             }
             loader = (Loader<DataDescriptor[]>)pocLoader;
         }
         else if (id == EntryType.PROJECT.loaderId()) {
             ProjectListLoader projLoader = new ProjectListLoader(getActivity());
-            if (searchInfo != null) {
-                projLoader.setSearchInfo(searchInfo);
+            if (isSearchActive()) {
+                projLoader.setSearchInfo(_activityInterface.getSearchInfo());
             }
             else if (_projStateFilterDialog != null) {
                 projLoader.setSearchInfo(new SearchInfo(SearchInfo.SearchType.PROJECT_STATE,
@@ -421,5 +425,24 @@ public class EntryListFragment extends ListFragment
             }
         }
         ScribaDBManager.releaseDB();
+    }
+
+    private boolean isSearchActive() {
+        SearchInfo searchInfo = _activityInterface.getSearchInfo();
+        if (searchInfo == null) {
+            Log.d("[Scriba]", "EntryListFragment.isSearchActive(): false");
+            return false;
+        }
+
+        if (((searchInfo.stringParam() != null) &&
+             (!searchInfo.stringParam().equals(""))) ||
+            (searchInfo.uuidParam() != null) ||
+            (searchInfo.byteParam() != SearchInfo.DEFAULT_BYTE_PARAM)) {
+            Log.d("[Scriba]", "EntryListFragment.isSearchActive(): true");
+            return true;
+        }
+
+        Log.d("[Scriba]", "EntryListFragment.isSearchActive(): false");
+        return false;
     }
 }

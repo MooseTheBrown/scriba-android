@@ -74,6 +74,9 @@ public class EventStateSpinnerHandler implements AdapterView.OnItemSelectedListe
         _eventStateListAdapter.clear();
         String[] strs = _eventStateMapper.getStrings();
         for (String str : strs) {
+            if (str.equals(_eventStateMapper.getString(EventStateMapper.ALL_EVENTS_STATE))) {
+                continue;
+            }
             _eventStateListAdapter.add(str);
             if (str.equals(selectedStr)) {
                 int pos = _eventStateListAdapter.getPosition(str);

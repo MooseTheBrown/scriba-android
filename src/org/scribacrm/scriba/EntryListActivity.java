@@ -386,6 +386,8 @@ public class EntryListActivity extends Activity
             else {
                 Log.e("[Scriba]", "EntryListActivity: could not find EntryListFragment!");
             }
+
+            invalidateOptionsMenu();
         }
 
         return true;
