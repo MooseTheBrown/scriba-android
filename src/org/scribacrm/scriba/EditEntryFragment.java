@@ -282,7 +282,7 @@ public class EditEntryFragment extends Fragment
         txt.setText(_event.outcome);
 
         // setup event date and time
-        _eventDate = new Date(_event.timestamp);
+        _eventDate = new Date(_event.timestamp * 1000);
         _dateTimeHandler = new DateTimeHandler(_eventDate,
                                                getActivity(),
                                                getActivity().getFragmentManager(),
