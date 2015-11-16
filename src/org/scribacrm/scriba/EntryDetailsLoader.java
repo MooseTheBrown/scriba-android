@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -60,7 +60,7 @@ public class EntryDetailsLoader<EntryType> extends AsyncTaskLoader<EntryType> {
 
         ScribaDBManager.useDB(getContext());
         if (_cls == Company.class) {
-            result = (EntryType)ScribaDB.getCompany(_entryId);
+            result = (EntryType)loadCompany();
         }
         else if (_cls == Event.class) {
             result = (EntryType)ScribaDB.getEvent(_entryId);
@@ -88,5 +88,35 @@ public class EntryDetailsLoader<EntryType> extends AsyncTaskLoader<EntryType> {
         Log.d("[Scriba]", "EntryDetailsLoader.onCancelLoad()");
         // this task cannot be canceled
         return false;
+    }
+
+    private Company loadCompany() {
+        Company comp = ScribaDB.getCompany(_entryId);
+        DataDescriptor[] complete_poc_list = comp.poc_list;
+        DataDescriptor[] complete_proj_list = comp.proj_list;
+        DataDescriptor[] complete_event_list = comp.event_list;
+        boolean complete = true;
+
+        if (comp.poc_list[comp.poc_list.length - 1].nextId != DataDescriptor.NONEXT) {
+            complete_poc_list = ScribaDB.fetchAll(comp.poc_list);
+            complete = false;
+        }
+        if (comp.proj_list[comp.proj_list.length - 1].nextId != DataDescriptor.NONEXT) {
+            complete_proj_list = ScribaDB.fetchAll(comp.proj_list);
+            complete = false;
+        }
+        if (comp.event_list[comp.event_list.length - 1].nextId != DataDescriptor.NONEXT) {
+            complete_event_list = ScribaDB.fetchAll(comp.event_list);
+            complete = false;
+        }
+
+        if (complete) {
+            return comp;
+        }
+        else {
+            return new Company(comp.id, comp.name, comp.jur_name, comp.address,
+                comp.inn, comp.phonenum, comp.email, complete_poc_list,
+                complete_proj_list, complete_event_list);
+        }
     }
 }
