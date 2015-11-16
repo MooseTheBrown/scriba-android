@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+<!--
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -20,10 +20,23 @@
  *
  -->
 
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/list_item_text"
+<org.scribacrm.scriba.CheckableLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:scriba="http://schemas.android.com/apk/res/org.scribacrm.scriba"
+    android:id="@+id/event_list_entry_container"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="20sp"
-    android:checkMark="@drawable/list_check"
-    />
+    android:layout_height="fill_parent"
+    android:background="@drawable/entry_item_bg"
+    scriba:checkId="@+id/list_item_text"
+    >
+
+    <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@id/list_item_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:checkMark="@drawable/list_check"
+        />
+
+</org.scribacrm.scriba.CheckableLinearLayout>

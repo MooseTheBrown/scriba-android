@@ -119,11 +119,11 @@ public class EntryDetailsFragment extends Fragment {
     // event lists
     private class EntryListClickListener implements View.OnClickListener {
 
-        private ArrayAdapter<DataDescriptor> _adapter = null;
+        private EntryListAdapter _adapter = null;
         private int _pos = -1;
         private EntryType _handlerEntryType;
 
-        public EntryListClickListener(ArrayAdapter<DataDescriptor> adapter,
+        public EntryListClickListener(EntryListAdapter adapter,
                                       int pos,
                                       EntryType entryType) {
             _adapter = adapter;
@@ -187,9 +187,9 @@ public class EntryDetailsFragment extends Fragment {
     private POC _poc = null;
 
     // list adapters for entry lists inside company view
-    private ArrayAdapter<DataDescriptor> _poc_list_adapter = null;
-    private ArrayAdapter<DataDescriptor> _project_list_adapter = null;
-    private ArrayAdapter<DataDescriptor> _event_list_adapter = null;
+    private EntryListAdapter _poc_list_adapter = null;
+    private EntryListAdapter _project_list_adapter = null;
+    private EventListAdapter _event_list_adapter = null;
 
     // adapter for event reminders
     private ArrayAdapter<EventAlarm> _eventAlarmAdapter = null;
@@ -311,9 +311,7 @@ public class EntryDetailsFragment extends Fragment {
     // populate POC, project and event lists in company view
     private void populateCompanyLists() {
         // populate POC list
-        _poc_list_adapter = new ArrayAdapter<DataDescriptor>(getActivity(),
-            R.layout.expandable_list_item,
-            R.id.expandable_item_text);
+        _poc_list_adapter = new EntryListAdapter(getActivity().getLayoutInflater());
 
         for (DataDescriptor poc : _company.poc_list) {
             _poc_list_adapter.add(poc);
@@ -323,7 +321,7 @@ public class EntryDetailsFragment extends Fragment {
             // add entry
             View entryView = _poc_list_adapter.getView(i, null, (ViewGroup)poc_list);
             ViewGroup.LayoutParams params =
-                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                            ViewGroup.LayoutParams.WRAP_CONTENT);
             poc_list.addView(entryView, params);
             entryView.setOnClickListener(new EntryListClickListener(_poc_list_adapter,
@@ -332,9 +330,7 @@ public class EntryDetailsFragment extends Fragment {
         }
 
         // populate project list
-        _project_list_adapter = new ArrayAdapter<DataDescriptor>(getActivity(),
-            R.layout.expandable_list_item,
-            R.id.expandable_item_text);
+        _project_list_adapter = new EntryListAdapter(getActivity().getLayoutInflater());
 
         for (DataDescriptor project : _company.proj_list) {
             _project_list_adapter.add(project);
@@ -344,7 +340,7 @@ public class EntryDetailsFragment extends Fragment {
             // add entry
             View entryView = _project_list_adapter.getView(i, null, (ViewGroup)project_list);
             ViewGroup.LayoutParams params =
-                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                            ViewGroup.LayoutParams.WRAP_CONTENT);
             project_list.addView(entryView, params);
             entryView.setOnClickListener(new EntryListClickListener(_project_list_adapter,
@@ -353,9 +349,8 @@ public class EntryDetailsFragment extends Fragment {
         }
 
         // populate event list
-        _event_list_adapter = new ArrayAdapter<DataDescriptor>(getActivity(),
-            R.layout.expandable_list_item,
-            R.id.expandable_item_text);
+        _event_list_adapter = new EventListAdapter(getActivity(),
+            getActivity().getLayoutInflater());
 
         for (DataDescriptor event : _company.event_list) {
             _event_list_adapter.add(event);
@@ -365,7 +360,7 @@ public class EntryDetailsFragment extends Fragment {
             // add entry
             View entryView = _event_list_adapter.getView(i, null, (ViewGroup)event_list);
             ViewGroup.LayoutParams params =
-                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                            ViewGroup.LayoutParams.WRAP_CONTENT);
             event_list.addView(entryView, params);
             entryView.setOnClickListener(new EntryListClickListener(_event_list_adapter,
