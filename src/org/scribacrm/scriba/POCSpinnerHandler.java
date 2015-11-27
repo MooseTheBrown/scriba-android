@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -79,11 +79,13 @@ public class POCSpinnerHandler implements
     @Override
     public void onLoadFinished(Loader<DataDescriptor[]> loader, DataDescriptor[] data) {
         _pocListAdapter.clear();
-        for (DataDescriptor item : data) {
-            _pocListAdapter.add(item);
-            if (item.id.equals(_selectedPOCId)) {
-                int pos = _pocListAdapter.getPosition(item);
-                _spinner.setSelection(pos);
+        if (data != null) {
+            for (DataDescriptor item : data) {
+                _pocListAdapter.add(item);
+                if (item.id.equals(_selectedPOCId)) {
+                    int pos = _pocListAdapter.getPosition(item);
+                    _spinner.setSelection(pos);
+                }
             }
         }
     }

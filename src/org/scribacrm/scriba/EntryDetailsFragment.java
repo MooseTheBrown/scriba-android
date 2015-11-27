@@ -313,8 +313,10 @@ public class EntryDetailsFragment extends Fragment {
         // populate POC list
         _poc_list_adapter = new EntryListAdapter(getActivity().getLayoutInflater());
 
-        for (DataDescriptor poc : _company.poc_list) {
-            _poc_list_adapter.add(poc);
+        if (_company.poc_list != null) {
+            for (DataDescriptor poc : _company.poc_list) {
+                _poc_list_adapter.add(poc);
+            }
         }
         LinearLayout poc_list = (LinearLayout)getActivity().findViewById(R.id.poc_list);
         for (int i = 0; i < _poc_list_adapter.getCount(); i++) {
@@ -332,8 +334,10 @@ public class EntryDetailsFragment extends Fragment {
         // populate project list
         _project_list_adapter = new EntryListAdapter(getActivity().getLayoutInflater());
 
-        for (DataDescriptor project : _company.proj_list) {
-            _project_list_adapter.add(project);
+        if (_company.proj_list != null) {
+            for (DataDescriptor project : _company.proj_list) {
+                _project_list_adapter.add(project);
+            }
         }
         LinearLayout project_list = (LinearLayout)getActivity().findViewById(R.id.project_list);
         for (int i = 0; i < _project_list_adapter.getCount(); i++) {
@@ -352,8 +356,10 @@ public class EntryDetailsFragment extends Fragment {
         _event_list_adapter = new EventListAdapter(getActivity(),
             getActivity().getLayoutInflater());
 
-        for (DataDescriptor event : _company.event_list) {
-            _event_list_adapter.add(event);
+        if (_company.event_list != null) {
+            for (DataDescriptor event : _company.event_list) {
+                _event_list_adapter.add(event);
+            }
         }
         LinearLayout event_list = (LinearLayout)getActivity().findViewById(R.id.event_list);
         for (int i = 0; i < _event_list_adapter.getCount(); i++) {

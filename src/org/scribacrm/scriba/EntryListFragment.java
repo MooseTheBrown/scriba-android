@@ -335,6 +335,8 @@ public class EntryListFragment extends ListFragment
             case R.id.action_delete_records:
                 deleteSelectedEntries();
                 mode.finish();
+                // destroy loader for old type of entries
+                getLoaderManager().destroyLoader(_entryType.loaderId());
                 // after some items are removed, force list refresh
                 loadData(true);
                 return true;

@@ -40,6 +40,7 @@ import java.util.Date;
 import java.text.DateFormat;
 import android.widget.TextView;
 import java.util.UUID;
+import java.lang.NumberFormatException;
 
 public class AddEntryActivity extends Activity
                               implements CompanySpinnerHandler.OnSelectedListener,
@@ -265,7 +266,11 @@ public class AddEntryActivity extends Activity
         byte currency = _currencySpinnerHandler.getSelectedCurrency();
 
         txt = (EditText)findViewById(R.id.project_cost_text);
-        long cost = Long.parseLong(txt.getText().toString(), 10);
+        long cost = 0;
+        try {
+            cost = Long.parseLong(txt.getText().toString(), 10);
+        }
+        catch (NumberFormatException e) {} // just leave cost 0
 
         // libscriba expects timestamp values in seconds
         long ts = (new Date()).getTime() / 1000;

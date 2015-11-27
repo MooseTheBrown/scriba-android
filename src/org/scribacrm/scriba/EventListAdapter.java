@@ -62,6 +62,11 @@ public class EventListAdapter extends EntryListAdapter {
         textView.setText(entry.descr);
 
         Event event = getEvent(entry.id);
+
+        if (event == null) {
+            return view;
+        }
+
         switch (event.state) {
             case Event.State.COMPLETED:
                 Log.d("[Scriba]", "EventListAdapter.getView(), event state completed");

@@ -97,17 +97,23 @@ public class EntryDetailsLoader<EntryType> extends AsyncTaskLoader<EntryType> {
         DataDescriptor[] complete_event_list = comp.event_list;
         boolean complete = true;
 
-        if (comp.poc_list[comp.poc_list.length - 1].nextId != DataDescriptor.NONEXT) {
-            complete_poc_list = ScribaDB.fetchAll(comp.poc_list);
-            complete = false;
+        if (comp.poc_list != null) {
+            if (comp.poc_list[comp.poc_list.length - 1].nextId != DataDescriptor.NONEXT) {
+                complete_poc_list = ScribaDB.fetchAll(comp.poc_list);
+                complete = false;
+            }
         }
-        if (comp.proj_list[comp.proj_list.length - 1].nextId != DataDescriptor.NONEXT) {
-            complete_proj_list = ScribaDB.fetchAll(comp.proj_list);
-            complete = false;
+        if (comp.proj_list != null) {
+            if (comp.proj_list[comp.proj_list.length - 1].nextId != DataDescriptor.NONEXT) {
+                complete_proj_list = ScribaDB.fetchAll(comp.proj_list);
+                complete = false;
+            }
         }
-        if (comp.event_list[comp.event_list.length - 1].nextId != DataDescriptor.NONEXT) {
-            complete_event_list = ScribaDB.fetchAll(comp.event_list);
-            complete = false;
+        if (comp.event_list != null) {
+            if (comp.event_list[comp.event_list.length - 1].nextId != DataDescriptor.NONEXT) {
+                complete_event_list = ScribaDB.fetchAll(comp.event_list);
+                complete = false;
+            }
         }
 
         if (complete) {

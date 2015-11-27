@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2014 Mikhail Sapozhnikov
+/*
+ * Copyright (C) 2015 Mikhail Sapozhnikov
  *
  * This file is part of scriba-android.
  *
@@ -80,11 +80,13 @@ public class ProjectSpinnerHandler implements
     @Override
     public void onLoadFinished(Loader<DataDescriptor[]> loader, DataDescriptor[] data) {
         _projectListAdapter.clear();
-        for (DataDescriptor item : data) {
-            _projectListAdapter.add(item);
-            if (item.id.equals(_selectedProjectId)) {
-                int pos = _projectListAdapter.getPosition(item);
-                _spinner.setSelection(pos);
+        if (data != null) {
+            for (DataDescriptor item : data) {
+                _projectListAdapter.add(item);
+                if (item.id.equals(_selectedProjectId)) {
+                    int pos = _projectListAdapter.getPosition(item);
+                    _spinner.setSelection(pos);
+                }
             }
         }
     }
